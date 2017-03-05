@@ -1,0 +1,16 @@
+{
+  "name": "backend-tree",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "run-example": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^0.15.3",
+    "express": "^4.14.1"
+  }
+}
