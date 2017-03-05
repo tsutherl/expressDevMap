@@ -34,6 +34,7 @@ module.exports = app => {
         //here we're hooking into the app object and filtering through all the routes for the ones that the dev explicitly added to their app 
         //--> this excludes routes/middleware that automatically come with an express app instance, or uninteresting ones like static middleware
         const actualRoutes = app._router.stack.filter(
+            //need to add something here to delve into routers
           middleware => !!middleware.route
         );
         res.send(actualRoutes.map(middleware => middleware.route.path));
