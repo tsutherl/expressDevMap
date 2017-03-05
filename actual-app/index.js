@@ -31,10 +31,17 @@ module.exports = app => {
     });
 
     router.get('/routes', (req, res) => {
+        let routerLists = []
+        //gets digs into any express routers used (right now only one level deep)--> might want to turn into recursive function
+        app._router.stack.forEach(middleware => {
+            if(middleware.handle.stack) {
+                routerList = routerList.concat(middleware.handle.stack)
+            }
+        })
+        const fullList = app._router.stack.concat(routerList)
         //here we're hooking into the app object and filtering through all the routes for the ones that the dev explicitly added to their app 
         //--> this excludes routes/middleware that automatically come with an express app instance, or uninteresting ones like static middleware
-        const actualRoutes = app._router.stack.filter(
-            //need to add something here to delve into routers
+        const actualRoutes = fullList.filter(
           middleware => !!middleware.route
         );
         res.send(actualRoutes.map(middleware => middleware.route.path));
