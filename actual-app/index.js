@@ -47,6 +47,7 @@ module.exports = app => {
         //gets any paths in the initial level of the app
         const firstPaths = firstRoutes.map(middleware => middleware.route.path)
 
+        console.log
         //get prefixes for the routers from their outer regexp key (try and find a better way to do this, maybe)
         const prefixes = routerList.map(middleware => {
             console.log(middleware.regexp)
