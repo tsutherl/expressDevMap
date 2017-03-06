@@ -14,6 +14,9 @@ const express = require('express');
 //in the docs, list all the routes that we are providing to them and 
     //what they do 
 
+
+//helper function to get info when 
+
 module.exports = app => {
 
     const router = express.Router();
@@ -55,19 +58,21 @@ module.exports = app => {
         //get prefixes for the routers from their outer regexp key (try and find a better way to do this, maybe)
         const prefixes = routerList.map(middleware => {
             if (middleware.regexp.fast_slash) {
-                return ''
+                return '/'
             }
             return middleware.regexp.toString().slice(3,-13)
         })
 
-        const routerPaths = []
-        routerList.forEach((middleware, idx)=>{
-            middleware.handle.stack.forEach(innerware => {
-                routerPaths.push({
-                    path: prefixes[idx] + innerware.route.path,
+        const routerPaths = routerList.map((middleware, idx)=>{
+            const paths = middleware.handle.stack.map(innerware => ({
+                    path: innerware.route.path,
                     verb: Object.keys(innerware.route.methods)[0],//this is some repetition!!
                 })
-            })
+            )
+            return {
+                router: prefixes[idx],
+                paths,
+            }
         })
 
         //join the paths into one array
