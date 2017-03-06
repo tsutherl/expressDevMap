@@ -1,6 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {get} from 'axios';
+import Tree from './Tree.jsx'
 
 //this is OUR axios call to our GET /routes that is sending back information about our client's express routes
 
@@ -15,12 +16,12 @@ import {get} from 'axios';
 get('/backend-tree/routes')
     .then(res => res.data)
     .then(routePaths => {
-        /*render(
+        render(
           <div>
-              {routePaths.map(path => <h1>{path}</h1>)}
+              <Tree/>
           </div>,
           document.getElementById('app')
-        );*/
-        console.log(routePaths)
+        );
+        // console.log(routePaths)
     }); 
 
