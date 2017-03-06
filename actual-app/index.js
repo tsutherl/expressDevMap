@@ -65,7 +65,7 @@ module.exports = app => {
             middleware.handle.stack.forEach(innerware => {
                 routerPaths.push({
                     path: prefixes[idx] + innerware.route.path,
-                    verb: Object.keys(innerware.route.methods)[0],
+                    verb: Object.keys(innerware.route.methods)[0],//this is some repetition!!
                 })
             })
         })
