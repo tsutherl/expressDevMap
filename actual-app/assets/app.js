@@ -23206,8 +23206,19 @@ var _axios = __webpack_require__(86);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _axios.get)('/backend-tree/routes').then(function (res) {
-    return res.data;
+//this is OUR axios call to the client's app backend
+//here we are retrieving their routes and rendering them in 
+//a tree via react JSX
+
+//build out react-redux!!!
+//learn D3...
+//how to deal with the example app that has multiple routers --> are they nested? how do we access them? 
+
+
+(0, _axios.get)('/backend-tree/routes')
+//.then(res => res.data)
+.then(function (hi) {
+    return console.log('HI THERE::::', hi);
 }).then(function (routePaths) {
     (0, _reactDom.render)(_react2.default.createElement(
         'div',

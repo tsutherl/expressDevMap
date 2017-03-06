@@ -2,7 +2,8 @@ import React from 'react';
 import {render} from 'react-dom';
 import {get} from 'axios';
 
-//this is OUR axios call to the client's app backend
+//this is OUR axios call to our GET /routes that is sending back information about our client's express routes
+
 //here we are retrieving their routes and rendering them in 
 //a tree via react JSX
 
