@@ -15,11 +15,12 @@ import {get} from 'axios';
 get('/backend-tree/routes')
     .then(res => res.data)
     .then(routePaths => {
-        render(
+        /*render(
           <div>
               {routePaths.map(path => <h1>{path}</h1>)}
           </div>,
           document.getElementById('app')
-        );
+        );*/
+        console.log(routePaths)
     }); 
 

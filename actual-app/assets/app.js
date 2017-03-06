@@ -23206,7 +23206,8 @@ var _axios = __webpack_require__(86);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//this is OUR axios call to the client's app backend
+//this is OUR axios call to our GET /routes that is sending back information about our client's express routes
+
 //here we are retrieving their routes and rendering them in 
 //a tree via react JSX
 
@@ -23215,22 +23216,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //how to deal with the example app that has multiple routers --> are they nested? how do we access them? 
 
 
-(0, _axios.get)('/backend-tree/routes')
-//.then(res => res.data)
-.then(function (hi) {
-    return console.log('HI THERE::::', hi);
+(0, _axios.get)('/backend-tree/routes').then(function (res) {
+    return res.data;
 }).then(function (routePaths) {
-    (0, _reactDom.render)(_react2.default.createElement(
-        'div',
-        null,
-        routePaths.map(function (path) {
-            return _react2.default.createElement(
-                'h1',
-                null,
-                path
-            );
-        })
-    ), document.getElementById('app'));
+    /*render(
+      <div>
+          {routePaths.map(path => <h1>{path}</h1>)}
+      </div>,
+      document.getElementById('app')
+    );*/
+    console.log(routePaths);
 });
 
 /***/ })
