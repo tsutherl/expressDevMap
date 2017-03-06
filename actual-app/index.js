@@ -15,7 +15,11 @@ const express = require('express');
     //what they do 
 
 
-//helper function to get info when 
+//helper function to get info when at terminal node
+const getNodeInfo = (middleware) => ({
+    path: middleware.route.path,
+    verb: Object.keys(middleware.route.methods)[0]//will there ever be more than one key?
+})
 
 module.exports = app => {
 
@@ -40,7 +44,7 @@ module.exports = app => {
         //gets digs into any express routers used (right now only one level deep)--> might want to turn into recursive function
         let firstRoutes = app._router.stack.filter(middleware => {
             if (middleware.path === '/backend-tree') return false //exclude routes added in this file
-            if(middleware.name === 'router') {// find the routers
+            if (middleware.name === 'router') {// find the routers
                 routerList.push(middleware)
                 return false
             } 
@@ -48,12 +52,7 @@ module.exports = app => {
         })
 
         //gets any paths in the initial level of the app
-        const firstPaths = firstRoutes.map(middleware => {
-            return {
-                path: middleware.route.path,
-                verb: Object.keys(middleware.route.methods)[0]//will there ever be more than one key?
-            }
-        })
+        const firstPaths = firstRoutes.map(getNodeInfo)
 
         //get prefixes for the routers from their outer regexp key (try and find a better way to do this, maybe)
         const prefixes = routerList.map(middleware => {
@@ -64,11 +63,7 @@ module.exports = app => {
         })
 
         const routerPaths = routerList.map((middleware, idx)=>{
-            const paths = middleware.handle.stack.map(innerware => ({
-                    path: innerware.route.path,
-                    verb: Object.keys(innerware.route.methods)[0],//this is some repetition!!
-                })
-            )
+            const paths = middleware.handle.stack.map(getNodeInfo)
             return {
                 router: prefixes[idx],
                 paths,
