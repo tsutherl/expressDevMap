@@ -51,7 +51,7 @@ module.exports = app => {
             return !!middleware.route //see if the remaining have routes
         })
 
-        //gets any paths in the initial level of the app
+        //gets info from first level paths
         const firstPaths = firstRoutes.map(getNodeInfo)
 
         //get prefixes for the routers from their outer regexp key (try and find a better way to do this, maybe)
@@ -70,7 +70,7 @@ module.exports = app => {
             }
         })
 
-        //join the paths into one array
+        //join the paths into one array to send
         const allPaths = firstPaths.concat(routerPaths)
 
         res.send(allPaths);
