@@ -38,21 +38,39 @@ module.exports = app => {
         let firstRoutes = app._router.stack.filter(middleware => {
             if (middleware.path === '/backend-tree') return false //exclude routes added in this file
             if(middleware.name === 'router') {// find the routers
-                routerList = routerList.concat(middleware.handle.stack)
+                routerList.push(middleware)
                 return false
             } 
-            return !!middleware.route //see it the remaining have routes
+            return !!middleware.route //see if the remaining have routes
         })
-        const fullList = firstRoutes.concat(routerList)
-        console.log(fullList)
 
-        res.send(fullList.map(middleware => middleware.route.path));
+        //gets any paths in the initial level of the app
+        const firstPaths = firstRoutes.map(middleware => middleware.route.path)
+
+        //get prefixes for the routers from their outer regexp key (try and find a better way to do this, maybe)
+        const prefixes = routerList.map(middleware => {
+            console.log(middleware.regexp)
+            if (middleware.regexp.fast_slash) {
+                return ''
+            }
+            return middleware.regexp.toString().slice(3,-13)
+        })
+
+        const routerPaths = []
+        routerList.forEach((middleware, idx)=>{
+            middleware.handle.stack.forEach(innerware => {
+                routerPaths.push(prefixes[idx] + innerware.route.path)
+            })
+        })
+
+        //join the paths into one array
+        const allPaths = firstPaths.concat(routerPaths)
+
+        res.send(allPaths);
     });
 
     //hit this route --> which shows the react tree????
 
     app.use('/backend-tree', router);
-
-
 
 };
