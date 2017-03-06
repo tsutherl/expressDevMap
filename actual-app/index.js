@@ -45,12 +45,15 @@ module.exports = app => {
         })
 
         //gets any paths in the initial level of the app
-        const firstPaths = firstRoutes.map(middleware => middleware.route.path)
+        const firstPaths = firstRoutes.map(middleware => {
+            return {
+                path: middleware.route.path,
+                verb: Object.keys(middleware.route.methods)[0]//will there ever be more than one key?
+            }
+        })
 
-        console.log
         //get prefixes for the routers from their outer regexp key (try and find a better way to do this, maybe)
         const prefixes = routerList.map(middleware => {
-            console.log(middleware.regexp)
             if (middleware.regexp.fast_slash) {
                 return ''
             }
@@ -60,7 +63,10 @@ module.exports = app => {
         const routerPaths = []
         routerList.forEach((middleware, idx)=>{
             middleware.handle.stack.forEach(innerware => {
-                routerPaths.push(prefixes[idx] + innerware.route.path)
+                routerPaths.push({
+                    path: prefixes[idx] + innerware.route.path,
+                    verb: Object.keys(innerware.route.methods)[0],
+                })
             })
         })
 
