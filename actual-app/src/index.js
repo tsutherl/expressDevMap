@@ -2,6 +2,8 @@ import React from 'react';
 import {render} from 'react-dom';
 import {get} from 'axios';
 
+import Testing from './Testing';
+
 //this is OUR axios call to the client's app backend
 //here we are retrieving their routes and rendering them in 
 //a tree via react JSX
@@ -11,14 +13,18 @@ import {get} from 'axios';
 //how to deal with the example app that has multiple routers --> are they nested? how do we access them? 
     
 
-get('/backend-tree/routes')
-    .then(res => res.data)
-    .then(routePaths => {
-        render(
-          <div>
-              {routePaths.map(path => <h1>{path}</h1>)}
-          </div>,
-          document.getElementById('app')
-        );
-    }); 
+// get('/backend-tree/routes')
+//     .then(res => res.data)
+//     .then(routePaths => {
+//         render(
+//           <div>
+//               {routePaths.map(path => <h1>{path}</h1>)}
+//           </div>,
+//           document.getElementById('app')
+//         );
+//     }); 
 
+render(
+    <Testing />, 
+    document.getElementById('app')
+)
