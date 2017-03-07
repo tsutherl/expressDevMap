@@ -1,29 +1,15 @@
-import React from 'react';
+import React from 'react'
+import { connect } from 'react-redux'
+import Tree from './Tree.jsx'
 
 
-var treeData = [
-    {
-    "name": "Top Level",
-    "parent": "null",
-    "children": [
-      {
-        "name": "Level 2: A",
-        "parent": "Top Level",
-        "children": [
-          {
-            "name": "Son of A",
-            "parent": "Level 2: A"
-          },
-          {
-            "name": "Daughter of A",
-            "parent": "Level 2: A"
-          }
-        ]
-      },
-      {
-        "name": "Level 2: B",
-        "parent": "Top Level"
-      }
-    ]
-  }
-];
+
+
+
+const mapState = ({ routes }) => ({ routes });
+
+
+
+export default connect(mapState)(Tree);
+
+
