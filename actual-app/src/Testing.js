@@ -9,11 +9,6 @@ export default class Testing extends React.Component{
 
     constructor(){
         super()
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick(){
-
     }
 
     render(){
