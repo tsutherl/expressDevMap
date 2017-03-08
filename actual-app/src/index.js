@@ -16,7 +16,7 @@ get('/backend-tree/routes')
     .then(routePaths => {
         render(
           <div>
-              {routePaths.map(path => <h1>{path}</h1>)}
+              {routePaths.map(path => <h1>{path.verb.toUpperCase()}: {path.path}</h1>)}
           </div>,
           document.getElementById('app')
         );
