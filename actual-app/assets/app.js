@@ -14696,13 +14696,19 @@ var Tree = function (_React$Component) {
   function Tree(props) {
     _classCallCheck(this, Tree);
 
-    return _possibleConstructorReturn(this, (Tree.__proto__ || Object.getPrototypeOf(Tree)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Tree.__proto__ || Object.getPrototypeOf(Tree)).call(this, props));
+
+    _this.state = {
+      nodes: []
+    };
+    _this.renderNode = _this.renderNode.bind(_this);
+
+    return _this;
   }
 
   _createClass(Tree, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-
       // set the dimensions and margins of the diagram
       var margin = { top: 20, right: 90, bottom: 30, left: 90 },
           width = 660 - margin.left - margin.right,
@@ -14718,6 +14724,10 @@ var Tree = function (_React$Component) {
 
       // maps the node data to the tree layout
       nodes = treemap(nodes);
+      console.log("nodes", nodes);
+      this.setState({ nodes: nodes });
+      // console.log("local state", this.state)
+
 
       // append the svg object to the body of the page
       // appends a 'group' element to 'svg'
@@ -14764,10 +14774,39 @@ var Tree = function (_React$Component) {
       });
     }
   }, {
+    key: "renderNode",
+    value: function renderNode(node) {
+      console.log("HERE------");
+      console.log("node", node);
+      console.log("node children", node.children);
+      var tree = _react2.default.createElement(
+        "div",
+        null,
+        node
+      );
+      if (node.children) {
+        if (node.children[0]) {
+          console.log("0th node", node.children[0]);
+          tree += this.renderNode(node.children[0]);
+        }
+        if (node.children[1]) {
+          console.log("1st node", node.children[1]);
+          tree += this.renderNode(node.children[1]);
+        }
+      } else {
+        console.log("TREE", tree);
+        return tree;
+      }
+    }
+    //if node has children: 
+    //if node has [0] child: return recurse 
+    //if node has [1] child: return recurse 
+    //else return JSX
+
+  }, {
     key: "render",
     value: function render() {
-      console.log('PROPS in render', this.props);
-
+      console.log(this.renderNode(this.state.nodes));
       return _react2.default.createElement("div", null);
     }
   }]);

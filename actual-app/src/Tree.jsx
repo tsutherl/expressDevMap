@@ -5,12 +5,14 @@ import * as d3 from "d3"
 export default class Tree extends React.Component {
   constructor(props){
     super(props);
-      
+    this.state = {
+      nodes: []
+    }
+    this.renderNode = this.renderNode.bind(this);
         
   }
 
   componentDidMount(){
-    
     // set the dimensions and margins of the diagram
     var margin = {top: 20, right: 90, bottom: 30, left: 90},
         width = 660 - margin.left - margin.right,
@@ -25,8 +27,14 @@ export default class Tree extends React.Component {
         return d.children;
       });
 
-    // maps the node data to the tree layout
+    // maps the node data to the tree layout---------
     nodes = treemap(nodes);
+    console.log("nodes", nodes)
+    this.setState({nodes: nodes})
+    // console.log("local state", this.state)------------
+
+
+
 
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
@@ -82,11 +90,36 @@ export default class Tree extends React.Component {
       .text(function(d) { return d.data.name; });
   }
 
+  renderNode(node){
+    console.log("HERE------")
+    console.log("node", node)
+    console.log("node children", node.children)
+    var tree = <div>{node}</div>;
+    if(node.children){
+      if(node.children[0]) {
+        console.log("0th node", node.children[0])
+        tree+=this.renderNode(node.children[0]);
+      }
+      if(node.children[1]) {
+         console.log("1st node", node.children[1])
+        tree+=this.renderNode(node.children[1]);
+      }
+    }
+    else {
+      console.log("TREE", tree)
+      return tree;
+    }
+  }
+  //if node has children: 
+    //if node has [0] child: return recurse 
+    //if node has [1] child: return recurse 
+  //else return JSX
+
   render() {
-    console.log('PROPS in render', this.props)
-  
+    console.log(this.renderNode(this.state.nodes));
     return(
       <div>
+
       </div>
     )
   }

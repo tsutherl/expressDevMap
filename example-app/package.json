@@ -7,7 +7,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "run-example": "node index.js"
+    "run-example": "node index.js && webpack --config ../actual-app/build/webpack.config.js -- -w"
   },
   "dependencies": {
     "axios": "^0.15.3",
