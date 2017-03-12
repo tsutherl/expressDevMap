@@ -43,13 +43,18 @@ export default class Tree extends React.Component {
         .data( nodes.descendants().slice(1))
       .enter().append("path")
         .attr("class", "link")
-        .style("stroke", function(d) { return d.data.level; })
+        .style("stroke", "black")     // question: can these style things be combined?
+        .style("fill", "none")         // they are style attributes for the drawn links
+        .style("stroke-opacity", 0.4)   // got rid of the fill and color along the link curve
+        .style("stroke-width", 1.5)  
         .attr("d", function(d) {
           return "M" + d.y + "," + d.x
             + "C" + (d.y + d.parent.y) / 2 + "," + d.x
             + " " + (d.y + d.parent.y) / 2 + "," + d.parent.x
             + " " + d.parent.y + "," + d.parent.x;
           });
+
+
 
     // adds each node as a group
     var node = g.selectAll(".node")
@@ -62,25 +67,20 @@ export default class Tree extends React.Component {
           return "translate(" + d.y + "," + d.x + ")"; });
 
     // adds symbols as nodes
-    node.append("path")
-      .style("stroke", function(d) { return d.data.type; })
-      .style("fill", function(d) { return d.data.level; })
-      .attr("d", d3.symbol()
-        .size(function(d) { return d.data.value * 30; } )
-        .type(function(d) { if
-          (d.data.value >= 9) { return d3.symbolCross; } else if
-          (d.data.value <= 9) { return d3.symbolDiamond;}
-        }));
+    node.append("circle")  // made all nodes circles instead of random shapes
+      .style("stroke", "black") // change node outline to black
+      .style("fill", function(d) { return d.data.children ? 'blue' : 'gray' ; })
+      .attr("r", 5);  // above line fills node blue if it has child nodes, otherwise gray
       
     // adds the text to the node
     node.append("text")
-      .attr("dy", ".35em")
+      .attr("dy", 3) // move 3 px down for text location (I think)
       .attr("x", function(d) { return d.children ? 
-        (d.data.value + 4) * -1 : d.data.value + 4 })
+        -8 : 8}) // place text label on left if node has children, otherwise on right
       .style("text-anchor", function(d) { 
-        return d.children ? "end" : "start"; })
-      .text(function(d) { return d.data.name; });
-  }
+        return d.children ? "end" : "start"; }) 
+      .text(function(d) { return "/" + d.data.name; });  // 'name' is key on routes object
+  }                                              
 
   render() {
     console.log('PROPS in render', this.props)
@@ -91,3 +91,24 @@ export default class Tree extends React.Component {
     )
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
