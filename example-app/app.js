@@ -51,3 +51,50 @@ app.get('/api/birds/ducks/Della', (req, res) => {
 
 
 
+
+{
+    'name': 'api'
+    'children' : [
+        {
+            'name' : 'puppies',
+            'children' : [
+                {
+                    'name': 'Boomer'
+                },
+                {
+                    'name': 'Nugget'
+                }
+            ]
+        },
+        {
+            'name' : 'birds',
+            children: [
+                {
+                    'name': 'chickens',
+                    children: [
+                        {
+                            'name' : 'Madge'
+                        },
+                        {
+                            'name' : 'Midge'
+                        }
+                    ]
+                },
+                {
+                    'name' : 'ducks',
+                    'children': [
+                        {
+                            'name': 'Dina'
+                        },
+                        {
+
+                            'name' : 'Della'
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
+
