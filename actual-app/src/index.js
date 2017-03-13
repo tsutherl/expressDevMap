@@ -6,6 +6,8 @@ import { Provider } from 'react-redux'
 import store, {loadRoutes} from './store'
 import {Router, Route, Link, hashHistory} from 'react-router';
 
+import axios from 'axios'
+
 
 //this is OUR axios call to our GET /routes that is sending back information about our client's express routes
 
@@ -27,41 +29,41 @@ import {Router, Route, Link, hashHistory} from 'react-router';
 
 
 
-const data =
-{
-  "name": "Top Level",
-  "value": 10,
-  "type": "black",
-  "level": "red",
-  "children": [
-    {
-      "name": "Level 2: A",
-      "value": 15,
-      "type": "grey",
-      "level": "red",
-      "children": [
-        {
-          "name": "Son of A",
-          "value": 5,
-          "type": "steelblue",        // type = outline color for node pic
-          "level": "orange"           // level = trace color along link + node fill color
-        },
-        {
-          "name": "Daughter of A",
-          "value": 8,
-          "type": "steelblue",
-          "level": "red"
-        }
-      ]
-    },
-    {
-      "name": "Level 2: B",
-      "value": 10,
-      "type": "grey",
-      "level": "green"
-    }
-  ]
-};
+// const data =
+// {
+//   "name": "Top Level",
+//   "value": 10,
+//   "type": "black",
+//   "level": "red",
+//   "children": [
+//     {
+//       "name": "Level 2: A",
+//       "value": 15,
+//       "type": "grey",
+//       "level": "red",
+//       "children": [
+//         {
+//           "name": "Son of A",
+//           "value": 5,
+//           "type": "steelblue",        // type = outline color for node pic
+//           "level": "orange"           // level = trace color along link + node fill color
+//         },
+//         {
+//           "name": "Daughter of A",
+//           "value": 8,
+//           "type": "steelblue",
+//           "level": "red"
+//         }
+//       ]
+//     },
+//     {
+//       "name": "Level 2: B",
+//       "value": 10,
+//       "type": "grey",
+//       "level": "green"
+//     }
+//   ]
+// };
 
 const ourData = {
     'name': 'api',
@@ -79,10 +81,10 @@ const ourData = {
         },
         {
             'name' : 'birds',
-            children: [
+            'children': [
                 {
                     'name': 'chickens',
-                    children: [
+                    'children': [
                         {
                             'name' : 'Madge'
                         },
@@ -108,9 +110,17 @@ const ourData = {
     ]
 }
 
+const axiosGetRoutes = () => {
+    axios('/backend-tree/routes')
+    .then((routes) => console.log('APP ROUTES :::', routes))
+}
 
 
-const getRoutes = () => store.dispatch(loadRoutes(ourData));
+
+const getRoutes = () => {
+    axiosGetRoutes()
+    store.dispatch(loadRoutes(ourData));
+}
 
 
 render(

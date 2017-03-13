@@ -47833,6 +47833,8 @@ var _reactDom = __webpack_require__(134);
 
 var _axios = __webpack_require__(131);
 
+var _axios2 = _interopRequireDefault(_axios);
+
 var _AppContainer = __webpack_require__(132);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
@@ -47865,34 +47867,41 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //     }); 
 
 
-var data = {
-    "name": "Top Level",
-    "value": 10,
-    "type": "black",
-    "level": "red",
-    "children": [{
-        "name": "Level 2: A",
-        "value": 15,
-        "type": "grey",
-        "level": "red",
-        "children": [{
-            "name": "Son of A",
-            "value": 5,
-            "type": "steelblue", // type = outline color for node pic
-            "level": "orange" // level = trace color along link + node fill color
-        }, {
-            "name": "Daughter of A",
-            "value": 8,
-            "type": "steelblue",
-            "level": "red"
-        }]
-    }, {
-        "name": "Level 2: B",
-        "value": 10,
-        "type": "grey",
-        "level": "green"
-    }]
-};
+// const data =
+// {
+//   "name": "Top Level",
+//   "value": 10,
+//   "type": "black",
+//   "level": "red",
+//   "children": [
+//     {
+//       "name": "Level 2: A",
+//       "value": 15,
+//       "type": "grey",
+//       "level": "red",
+//       "children": [
+//         {
+//           "name": "Son of A",
+//           "value": 5,
+//           "type": "steelblue",        // type = outline color for node pic
+//           "level": "orange"           // level = trace color along link + node fill color
+//         },
+//         {
+//           "name": "Daughter of A",
+//           "value": 8,
+//           "type": "steelblue",
+//           "level": "red"
+//         }
+//       ]
+//     },
+//     {
+//       "name": "Level 2: B",
+//       "value": 10,
+//       "type": "grey",
+//       "level": "green"
+//     }
+//   ]
+// };
 
 var ourData = {
     'name': 'api',
@@ -47905,9 +47914,9 @@ var ourData = {
         }]
     }, {
         'name': 'birds',
-        children: [{
+        'children': [{
             'name': 'chickens',
-            children: [{
+            'children': [{
                 'name': 'Madge'
             }, {
                 'name': 'Midge'
@@ -47924,8 +47933,15 @@ var ourData = {
     }]
 };
 
+var axiosGetRoutes = function axiosGetRoutes() {
+    (0, _axios2.default)('/backend-tree/routes').then(function (routes) {
+        return console.log('APP ROUTES :::', routes);
+    });
+};
+
 var getRoutes = function getRoutes() {
-    return _store2.default.dispatch((0, _store.loadRoutes)(ourData));
+    axiosGetRoutes();
+    _store2.default.dispatch((0, _store.loadRoutes)(ourData));
 };
 
 (0, _reactDom.render)(_react2.default.createElement(
