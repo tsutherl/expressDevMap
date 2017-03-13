@@ -42,12 +42,15 @@ module.exports = app => {
         //here we're hooking into the app object and filtering through all the routes for the ones that the dev explicitly added to their app 
         //--> this excludes routes/middleware that automatically come with an express app instance, or uninteresting ones like static middleware
         //gets digs into any express routers used (right now only one level deep)--> might want to turn into recursive function
+        let deleteLater = []
         let firstRoutes = app._router.stack.filter(middleware => {
             if (middleware.path === '/backend-tree') return false //exclude routes added in this file
             if (middleware.name === 'router') {// find the routers
                 routerList.push(middleware)
                 return false
             } 
+            deleteLater.push(['!!middleware.route:', middleware.route, !!middleware.route])
+            //!! will turn the result into a boolean 
             return !!middleware.route //see if the remaining have routes
         })
 
@@ -72,7 +75,7 @@ module.exports = app => {
 
         //join the paths into one array to send
         const allPaths = firstPaths.concat(routerPaths)
-        res.send(allPaths);
+        res.send(routerList);
 
     });
 
