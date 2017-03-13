@@ -74,6 +74,8 @@ module.exports = app => {
         const allPaths = firstPaths.concat(routerPaths)
 
         res.send(allPaths);
+
+        console.log(allPaths);
     });
 
     //hit this route --> which shows the react tree????

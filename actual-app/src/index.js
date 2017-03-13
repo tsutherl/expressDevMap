@@ -43,8 +43,8 @@ const data =
         {
           "name": "Son of A",
           "value": 5,
-          "type": "steelblue",
-          "level": "orange"
+          "type": "steelblue",        // type = outline color for node pic
+          "level": "orange"           // level = trace color along link + node fill color
         },
         {
           "name": "Daughter of A",
@@ -63,8 +63,54 @@ const data =
   ]
 };
 
+const ourData = {
+    'name': 'api',
+    'children' : [
+        {
+            'name' : 'puppies',
+            'children' : [
+                {
+                    'name': 'Boomer'
+                },
+                {
+                    'name': 'Nugget'
+                }
+            ]
+        },
+        {
+            'name' : 'birds',
+            children: [
+                {
+                    'name': 'chickens',
+                    children: [
+                        {
+                            'name' : 'Madge'
+                        },
+                        {
+                            'name' : 'Midge'
+                        }
+                    ]
+                },
+                {
+                    'name' : 'ducks',
+                    'children': [
+                        {
+                            'name': 'Dina'
+                        },
+                        {
 
-const getRoutes = () => store.dispatch(loadRoutes(data));
+                            'name' : 'Della'
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
+
+
+const getRoutes = () => store.dispatch(loadRoutes(ourData));
 
 
 render(
