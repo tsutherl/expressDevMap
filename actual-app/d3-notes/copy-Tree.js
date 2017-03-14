@@ -1,7 +1,7 @@
 import React from 'react'
 import * as d3 from "d3"
 
-
+//D3 notes: the D3 code commented on here renders that initial kinda ugly tree we used - the one with ribbon like branches 
 export default class Tree extends React.Component {
   constructor(props){
     super(props);
