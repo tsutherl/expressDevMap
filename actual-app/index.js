@@ -25,10 +25,10 @@ const parseRoutes = (appRouterStack, path) => {
         if (element.path !== '/backend-tree') {
             //if the element is a router recursive parse the route
             if (element.name === 'router' ) { 
-                toReturn.children.push(parseRoutes(element.handle.stack, element.regexp.toString().slice(3,-13)))
+                routesObj.children.push(parseRoutes(element.handle.stack, element.regexp.toString().slice(3,-13)))
             } else if (element.route) {
                 //if normal route, just add it here
-                toReturn.children.push({
+                routesObj.children.push({
                     name: element.route.path,
                     verb: Object.keys(element.route.methods)[0]
                 })
