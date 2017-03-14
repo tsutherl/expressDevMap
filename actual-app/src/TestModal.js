@@ -18,9 +18,12 @@ export default class TestModal extends React.Component {
 		console.log("props in testModal ", this.props);
 			return (
 		<div className='modal'>
-			<p> I'm just a boring modal for now </p>
+			<div className='info'>
+				<h2>Info</h2>
+				<p><b>Path: </b>{this.props.testRoute}</p>
+				<p><b>Method: </b>{this.props.testRoute}</p>
+			</div>
 			<button onClick={()=>this.handleClick(route)}>Test Route</button>
-			<p> {this.props.testRoute} </p>
 		</div>
 	)
 }

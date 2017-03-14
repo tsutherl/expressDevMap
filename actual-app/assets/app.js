@@ -14765,9 +14765,33 @@ var TestModal = function (_React$Component) {
 				'div',
 				{ className: 'modal' },
 				_react2.default.createElement(
-					'p',
-					null,
-					' I\'m just a boring modal for now '
+					'div',
+					{ className: 'info' },
+					_react2.default.createElement(
+						'h2',
+						null,
+						'Info'
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'Path: '
+						),
+						this.props.testRoute
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'Method: '
+						),
+						this.props.testRoute
+					)
 				),
 				_react2.default.createElement(
 					'button',
@@ -14775,13 +14799,6 @@ var TestModal = function (_React$Component) {
 							return _this2.handleClick(route);
 						} },
 					'Test Route'
-				),
-				_react2.default.createElement(
-					'p',
-					null,
-					' ',
-					this.props.testRoute,
-					' '
 				)
 			);
 		}
