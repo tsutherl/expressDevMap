@@ -34,7 +34,7 @@ export default class Tree extends React.Component {
         routeSteps.unshift(current.data.name);
         current = current.parent;
         }
-      return routeSteps.join("/");
+      return routeSteps.join("");
     }
 
     
@@ -107,7 +107,7 @@ export default class Tree extends React.Component {
         -8 : 8}) // place text label on left if node has children, otherwise on right
       .style("text-anchor", function(d) { 
         return d.children ? "end" : "start"; }) 
-      .text(function(d) { return d.data.name; });  // 'name' is key on routes object
+      .text(function(d) { return `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object
   }                                              
 
   render() {
