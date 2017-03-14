@@ -47831,10 +47831,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(134);
 
-var _axios = __webpack_require__(131);
-
-var _axios2 = _interopRequireDefault(_axios);
-
 var _AppContainer = __webpack_require__(132);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
@@ -47847,6 +47843,10 @@ var _store2 = _interopRequireDefault(_store);
 
 var _reactRouter = __webpack_require__(135);
 
+var _axios = __webpack_require__(131);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //this is OUR axios call to our GET /routes that is sending back information about our client's express routes
@@ -47858,90 +47858,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //learn D3...
 //how to deal with the example app that has multiple routers --> are they nested? how do we access them? 
 
-
-// get('/backend-tree/routes')
-//     .then(res => res.data)
-//     .then(routePaths => {
-//         let myState = store.getState();      
-//         // console.log(routePaths)
-//     }); 
-
-
-// const data =
-// {
-//   "name": "Top Level",
-//   "value": 10,
-//   "type": "black",
-//   "level": "red",
-//   "children": [
-//     {
-//       "name": "Level 2: A",
-//       "value": 15,
-//       "type": "grey",
-//       "level": "red",
-//       "children": [
-//         {
-//           "name": "Son of A",
-//           "value": 5,
-//           "type": "steelblue",        // type = outline color for node pic
-//           "level": "orange"           // level = trace color along link + node fill color
-//         },
-//         {
-//           "name": "Daughter of A",
-//           "value": 8,
-//           "type": "steelblue",
-//           "level": "red"
-//         }
-//       ]
-//     },
-//     {
-//       "name": "Level 2: B",
-//       "value": 10,
-//       "type": "grey",
-//       "level": "green"
-//     }
-//   ]
-// };
-
-var ourData = {
-    'name': 'api',
-    'children': [{
-        'name': 'puppies',
-        'children': [{
-            'name': 'Boomer'
-        }, {
-            'name': 'Nugget'
-        }]
-    }, {
-        'name': 'birds',
-        'children': [{
-            'name': 'chickens',
-            'children': [{
-                'name': 'Madge'
-            }, {
-                'name': 'Midge'
-            }]
-        }, {
-            'name': 'ducks',
-            'children': [{
-                'name': 'Dina'
-            }, {
-
-                'name': 'Della'
-            }]
-        }]
-    }]
-};
-
-var axiosGetRoutes = function axiosGetRoutes() {
-    (0, _axios2.default)('/backend-tree/routes').then(function (routes) {
-        return console.log('APP ROUTES :::', routes);
-    });
-};
-
 var getRoutes = function getRoutes() {
-    axiosGetRoutes();
-    _store2.default.dispatch((0, _store.loadRoutes)(ourData));
+    (0, _axios2.default)('/backend-tree/routes').then(function (routes) {
+        _store2.default.dispatch((0, _store.loadRoutes)(routes.data));
+    });
 };
 
 (0, _reactDom.render)(_react2.default.createElement(

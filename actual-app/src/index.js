@@ -1,6 +1,5 @@
 import React from 'react';
 import {render} from 'react-dom';
-import {get} from 'axios';
 import AppContainer from './AppContainer.jsx'
 import { Provider } from 'react-redux'
 import store, {loadRoutes} from './store'
@@ -17,111 +16,13 @@ import axios from 'axios'
 //build out react-redux!!!
 //learn D3...
 //how to deal with the example app that has multiple routers --> are they nested? how do we access them? 
-    
-
-
-// get('/backend-tree/routes')
-//     .then(res => res.data)
-//     .then(routePaths => {
-//         let myState = store.getState();      
-//         // console.log(routePaths)
-//     }); 
-
-
-
-// const data =
-// {
-//   "name": "Top Level",
-//   "value": 10,
-//   "type": "black",
-//   "level": "red",
-//   "children": [
-//     {
-//       "name": "Level 2: A",
-//       "value": 15,
-//       "type": "grey",
-//       "level": "red",
-//       "children": [
-//         {
-//           "name": "Son of A",
-//           "value": 5,
-//           "type": "steelblue",        // type = outline color for node pic
-//           "level": "orange"           // level = trace color along link + node fill color
-//         },
-//         {
-//           "name": "Daughter of A",
-//           "value": 8,
-//           "type": "steelblue",
-//           "level": "red"
-//         }
-//       ]
-//     },
-//     {
-//       "name": "Level 2: B",
-//       "value": 10,
-//       "type": "grey",
-//       "level": "green"
-//     }
-//   ]
-// };
-
-const ourData = {
-    'name': 'api',
-    'children' : [
-        {
-            'name' : 'puppies',
-            'children' : [
-                {
-                    'name': 'Boomer'
-                },
-                {
-                    'name': 'Nugget'
-                }
-            ]
-        },
-        {
-            'name' : 'birds',
-            'children': [
-                {
-                    'name': 'chickens',
-                    'children': [
-                        {
-                            'name' : 'Madge'
-                        },
-                        {
-                            'name' : 'Midge'
-                        }
-                    ]
-                },
-                {
-                    'name' : 'ducks',
-                    'children': [
-                        {
-                            'name': 'Dina'
-                        },
-                        {
-
-                            'name' : 'Della'
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-}
-
-const axiosGetRoutes = () => {
-    axios('/backend-tree/routes')
-    .then((routes) => console.log('APP ROUTES :::', routes))
-}
-
-
 
 const getRoutes = () => {
-    axiosGetRoutes()
-    store.dispatch(loadRoutes(ourData));
+    axios('/backend-tree/routes')
+    .then((routes) => {
+        store.dispatch(loadRoutes(routes.data))
+    })
 }
-
 
 render(
 <Provider store={store}>
