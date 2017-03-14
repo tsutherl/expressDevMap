@@ -14,9 +14,6 @@ const express = require('express');
 //in the docs, list all the routes that we are providing to them and 
     //what they do 
 
-
-//TODO: recursive function that can be called in /routes - (maybe to be moved into a utils file for more organized code?)
-
 //added second optional input to make the call for the routers much simpler
 const parseRoutes = (appRouterStack, path) => {
 
@@ -60,10 +57,7 @@ module.exports = app => {
     });
 
     router.get('/routes', (req, res) => {
-    //    res.send(app._router.stack)
-        // console.log('PARSE ROUTES::: ', parseRoutes(app._router.stack))
         res.send(parseRoutes(app._router.stack));
-
     });
 
     //hit this route --> which shows the react tree????
