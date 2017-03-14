@@ -14755,7 +14755,7 @@ var Tree = function (_React$Component) {
       .style("text-anchor", function (d) {
         return d.children ? "end" : "start";
       }).text(function (d) {
-        return "/" + d.data.name;
+        return d.data.name;
       }); // 'name' is key on routes object
     }
   }, {
@@ -47860,6 +47860,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var getRoutes = function getRoutes() {
     (0, _axios2.default)('/backend-tree/routes').then(function (routes) {
+        console.log('OBJ', routes.data);
         _store2.default.dispatch((0, _store.loadRoutes)(routes.data));
     });
 };

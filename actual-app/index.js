@@ -34,10 +34,12 @@ const parseRoutes = (appRouterStack) => {
                     children: parseRoutes(appRouterStack[i].handle.stack).children
                 })
             } else if (appRouterStack[i].route) {
-                toReturn.children.push({name: appRouterStack[i].route.path})
+                toReturn.children.push({
+                    name: appRouterStack[i].route.path,
+                    verb: Object.keys(appRouterStack[i].route.methods)[0]
+                })
             }
         }
-        
         
     }
     return toReturn
@@ -99,6 +101,7 @@ module.exports = app => {
     });
 
     router.get('/routes', (req, res) => {
+    //    res.send(app._router.stack)
         // console.log('PARSE ROUTES::: ', parseRoutes(app._router.stack))
         res.send(parseRoutes(app._router.stack));
 
