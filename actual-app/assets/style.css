@@ -1,6 +1,30 @@
-
+* {
+    box-sizing: border-box;
+}
 
 body {
     background: #eee;
 }
 
+.modal {
+    padding: 2em;
+    background: #bcc8db;
+    border-radius: 1em;
+    position: absolute;
+}
+
+.modal > :first-child {
+    margin-top: 0;
+}
+
+.modal > :last-child {
+    margin-bottom: 0;
+}
+
+.modal button {
+    padding: .5em 1em;
+    border-radius: .5em;
+    border: #eee solid 1px;
+    background: #333;
+    color: #eee;
+}
