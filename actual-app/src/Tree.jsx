@@ -1,6 +1,9 @@
 import React from 'react'
 import * as d3 from "d3"
 
+import TestModalContainer from './TestModalContainer';
+import store, { setTestRoute, showModal, setTestNode } from './store';
+
 
 export default class Tree extends React.Component {
   constructor(props){
@@ -10,6 +13,30 @@ export default class Tree extends React.Component {
   }
 
   componentDidMount(){
+
+    const clickHandler = (e) => {   // click handler
+      e.children ? null :           // if node has children, toggleExpand
+      endRouteHandleClick(e);     // else, getRoute and
+    }                             // dispatch route to state as testRoute
+                                  // also need to make a popup to test the route!
+
+    const endRouteHandleClick = (node) => {
+      let testRoute = getRoute(node);
+      store.dispatch(setTestRoute(testRoute));
+      store.dispatch(setTestNode(node));
+      store.dispatch(showModal());
+    }
+
+    const getRoute = (node) => {
+      const routeSteps = [];
+      let current = node;
+      while (current){
+        routeSteps.unshift(current.data.name);
+        current = current.parent;
+        }
+      return routeSteps.join("/");
+    }
+
     
     // set the dimensions and margins of the diagram
     var margin = {top: 20, right: 90, bottom: 30, left: 90},
@@ -31,7 +58,7 @@ export default class Tree extends React.Component {
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select(this.refs.routeMap).append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom),
         g = svg.append("g")
@@ -70,8 +97,9 @@ export default class Tree extends React.Component {
     node.append("circle")  // made all nodes circles instead of random shapes
       .style("stroke", "black") // change node outline to black
       .style("fill", function(d) { return d.data.children ? 'blue' : 'gray' ; })
-      .attr("r", 5);  // above line fills node blue if it has child nodes, otherwise gray
-      
+      .attr("r", 5)  // above line fills node blue if it has child nodes, otherwise gray
+      .on("click", clickHandler);
+
     // adds the text to the node
     node.append("text")
       .attr("dy", 3) // move 3 px down for text location (I think)
@@ -83,10 +111,10 @@ export default class Tree extends React.Component {
   }                                              
 
   render() {
-    console.log('PROPS in render', this.props)
   
     return(
-      <div>
+      <div ref="routeMap">
+        {this.props.showModal ? <TestModalContainer/> : null}
       </div>
     )
   }

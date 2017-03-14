@@ -7,6 +7,14 @@ import thunkMiddleware from 'redux-thunk'
 
 const RECEIVE_ROUTES = 'RECEIVE_ROUTES';
 
+const RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
+
+const SHOW_MODAL = 'SHOW_MODAL';
+
+const SET_TEST_NODE = 'SET_TEST_NODE';
+
+const RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
+
 /*---------------ACTION CREATORS-----------------*/
 
 
@@ -15,27 +23,60 @@ export const loadRoutes = routes => ({
   routes
 });
 
-/*---------------ACTION CREATORS-----------------*/
+export const setTestRoute = testRoute => ({
+    type: RECEIVE_TEST_ROUTE,
+    testRoute
+})
 
+export const showModal = () => ({
+    type: SHOW_MODAL
+})
 
+export const setTestNode = (node) =>({
+    type: SET_TEST_NODE,
+    node
+})
+
+export const getRouteTestResult = (result) => ({
+    type: RECEIVE_TEST_RESULT,
+    result
+})
+/*---------------ASYNC ACTION CREATORS-----------------*/
+
+export const fakeRouteTest = (route) => {
+    console.log("this is a fake route test!  It doesn't test the route yet. ");
+    console.log("eventually, I will test this route: ", route);
+    store.dispatch(getRouteTestResult('totally fake test result'));
+}
 
 
 /*---------------REDUCER-----------------*/
 
-
-export const reducer = (state={}, action) => {
+const reducer = (state={showModal: false, activeTestNode: null}, action) => {
     const newState = Object.assign({}, state)
     switch(action.type) {
         case RECEIVE_ROUTES:
-            newState.routes = action.routes
+            newState.routes = action.routes;
             break
+        case RECEIVE_TEST_ROUTE:
+            newState.testRoute = action.testRoute;
+            break;
+        case SET_TEST_NODE:
+            newState.activeTestNode = action.node;
+            break;
+        case SHOW_MODAL:
+            newState.showModal = true;
+            break;
+        case RECEIVE_TEST_RESULT:
+            newState.testResult = action.result;
+            break;
         default:
-            return state
+            return state;
     }
     return newState
 }
 
-export default createStore(
+const store = createStore(
     reducer,
     applyMiddleware(
         thunkMiddleware,
@@ -43,7 +84,7 @@ export default createStore(
     )
 )
 
-
+export default store;
 
  
 
