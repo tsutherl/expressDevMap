@@ -1,7 +1,8 @@
 import React from 'react'
 import * as d3 from "d3"
 
-import store, { setTestRoute } from './store';
+import TestModalContainer from './TestModalContainer';
+import store, { setTestRoute, showModal, setTestNode } from './store';
 
 
 export default class Tree extends React.Component {
@@ -22,6 +23,8 @@ export default class Tree extends React.Component {
     const endRouteHandleClick = (node) => {
       let testRoute = getRoute(node);
       store.dispatch(setTestRoute(testRoute));
+      store.dispatch(setTestNode(node));
+      store.dispatch(showModal());
     }
 
     const getRoute = (node) => {
@@ -111,6 +114,7 @@ export default class Tree extends React.Component {
   
     return(
       <div ref="routeMap">
+        {this.props.showModal ? <TestModalContainer/> : null}
       </div>
     )
   }

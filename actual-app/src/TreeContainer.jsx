@@ -6,7 +6,8 @@ import Tree from './Tree.jsx'
 
 
 
-const mapState = ({ routes }) => ({ routes });
+const mapState = ({ routes, testRoute, showModal, activeTestNode }) => 
+	({ routes, testRoute, showModal, activeTestNode });
 
 
 

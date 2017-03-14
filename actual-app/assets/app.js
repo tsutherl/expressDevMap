@@ -13676,7 +13676,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.reducer = exports.setTestRoute = exports.loadRoutes = undefined;
+exports.reducer = exports.fakeRouteTest = exports.setTestNode = exports.showModal = exports.setTestRoute = exports.loadRoutes = undefined;
 
 var _redux = __webpack_require__(129);
 
@@ -13696,6 +13696,10 @@ var RECEIVE_ROUTES = 'RECEIVE_ROUTES';
 
 var RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
 
+var SHOW_MODAL = 'SHOW_MODAL';
+
+var SET_TEST_NODE = 'SET_TEST_NODE';
+
 /*---------------ACTION CREATORS-----------------*/
 
 var loadRoutes = exports.loadRoutes = function loadRoutes(routes) {
@@ -13712,12 +13716,29 @@ var setTestRoute = exports.setTestRoute = function setTestRoute(testRoute) {
     };
 };
 
+var showModal = exports.showModal = function showModal() {
+    return {
+        type: SHOW_MODAL
+    };
+};
+
+var setTestNode = exports.setTestNode = function setTestNode(node) {
+    return {
+        type: SET_TEST_NODE,
+        node: node
+    };
+};
 /*---------------ASYNC ACTION CREATORS-----------------*/
+
+var fakeRouteTest = exports.fakeRouteTest = function fakeRouteTest(route) {
+    console.log("this is a fake route test!  It doesn't test the route yet. ");
+    console.log("eventually, I will test this route: ", route);
+};
 
 /*---------------REDUCER-----------------*/
 
 var reducer = exports.reducer = function reducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { showModal: false, activeTestNode: null };
     var action = arguments[1];
 
     var newState = Object.assign({}, state);
@@ -13727,6 +13748,12 @@ var reducer = exports.reducer = function reducer() {
             break;
         case RECEIVE_TEST_ROUTE:
             newState.testRoute = action.testRoute;
+            break;
+        case SET_TEST_NODE:
+            newState.activeTestNode = action.node;
+            break;
+        case SHOW_MODAL:
+            newState.showModal = true;
             break;
         default:
             return state;
@@ -14691,6 +14718,10 @@ var _d = __webpack_require__(155);
 
 var d3 = _interopRequireWildcard(_d);
 
+var _TestModalContainer = __webpack_require__(308);
+
+var _TestModalContainer2 = _interopRequireDefault(_TestModalContainer);
+
 var _store = __webpack_require__(133);
 
 var _store2 = _interopRequireDefault(_store);
@@ -14728,6 +14759,8 @@ var Tree = function (_React$Component) {
       var endRouteHandleClick = function endRouteHandleClick(node) {
         var testRoute = getRoute(node);
         _store2.default.dispatch((0, _store.setTestRoute)(testRoute));
+        _store2.default.dispatch((0, _store.setTestNode)(node));
+        _store2.default.dispatch((0, _store.showModal)());
       };
 
       var getRoute = function getRoute(node) {
@@ -14800,7 +14833,11 @@ var Tree = function (_React$Component) {
     key: 'render',
     value: function render() {
 
-      return _react2.default.createElement('div', { ref: 'routeMap' });
+      return _react2.default.createElement(
+        'div',
+        { ref: 'routeMap' },
+        this.props.showModal ? _react2.default.createElement(_TestModalContainer2.default, null) : null
+      );
     }
   }]);
 
@@ -14817,7 +14854,7 @@ exports.default = Tree;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 
 var _react = __webpack_require__(5);
@@ -14833,8 +14870,11 @@ var _Tree2 = _interopRequireDefault(_Tree);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapState = function mapState(_ref) {
-  var routes = _ref.routes;
-  return { routes: routes };
+	var routes = _ref.routes,
+	    testRoute = _ref.testRoute,
+	    showModal = _ref.showModal,
+	    activeTestNode = _ref.activeTestNode;
+	return { routes: routes, testRoute: testRoute, showModal: showModal, activeTestNode: activeTestNode };
 };
 
 exports.default = (0, _reactRedux.connect)(mapState)(_Tree2.default);
@@ -47974,6 +48014,133 @@ var getRoutes = function getRoutes() {
         _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default, onEnter: getRoutes })
     )
 ), document.getElementById('app'));
+
+/***/ }),
+/* 307 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TestModal = function (_React$Component) {
+	_inherits(TestModal, _React$Component);
+
+	function TestModal(props) {
+		_classCallCheck(this, TestModal);
+
+		var _this = _possibleConstructorReturn(this, (TestModal.__proto__ || Object.getPrototypeOf(TestModal)).call(this, props));
+
+		_this.handleClick = _this.handleClick.bind(_this);
+		return _this;
+	}
+
+	_createClass(TestModal, [{
+		key: 'handleClick',
+		value: function handleClick(route) {
+			this.props.testThisRoute(route);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var _this2 = this;
+
+			var route = this.props.testRoute;
+			console.log("props in testModal ", this.props);
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'p',
+					null,
+					' I\'m just a boring modal for now '
+				),
+				_react2.default.createElement(
+					'p',
+					null,
+					' if you click ',
+					_react2.default.createElement(
+						'button',
+						{ onClick: function onClick() {
+								return _this2.handleClick(route);
+							} },
+						'me'
+					),
+					' you can test this route: '
+				),
+				_react2.default.createElement(
+					'p',
+					null,
+					' ',
+					this.props.testRoute,
+					' '
+				)
+			);
+		}
+	}]);
+
+	return TestModal;
+}(_react2.default.Component);
+
+exports.default = TestModal;
+
+/***/ }),
+/* 308 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(43);
+
+var _store = __webpack_require__(133);
+
+var _TestModal = __webpack_require__(307);
+
+var _TestModal2 = _interopRequireDefault(_TestModal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(_ref) {
+	var testRoute = _ref.testRoute,
+	    activeTestNode = _ref.activeTestNode;
+	return { testRoute: testRoute, activeTestNode: activeTestNode };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	return {
+		testThisRoute: function testThisRoute(route) {
+			dispatch((0, _store.fakeRouteTest)(route));
+		}
+	};
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_TestModal2.default);
 
 /***/ })
 /******/ ]);
