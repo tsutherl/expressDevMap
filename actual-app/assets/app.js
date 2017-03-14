@@ -14770,17 +14770,11 @@ var TestModal = function (_React$Component) {
 					' I\'m just a boring modal for now '
 				),
 				_react2.default.createElement(
-					'p',
-					null,
-					' if you click ',
-					_react2.default.createElement(
-						'button',
-						{ onClick: function onClick() {
-								return _this2.handleClick(route);
-							} },
-						'me'
-					),
-					' you can test this route: '
+					'button',
+					{ onClick: function onClick() {
+							return _this2.handleClick(route);
+						} },
+					'Test Route'
 				),
 				_react2.default.createElement(
 					'p',
