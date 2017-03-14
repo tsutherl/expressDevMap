@@ -15,12 +15,6 @@ const express = require('express');
     //what they do 
 
 
-//helper function to get info when at terminal node
-const getNodeInfo = (middleware) => ({
-        path: middleware.route.path,
-        verb: Object.keys(middleware.route.methods)[0]//will there ever be more than one key?
-})
-
 //TODO: recursive function that can be called in /routes - (maybe to be moved into a utils file for more organized code?)
 
 //added second optional input to make the call for the routers much simpler
