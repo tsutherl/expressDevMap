@@ -14760,6 +14760,7 @@ var TestModal = function (_React$Component) {
 			var _this2 = this;
 
 			var route = this.props.testRoute;
+			var method = 'POST';
 			console.log("props in testModal ", this.props);
 			return _react2.default.createElement(
 				'div',
@@ -14790,8 +14791,37 @@ var TestModal = function (_React$Component) {
 							null,
 							'Method: '
 						),
-						this.props.testRoute
-					)
+						method
+					),
+					method === 'PUT' || method === 'POST' ? _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Request Object'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'ro-row' },
+							_react2.default.createElement(
+								'span',
+								null,
+								'Key'
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'Value'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'ro-row' },
+							_react2.default.createElement('input', null),
+							_react2.default.createElement('input', null)
+						)
+					) : null
 				),
 				_react2.default.createElement(
 					'button',
