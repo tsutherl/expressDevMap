@@ -13650,7 +13650,6 @@ var _reactRedux = __webpack_require__(43);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = exports.App = function App(props) {
-    console.log("PROPS IN APP ", props);
     return _react2.default.createElement(
         'div',
         null,
@@ -13677,7 +13676,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.reducer = exports.loadRoutes = undefined;
+exports.reducer = exports.setTestRoute = exports.loadRoutes = undefined;
 
 var _redux = __webpack_require__(129);
 
@@ -13695,6 +13694,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var RECEIVE_ROUTES = 'RECEIVE_ROUTES';
 
+var RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
+
 /*---------------ACTION CREATORS-----------------*/
 
 var loadRoutes = exports.loadRoutes = function loadRoutes(routes) {
@@ -13704,7 +13705,14 @@ var loadRoutes = exports.loadRoutes = function loadRoutes(routes) {
     };
 };
 
-/*---------------ACTION CREATORS-----------------*/
+var setTestRoute = exports.setTestRoute = function setTestRoute(testRoute) {
+    return {
+        type: RECEIVE_TEST_ROUTE,
+        testRoute: testRoute
+    };
+};
+
+/*---------------ASYNC ACTION CREATORS-----------------*/
 
 /*---------------REDUCER-----------------*/
 
@@ -13716,6 +13724,9 @@ var reducer = exports.reducer = function reducer() {
     switch (action.type) {
         case RECEIVE_ROUTES:
             newState.routes = action.routes;
+            break;
+        case RECEIVE_TEST_ROUTE:
+            newState.testRoute = action.testRoute;
             break;
         default:
             return state;
@@ -14680,6 +14691,10 @@ var _d = __webpack_require__(155);
 
 var d3 = _interopRequireWildcard(_d);
 
+var _store = __webpack_require__(133);
+
+var _store2 = _interopRequireDefault(_store);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -14700,8 +14715,30 @@ var Tree = function (_React$Component) {
   }
 
   _createClass(Tree, [{
-    key: "componentDidMount",
+    key: 'componentDidMount',
     value: function componentDidMount() {
+
+      var clickHandler = function clickHandler(e) {
+        // click handler
+        e.children ? null : // if node has children, toggleExpand
+        endRouteHandleClick(e); // else, getRoute and
+      }; // dispatch route to state as testRoute
+      // also need to make a popup to test the route!
+
+      var endRouteHandleClick = function endRouteHandleClick(node) {
+        var testRoute = getRoute(node);
+        _store2.default.dispatch((0, _store.setTestRoute)(testRoute));
+      };
+
+      var getRoute = function getRoute(node) {
+        var routeSteps = [];
+        var current = node;
+        while (current) {
+          routeSteps.unshift(current.data.name);
+          current = current.parent;
+        }
+        return routeSteps.join("/");
+      };
 
       // set the dimensions and margins of the diagram
       var margin = { top: 20, right: 90, bottom: 30, left: 90 },
@@ -14722,7 +14759,7 @@ var Tree = function (_React$Component) {
       // append the svg object to the body of the page
       // appends a 'group' element to 'svg'
       // moves the 'group' element to the top left margin
-      var svg = d3.select("body").append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom),
+      var svg = d3.select(this.refs.routeMap).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom),
           g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       // adds the links between the nodes
@@ -14745,7 +14782,8 @@ var Tree = function (_React$Component) {
       .style("stroke", "black") // change node outline to black
       .style("fill", function (d) {
         return d.data.children ? 'blue' : 'gray';
-      }).attr("r", 5); // above line fills node blue if it has child nodes, otherwise gray
+      }).attr("r", 5) // above line fills node blue if it has child nodes, otherwise gray
+      .on("click", clickHandler);
 
       // adds the text to the node
       node.append("text").attr("dy", 3) // move 3 px down for text location (I think)
@@ -14759,11 +14797,10 @@ var Tree = function (_React$Component) {
       }); // 'name' is key on routes object
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
-      console.log('PROPS in render', this.props);
 
-      return _react2.default.createElement("div", null);
+      return _react2.default.createElement('div', { ref: 'routeMap' });
     }
   }]);
 

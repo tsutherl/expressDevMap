@@ -7,6 +7,8 @@ import thunkMiddleware from 'redux-thunk'
 
 const RECEIVE_ROUTES = 'RECEIVE_ROUTES';
 
+const RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
+
 /*---------------ACTION CREATORS-----------------*/
 
 
@@ -15,7 +17,12 @@ export const loadRoutes = routes => ({
   routes
 });
 
-/*---------------ACTION CREATORS-----------------*/
+export const setTestRoute = testRoute => ({
+    type: RECEIVE_TEST_ROUTE,
+    testRoute
+})
+
+/*---------------ASYNC ACTION CREATORS-----------------*/
 
 
 
@@ -29,6 +36,9 @@ export const reducer = (state={}, action) => {
         case RECEIVE_ROUTES:
             newState.routes = action.routes
             break
+        case RECEIVE_TEST_ROUTE:
+            newState.testRoute = action.testRoute
+            break;
         default:
             return state
     }

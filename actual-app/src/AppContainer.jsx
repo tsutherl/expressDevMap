@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 
 
 export const App = (props) => {
-    console.log("PROPS IN APP ", props);
     return(
         <div>
             {props.routes ? <TreeContainer/> : null }
