@@ -3,15 +3,28 @@
 }
 
 body {
+    margin: 0;
     background: #eee;
 }
 
 .modal {
+    height: 100%;
+    width: 25%;
     background: #143E81;
-    margin: auto;
+    left: 75%;
     position: absolute;
     overflow: hidden;
-    box-shadow: .125em .125em .5em 0 rgba(51,51,51,.75);
+    animation: 1s slidein;
+    box-shadow: -.125em 0 .5em 0 rgba(51,51,51,.75);
+}
+
+@keyframes slidein {
+  from {
+    left: 100%;
+  }
+  to {
+    left: 75%
+  }
 }
 
 .modal .info {
