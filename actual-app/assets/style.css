@@ -74,3 +74,20 @@ body {
     border: #333 1px solid;
     width: 45%;
 }
+
+.modal .close-x {
+    position: absolute;
+    left: .5em;
+    top: .5em;
+    width: 1.5em;
+    height: 1.5em;
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    stroke-linejoin:r ound;
+    stroke-miterlimit: 1.41421;
+}
+
+.modal .close-x path{
+    fill: #333;
+    fill-rule: nonzero;
+}

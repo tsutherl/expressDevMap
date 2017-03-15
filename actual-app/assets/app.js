@@ -14774,6 +14774,10 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _xImage = __webpack_require__(309);
+
+var _xImage2 = _interopRequireDefault(_xImage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14814,6 +14818,11 @@ var TestModal = function (_React$Component) {
 					'div',
 					{ className: 'info' },
 					_react2.default.createElement(
+						'div',
+						{ onClick: this.props.hideModal },
+						_react2.default.createElement(_xImage2.default, null)
+					),
+					_react2.default.createElement(
 						'h2',
 						null,
 						'Info'
@@ -14838,7 +14847,7 @@ var TestModal = function (_React$Component) {
 						),
 						method
 					),
-					method === 'put' || method === 'POST' ? _react2.default.createElement(
+					method === 'put' || method === 'post' ? _react2.default.createElement(
 						'div',
 						null,
 						_react2.default.createElement(
@@ -14920,6 +14929,10 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	return {
 		testThisRoute: function testThisRoute(route, verb) {
 			dispatch((0, _store.fakeRouteTest)(route, verb));
+		},
+		hideModal: function hideModal() {
+			console.log('in the function');
+			dispatch((0, _store.hideModal)());
 		}
 	};
 };
@@ -48188,6 +48201,33 @@ var getRoutes = function getRoutes() {
         _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default, onEnter: getRoutes })
     )
 ), document.getElementById('app'));
+
+/***/ }),
+/* 309 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// const xImage = 
+
+exports.default = function () {
+  return _react2.default.createElement(
+    "svg",
+    { role: "img", "aria-label": "close the popup tray", width: "100%", height: "100%", viewBox: "0 0 365 365", version: "1.1", xmlns: "http://www.w3.org/2000/svg", className: "close-x" },
+    _react2.default.createElement("path", { id: "x-mark-icon", d: "M350.652,315.131c7.807,-7.811 7.804,-20.472 -0.006,-28.28c-31.461,-31.457 -104.496,-104.481 -104.496,-104.481c0,0 73.014,-73.019 104.475,-104.482c3.751,-3.752 5.859,-8.84 5.858,-14.145c-0.001,-5.306 -2.11,-10.393 -5.863,-14.144c-10.561,-10.554 -24.929,-24.913 -35.489,-35.465c-7.811,-7.807 -20.472,-7.804 -28.28,0.006c-31.453,31.457 -104.463,104.478 -104.463,104.478c0,0 -73.025,-73.015 -104.482,-104.467c-7.809,-7.808 -20.468,-7.809 -28.279,-0.003c-10.556,10.549 -24.918,24.903 -35.476,35.454c-3.753,3.751 -5.861,8.839 -5.862,14.144c-0.001,5.306 2.107,10.394 5.858,14.145c31.466,31.464 104.492,104.485 104.492,104.485c0,0 -73.032,73.043 -104.488,104.504c-7.808,7.809 -7.809,20.468 -0.003,28.279c10.549,10.556 24.903,24.918 35.454,35.476c3.751,3.753 8.839,5.861 14.144,5.862c5.306,0.001 10.394,-2.107 14.145,-5.858c31.468,-31.47 104.504,-104.512 104.504,-104.512c0,0 73.036,73.032 104.503,104.498c3.752,3.751 8.84,5.858 14.146,5.857c5.305,-0.001 10.393,-2.109 14.143,-5.862l35.465,-35.489Z" })
+  );
+};
 
 /***/ })
 /******/ ]);

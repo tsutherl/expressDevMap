@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import Closex from './xImage'
 
 
 export default class TestModal extends React.Component {
@@ -20,10 +21,13 @@ export default class TestModal extends React.Component {
 			return (
 		<div className='modal'>
 			<div className='info'>
+				<div onClick={this.props.hideModal}>
+					<Closex />
+				</div>
 				<h2>Info</h2>
 				<p><b>Path: </b>{this.props.testRoute}</p>
 				<p><b>Method: </b>{method}</p>
-				{method === 'put' || method === 'POST' ? 
+				{method === 'put' || method === 'post' ? 
 					<div>
 						<h3>Request Body</h3>
 						<div className='ro-row'>
