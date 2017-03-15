@@ -5739,7 +5739,7 @@ module.exports = setInnerHTML;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.fakeRouteTest = exports.getRouteTestResult = exports.setTestNode = exports.showModal = exports.setTestRoute = exports.loadRoutes = undefined;
+exports.fakeRouteTest = exports.setRouteVerb = exports.getRouteTestResult = exports.setTestNode = exports.showModal = exports.setTestRoute = exports.loadRoutes = undefined;
 
 var _redux = __webpack_require__(130);
 
@@ -5750,6 +5750,10 @@ var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 var _reduxThunk = __webpack_require__(299);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _axios = __webpack_require__(132);
+
+var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5764,6 +5768,8 @@ var SHOW_MODAL = 'SHOW_MODAL';
 var SET_TEST_NODE = 'SET_TEST_NODE';
 
 var RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
+
+var SET_ROUTE_VERB = 'SET_ROUTE_VERB';
 
 /*---------------ACTION CREATORS-----------------*/
 
@@ -5800,20 +5806,34 @@ var getRouteTestResult = exports.getRouteTestResult = function getRouteTestResul
         result: result
     };
 };
+
+var setRouteVerb = exports.setRouteVerb = function setRouteVerb(verb) {
+    return {
+        type: SET_ROUTE_VERB,
+        verb: verb
+    };
+};
 /*---------------ASYNC ACTION CREATORS-----------------*/
 
-var fakeRouteTest = exports.fakeRouteTest = function fakeRouteTest(route) {
-    console.log("this is a fake route test!  It doesn't test the route yet. ");
-    console.log("eventually, I will test this route: ", route);
-    store.dispatch(getRouteTestResult('totally fake test result'));
+var fakeRouteTest = exports.fakeRouteTest = function fakeRouteTest(route, verb) {
+
+    //re-assigning route here because it was coming in as '//api/puppies, so this was just a quick fix to test the axios request
+    route = '/api/puppies';
+    console.log("should be testing: ", route, verb);
+    _axios2.default[verb](route).then(function (res) {
+        return console.log(res.data);
+    }).catch(console.error);
+    return setRouteVerb(verb);
+    // store.dispatch(getRouteTestResult('totally fake test result'));
 };
 
 /*---------------REDUCER-----------------*/
 
 var reducer = function reducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { showModal: false, activeTestNode: null };
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { showModal: true, activeTestNode: null, testRoute: null };
     var action = arguments[1];
 
+    console.log("ACTION", action);
     var newState = Object.assign({}, state);
     switch (action.type) {
         case RECEIVE_ROUTES:
@@ -5831,6 +5851,9 @@ var reducer = function reducer() {
         case RECEIVE_TEST_RESULT:
             newState.testResult = action.result;
             break;
+        case SET_ROUTE_VERB:
+            newState.selectedRouteVerb = action.verb;
+            break;
         default:
             return state;
     }
@@ -5840,6 +5863,17 @@ var reducer = function reducer() {
 var store = (0, _redux.createStore)(reducer, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)({ collapsed: true })));
 
 exports.default = store;
+
+// const testRoute = (route, verb) => {
+//     verb = 'put';
+//     // if(verb === 'put'){
+//         console.log('IN TEST ROUTE')
+//         console.log('axios?', axios[verb]);
+//         axios[verb]('/backend-tree/routes')
+//             .then(res => console.log(res.data))
+//             .catch(console.error)
+//     // }
+// }
 
 /***/ }),
 /* 45 */
@@ -14751,8 +14785,8 @@ var TestModal = function (_React$Component) {
 
 	_createClass(TestModal, [{
 		key: 'handleClick',
-		value: function handleClick(route) {
-			this.props.testThisRoute(route);
+		value: function handleClick(route, verb) {
+			this.props.testThisRoute(route, verb);
 		}
 	}, {
 		key: 'render',
@@ -14760,6 +14794,7 @@ var TestModal = function (_React$Component) {
 			var _this2 = this;
 
 			var route = this.props.testRoute;
+			var verb = this.props.selectedRouteVerb;
 			console.log("props in testModal ", this.props);
 			return _react2.default.createElement(
 				'div',
@@ -14776,7 +14811,7 @@ var TestModal = function (_React$Component) {
 					_react2.default.createElement(
 						'button',
 						{ onClick: function onClick() {
-								return _this2.handleClick(route);
+								return _this2.handleClick(route, verb);
 							} },
 						'me'
 					),
@@ -14825,14 +14860,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(_ref) {
 	var testRoute = _ref.testRoute,
-	    activeTestNode = _ref.activeTestNode;
-	return { testRoute: testRoute, activeTestNode: activeTestNode };
+	    activeTestNode = _ref.activeTestNode,
+	    selectedRouteVerb = _ref.selectedRouteVerb;
+	return { testRoute: testRoute, activeTestNode: activeTestNode, selectedRouteVerb: selectedRouteVerb };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	return {
-		testThisRoute: function testThisRoute(route) {
-			dispatch((0, _store.fakeRouteTest)(route));
+		testThisRoute: function testThisRoute(route, verb) {
+			dispatch((0, _store.fakeRouteTest)(route, verb));
 		}
 	};
 };
@@ -14849,6 +14885,8 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -14892,14 +14930,21 @@ var Tree = function (_React$Component) {
     value: function componentDidMount() {
 
       var clickHandler = function clickHandler(e) {
+        console.log("---e", e.children);
         // click handler
-        e.children ? null : // if node has children, toggleExpand
-        endRouteHandleClick(e); // else, getRoute and
+        endRouteHandleClick(e);
+        // e.children ? null :           // if node has children, toggleExpand
+        // endRouteHandleClick(e);     // else, getRoute and
       }; // dispatch route to state as testRoute
       // also need to make a popup to test the route!
 
       var endRouteHandleClick = function endRouteHandleClick(node) {
+        console.log("node", typeof node === 'undefined' ? 'undefined' : _typeof(node));
         var testRoute = getRoute(node);
+        var verb = getVerb(node);
+        console.log("got verb", verb);
+        console.log("testroute", testRoute);
+        _store2.default.dispatch((0, _store.setRouteVerb)(verb));
         _store2.default.dispatch((0, _store.setTestRoute)(testRoute));
         _store2.default.dispatch((0, _store.setTestNode)(node));
         _store2.default.dispatch((0, _store.showModal)());
@@ -14913,6 +14958,10 @@ var Tree = function (_React$Component) {
           current = current.parent;
         }
         return routeSteps.join("");
+      };
+
+      var getVerb = function getVerb(node) {
+        return node.data.verb;
       };
 
       // set the dimensions and margins of the diagram
@@ -15015,8 +15064,9 @@ var mapState = function mapState(_ref) {
 	var routes = _ref.routes,
 	    testRoute = _ref.testRoute,
 	    showModal = _ref.showModal,
-	    activeTestNode = _ref.activeTestNode;
-	return { routes: routes, testRoute: testRoute, showModal: showModal, activeTestNode: activeTestNode };
+	    activeTestNode = _ref.activeTestNode,
+	    selectedRouteVerb = _ref.selectedRouteVerb;
+	return { routes: routes, testRoute: testRoute, showModal: showModal, activeTestNode: activeTestNode, selectedRouteVerb: selectedRouteVerb };
 };
 
 exports.default = (0, _reactRedux.connect)(mapState)(_Tree2.default);
