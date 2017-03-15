@@ -32,13 +32,13 @@ body {
     right: 70%;
     position: absolute;
     overflow: hidden;
-    animation: 1s slidein;
+    animation: 1s ease-in-out slidein;
     box-shadow: -.125em 0 .5em 0 rgba(51,51,51,.75);
 }
 
 .modal.fadeOut {
     right: 100%;
-    animation: 1s slideout;
+    animation: 1s ease-in-out slideout;
 }
 
 .modal .info {
