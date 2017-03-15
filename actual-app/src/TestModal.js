@@ -18,6 +18,10 @@ export default class TestModal extends React.Component {
 		this.props.testThisRoute(route, verb);
 	}
 
+	// to do: change handle click to incorporate reqBody / headers for put or post 
+	// to do above, you will need to change the async action creator (in store ) to
+	// pass headers to axios request 
+
 	onChange(e) {
 		switch(e.target.name){
 			case "reqBodyKey":
@@ -25,7 +29,6 @@ export default class TestModal extends React.Component {
 				break;
 			case "reqBodyValue":
 				let key = document.getElementById("reqBodyKey").value;
-				console.log("KEY ??? ", key);
 				this.setState({reqBody: {[key] : e.target.value}});
 				break;
 		}
@@ -54,6 +57,8 @@ export default class TestModal extends React.Component {
 						<div className='ro-row form-group'>
 							<input name="headersKey"></input>
 							<input name="headersValue"></input>
+						{/*  button here to add another set (key-value pair) for headers
+							would have to capture their data separately */}
 						</div>
 
 						<h3>Request Body</h3>
@@ -63,6 +68,12 @@ export default class TestModal extends React.Component {
 						<div className='ro-row form-group'>
 							<input name="reqBodyKey" id="reqBodyKey" onChange={this.onChange}></input>
 							<input name="reqBodyValue" onChange={this.onChange}></input>
+
+						{/* add option to have text field where user can enter JSON instead
+						of entering key-value pairs in form?  
+						in that case, we need to use json.stringify(?) or json.parse to 
+						grab user data and  put on local state */}
+
 						</div>
 					</form> : null }
 			</div>

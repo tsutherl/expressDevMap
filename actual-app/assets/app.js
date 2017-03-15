@@ -14795,6 +14795,11 @@ var TestModal = function (_React$Component) {
 		value: function handleClick(route, verb) {
 			this.props.testThisRoute(route, verb);
 		}
+
+		// to do: change handle click to incorporate reqBody / headers for put or post 
+		// to do above, you will need to change the async action creator (in store ) to
+		// pass headers to axios request 
+
 	}, {
 		key: 'onChange',
 		value: function onChange(e) {
@@ -14804,7 +14809,6 @@ var TestModal = function (_React$Component) {
 					break;
 				case "reqBodyValue":
 					var key = document.getElementById("reqBodyKey").value;
-					console.log("KEY ??? ", key);
 					this.setState({ reqBody: _defineProperty({}, key, e.target.value) });
 					break;
 			}
