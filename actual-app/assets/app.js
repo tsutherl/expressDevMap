@@ -14794,35 +14794,75 @@ var TestModal = function (_React$Component) {
 			var _this2 = this;
 
 			var route = this.props.testRoute;
-			var verb = this.props.selectedRouteVerb;
+			var method = this.props.selectedRouteVerb;
 			console.log("props in testModal ", this.props);
 			return _react2.default.createElement(
 				'div',
-				null,
+				{ className: 'modal' },
 				_react2.default.createElement(
-					'p',
-					null,
-					' I\'m just a boring modal for now '
-				),
-				_react2.default.createElement(
-					'p',
-					null,
-					' if you click ',
+					'div',
+					{ className: 'info' },
 					_react2.default.createElement(
-						'button',
-						{ onClick: function onClick() {
-								return _this2.handleClick(route, verb);
-							} },
-						'me'
+						'h2',
+						null,
+						'Info'
 					),
-					' you can test this route: '
+					_react2.default.createElement(
+						'p',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'Path: '
+						),
+						this.props.testRoute
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						_react2.default.createElement(
+							'b',
+							null,
+							'Method: '
+						),
+						method
+					),
+					method === 'PUT' || method === 'POST' ? _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Request Body'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'ro-row' },
+							_react2.default.createElement(
+								'span',
+								null,
+								'Key'
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'Value'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'ro-row' },
+							_react2.default.createElement('input', null),
+							_react2.default.createElement('input', null)
+						)
+					) : null
 				),
 				_react2.default.createElement(
-					'p',
-					null,
-					' ',
-					this.props.testRoute,
-					' '
+					'button',
+					{ onClick: function onClick() {
+							return _this2.handleClick(route);
+						} },
+					'Test Route'
 				)
 			);
 		}
