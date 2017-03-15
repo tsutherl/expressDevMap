@@ -25,6 +25,11 @@ body {
     background: #eee;
 }
 
+#app > div > div > svg {
+    display: block;
+    margin: auto;
+}
+
 .modal {
     height: 100%;
     width: 30%;
