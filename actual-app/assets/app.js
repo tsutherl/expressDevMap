@@ -14799,7 +14799,7 @@ var TestModal = function (_React$Component) {
 						_react2.default.createElement(
 							'h3',
 							null,
-							'Request Object'
+							'Request Body'
 						),
 						_react2.default.createElement(
 							'div',

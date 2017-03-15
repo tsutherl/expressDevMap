@@ -25,7 +25,7 @@ export default class TestModal extends React.Component {
 				<p><b>Method: </b>{method}</p>
 				{method === 'PUT' || method === 'POST' ? 
 					<div>
-						<h3>Request Object</h3>
+						<h3>Request Body</h3>
 						<div className='ro-row'>
 							<span>Key</span><span>Value</span>
 						</div>

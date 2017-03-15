@@ -57,7 +57,7 @@ body {
 
 .modal input {
     padding: .5em 1em;
-    border-radius: 1.5em;
+    border-radius: .5em;
     border: #333 1px solid;
     width: 45%;
 }
