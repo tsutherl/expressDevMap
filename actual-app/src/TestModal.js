@@ -9,13 +9,13 @@ export default class TestModal extends React.Component {
 		this.handleClick = this.handleClick.bind(this);
 	}
 
-	handleClick(route) {
-		this.props.testThisRoute(route);
+	handleClick(route, verb) {
+		this.props.testThisRoute(route, verb);
 	}
 
 	render() {
 		const route = this.props.testRoute;
-		const method = 'POST'
+		const method = this.props.selectedRouteVerb;
 		console.log("props in testModal ", this.props);
 			return (
 		<div className='modal'>
