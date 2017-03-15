@@ -17,6 +17,7 @@ export default class TestModal extends React.Component {
 		const route = this.props.testRoute;
 		const method = this.props.selectedRouteVerb;
 		console.log("props in testModal ", this.props);
+		console.log("method in testModal render ", method);
 			return (
 		<div className='modal'>
 			<div className='info'>
@@ -34,7 +35,7 @@ export default class TestModal extends React.Component {
 						</div>
 					</div> : null }
 			</div>
-			<button onClick={()=>this.handleClick(route)}>Test Route</button>
+			<button onClick={()=>this.handleClick(route, method)}>Test Route</button>
 		</div>
 	)
 }

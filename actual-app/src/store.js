@@ -54,8 +54,8 @@ export const setRouteVerb = (verb) => ({
 export const fakeRouteTest = (route, verb) => {
     
     //re-assigning route here because it was coming in as '//api/puppies, so this was just a quick fix to test the axios request
-    route = '/api/puppies' 
-    console.log("should be testing: ", route, verb)
+    route = route.slice(1);
+    console.log("should be testing: ", route, verb);
     axios[verb](route)
             .then(res => console.log(res.data))
             .catch(console.error)

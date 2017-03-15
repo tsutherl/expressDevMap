@@ -5818,7 +5818,7 @@ var setRouteVerb = exports.setRouteVerb = function setRouteVerb(verb) {
 var fakeRouteTest = exports.fakeRouteTest = function fakeRouteTest(route, verb) {
 
     //re-assigning route here because it was coming in as '//api/puppies, so this was just a quick fix to test the axios request
-    route = '/api/puppies';
+    route = route.slice(1);
     console.log("should be testing: ", route, verb);
     _axios2.default[verb](route).then(function (res) {
         return console.log(res.data);
@@ -14796,6 +14796,7 @@ var TestModal = function (_React$Component) {
 			var route = this.props.testRoute;
 			var method = this.props.selectedRouteVerb;
 			console.log("props in testModal ", this.props);
+			console.log("method in testModal render ", method);
 			return _react2.default.createElement(
 				'div',
 				{ className: 'modal' },
@@ -14860,7 +14861,7 @@ var TestModal = function (_React$Component) {
 				_react2.default.createElement(
 					'button',
 					{ onClick: function onClick() {
-							return _this2.handleClick(route);
+							return _this2.handleClick(route, method);
 						} },
 					'Test Route'
 				)
