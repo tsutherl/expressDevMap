@@ -7,12 +7,12 @@ import {fakeRouteTest} from './store';
 
 import TestModal from './TestModal';
 
-const mapStateToProps = ({testRoute, activeTestNode }) =>
-	({ testRoute, activeTestNode});
+const mapStateToProps = ({testRoute, activeTestNode, selectedRouteVerb }) =>
+	({ testRoute, activeTestNode, selectedRouteVerb});
 
 const mapDispatchToProps = (dispatch) => ({
-	testThisRoute : (route) => {
-		dispatch(fakeRouteTest(route));
+	testThisRoute : (route, verb) => {
+		dispatch(fakeRouteTest(route, verb));
 	}
 })
 
