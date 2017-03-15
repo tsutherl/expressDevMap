@@ -14811,7 +14811,7 @@ var TestModal = function (_React$Component) {
 		key: 'closeButton',
 		value: function closeButton() {
 			this.setState({ fadingOut: true });
-			setTimeout(this.props.hideModal, 3000);
+			setTimeout(this.props.hideModal, 1000);
 		}
 	}, {
 		key: 'render',

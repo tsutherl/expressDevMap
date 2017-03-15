@@ -20,7 +20,7 @@ export default class TestModal extends React.Component {
 
 	closeButton () {
 		this.setState({fadingOut: true})
-		setTimeout(this.props.hideModal, 3000)
+		setTimeout(this.props.hideModal, 1000)
 	}
 
 	render() {
