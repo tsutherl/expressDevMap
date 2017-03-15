@@ -8,6 +8,7 @@ body {
 
 .modal {
     background: #143E81;
+    margin: auto;
     /*border-radius: 1em;*/
     position: absolute;
     overflow: hidden;
