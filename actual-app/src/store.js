@@ -12,6 +12,8 @@ const RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
 
 const SHOW_MODAL = 'SHOW_MODAL';
 
+const HIDE_MODAL = 'HIDE_MODAL';
+
 const SET_TEST_NODE = 'SET_TEST_NODE';
 
 const RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
@@ -33,6 +35,10 @@ export const setTestRoute = testRoute => ({
 
 export const showModal = () => ({
     type: SHOW_MODAL
+})
+
+export const hideModal = () => ({
+    type: HIDE_MODAL
 })
 
 export const setTestNode = (node) =>({
@@ -66,7 +72,7 @@ export const fakeRouteTest = (route, verb) => {
 
 /*---------------REDUCER-----------------*/
 
-const reducer = (state={showModal: true, activeTestNode: null, testRoute: null}, action) => {
+const reducer = (state={showModal: false, activeTestNode: null, testRoute: null}, action) => {
     console.log("ACTION", action)
     const newState = Object.assign({}, state)
     switch(action.type) {
@@ -81,6 +87,9 @@ const reducer = (state={showModal: true, activeTestNode: null, testRoute: null},
             break;
         case SHOW_MODAL:
             newState.showModal = true;
+            break;
+        case HIDE_MODAL:
+            newState.showModal = false;
             break;
         case RECEIVE_TEST_RESULT:
             newState.testResult = action.result;
