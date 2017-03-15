@@ -7,11 +7,20 @@ import Closex from './xImage'
 export default class TestModal extends React.Component {
 	constructor (props) {
 		super(props);
+		this.state = {
+			fadingOut: false,
+		}
 		this.handleClick = this.handleClick.bind(this);
+		this.closeButton = this.closeButton.bind(this);
 	}
 
 	handleClick(route, verb) {
 		this.props.testThisRoute(route, verb);
+	}
+
+	closeButton () {
+		this.setState({fadingOut: true})
+		setTimeout(this.props.hideModal, 3000)
 	}
 
 	render() {
@@ -19,9 +28,9 @@ export default class TestModal extends React.Component {
 		const method = this.props.selectedRouteVerb;
 		console.log("props in testModal ", this.props);
 			return (
-		<div className='modal'>
+		<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 			<div className='info'>
-				<div onClick={this.props.hideModal}>
+				<div onClick={this.closeButton}>
 					<Closex />
 				</div>
 				<h2>Info</h2>

@@ -14794,7 +14794,11 @@ var TestModal = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (TestModal.__proto__ || Object.getPrototypeOf(TestModal)).call(this, props));
 
+		_this.state = {
+			fadingOut: false
+		};
 		_this.handleClick = _this.handleClick.bind(_this);
+		_this.closeButton = _this.closeButton.bind(_this);
 		return _this;
 	}
 
@@ -14802,6 +14806,12 @@ var TestModal = function (_React$Component) {
 		key: 'handleClick',
 		value: function handleClick(route, verb) {
 			this.props.testThisRoute(route, verb);
+		}
+	}, {
+		key: 'closeButton',
+		value: function closeButton() {
+			this.setState({ fadingOut: true });
+			setTimeout(this.props.hideModal, 3000);
 		}
 	}, {
 		key: 'render',
@@ -14813,13 +14823,13 @@ var TestModal = function (_React$Component) {
 			console.log("props in testModal ", this.props);
 			return _react2.default.createElement(
 				'div',
-				{ className: 'modal' },
+				{ className: this.state.fadingOut ? 'modal fadeOut' : 'modal' },
 				_react2.default.createElement(
 					'div',
 					{ className: 'info' },
 					_react2.default.createElement(
 						'div',
-						{ onClick: this.props.hideModal },
+						{ onClick: this.closeButton },
 						_react2.default.createElement(_xImage2.default, null)
 					),
 					_react2.default.createElement(
