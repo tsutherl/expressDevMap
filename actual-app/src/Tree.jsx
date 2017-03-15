@@ -2,7 +2,7 @@ import React from 'react'
 import * as d3 from "d3"
 
 import TestModalContainer from './TestModalContainer';
-import store, { setTestRoute, showModal, setTestNode } from './store';
+import store, { setTestRoute, showModal, setTestNode, setRouteVerb } from './store';
 
 
 export default class Tree extends React.Component {
@@ -14,14 +14,22 @@ export default class Tree extends React.Component {
 
   componentDidMount(){
 
-    const clickHandler = (e) => {   // click handler
-      e.children ? null :           // if node has children, toggleExpand
-      endRouteHandleClick(e);     // else, getRoute and
+    const clickHandler = (e) => { 
+      console.log("---e", e.children)
+        // click handler
+        endRouteHandleClick(e);
+      // e.children ? null :           // if node has children, toggleExpand
+      // endRouteHandleClick(e);     // else, getRoute and
     }                             // dispatch route to state as testRoute
                                   // also need to make a popup to test the route!
 
     const endRouteHandleClick = (node) => {
+      console.log("node", typeof node)
       let testRoute = getRoute(node);
+      let verb = getVerb(node);
+      console.log("got verb", verb)
+      console.log("testroute", testRoute)
+      store.dispatch(setRouteVerb(verb));
       store.dispatch(setTestRoute(testRoute));
       store.dispatch(setTestNode(node));
       store.dispatch(showModal());
@@ -35,6 +43,10 @@ export default class Tree extends React.Component {
         current = current.parent;
         }
       return routeSteps.join("");
+    }
+
+    const getVerb = (node) => {
+      return node.data.verb;
     }
 
     
