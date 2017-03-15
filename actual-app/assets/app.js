@@ -5739,7 +5739,7 @@ module.exports = setInnerHTML;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.fakeRouteTest = exports.setRouteVerb = exports.getRouteTestResult = exports.setTestNode = exports.showModal = exports.setTestRoute = exports.loadRoutes = undefined;
+exports.fakeRouteTest = exports.setRouteVerb = exports.getRouteTestResult = exports.setTestNode = exports.hideModal = exports.showModal = exports.setTestRoute = exports.loadRoutes = undefined;
 
 var _redux = __webpack_require__(131);
 
@@ -5764,6 +5764,8 @@ var RECEIVE_ROUTES = 'RECEIVE_ROUTES';
 var RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
 
 var SHOW_MODAL = 'SHOW_MODAL';
+
+var HIDE_MODAL = 'HIDE_MODAL';
 
 var SET_TEST_NODE = 'SET_TEST_NODE';
 
@@ -5790,6 +5792,12 @@ var setTestRoute = exports.setTestRoute = function setTestRoute(testRoute) {
 var showModal = exports.showModal = function showModal() {
     return {
         type: SHOW_MODAL
+    };
+};
+
+var hideModal = exports.hideModal = function hideModal() {
+    return {
+        type: HIDE_MODAL
     };
 };
 
@@ -5830,7 +5838,7 @@ var fakeRouteTest = exports.fakeRouteTest = function fakeRouteTest(route, verb) 
 /*---------------REDUCER-----------------*/
 
 var reducer = function reducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { showModal: true, activeTestNode: null, testRoute: null };
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { showModal: false, activeTestNode: null, testRoute: null };
     var action = arguments[1];
 
     console.log("ACTION", action);
@@ -5847,6 +5855,9 @@ var reducer = function reducer() {
             break;
         case SHOW_MODAL:
             newState.showModal = true;
+            break;
+        case HIDE_MODAL:
+            newState.showModal = false;
             break;
         case RECEIVE_TEST_RESULT:
             newState.testResult = action.result;
