@@ -5739,7 +5739,7 @@ module.exports = setInnerHTML;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.fakeRouteTest = exports.setRouteVerb = exports.getRouteTestResult = exports.setTestNode = exports.hideModal = exports.showModal = exports.setTestRoute = exports.loadRoutes = undefined;
+exports.fakeRouteTest = exports.setRouteVerb = exports.routeTestResult = exports.setTestNode = exports.hideModal = exports.showModal = exports.setTestRoute = exports.loadRoutes = undefined;
 
 var _redux = __webpack_require__(131);
 
@@ -5808,7 +5808,7 @@ var setTestNode = exports.setTestNode = function setTestNode(node) {
     };
 };
 
-var getRouteTestResult = exports.getRouteTestResult = function getRouteTestResult(result) {
+var routeTestResult = exports.routeTestResult = function routeTestResult(result) {
     return {
         type: RECEIVE_TEST_RESULT,
         result: result
@@ -5824,15 +5824,15 @@ var setRouteVerb = exports.setRouteVerb = function setRouteVerb(verb) {
 /*---------------ASYNC ACTION CREATORS-----------------*/
 
 var fakeRouteTest = exports.fakeRouteTest = function fakeRouteTest(route, verb) {
+    var routeResponse = void 0;
+    route = route.slice(1);
 
-    //re-assigning route here because it was coming in as '//api/puppies, so this was just a quick fix to test the axios request
-    route = '/api/puppies';
-    console.log("should be testing: ", route, verb);
-    _axios2.default[verb](route).then(function (res) {
-        return console.log(res.data);
-    }).catch(console.error);
-    return setRouteVerb(verb);
-    // store.dispatch(getRouteTestResult('totally fake test result'));
+    return function (dispatch) {
+        _axios2.default[verb](route).then(function (res) {
+            routeResponse = res.data;
+            dispatch(routeTestResult(res.data));
+        }).catch(console.error);
+    };
 };
 
 /*---------------REDUCER-----------------*/
@@ -14780,6 +14780,8 @@ var _xImage2 = _interopRequireDefault(_xImage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -14795,9 +14797,12 @@ var TestModal = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (TestModal.__proto__ || Object.getPrototypeOf(TestModal)).call(this, props));
 
 		_this.state = {
+			reqBody: {},
+			headers: {},
 			fadingOut: false
 		};
 		_this.handleClick = _this.handleClick.bind(_this);
+		_this.onChange = _this.onChange.bind(_this);
 		_this.closeButton = _this.closeButton.bind(_this);
 		return _this;
 	}
@@ -14813,6 +14818,24 @@ var TestModal = function (_React$Component) {
 			this.setState({ fadingOut: true });
 			setTimeout(this.props.hideModal, 1000);
 		}
+		// to do: change handle click to incorporate reqBody / headers for put or post 
+		// to do above, you will need to change the async action creator (in store ) to
+		// pass headers to axios request 
+
+	}, {
+		key: 'onChange',
+		value: function onChange(e) {
+			switch (e.target.name) {
+				case "reqBodyKey":
+					this.setState({ reqBody: _defineProperty({}, e.target.value, null) });
+					break;
+				case "reqBodyValue":
+					var key = document.getElementById("reqBodyKey").value;
+					this.setState({ reqBody: _defineProperty({}, key, e.target.value) });
+					break;
+			}
+			console.log("in onChange, here is this.reqBody ", this.state.reqBody);
+		}
 	}, {
 		key: 'render',
 		value: function render() {
@@ -14821,6 +14844,7 @@ var TestModal = function (_React$Component) {
 			var route = this.props.testRoute;
 			var method = this.props.selectedRouteVerb;
 			console.log("props in testModal ", this.props);
+			console.log("method in testModal render ", method);
 			return _react2.default.createElement(
 				'div',
 				{ className: this.state.fadingOut ? 'modal fadeOut' : 'modal' },
@@ -14858,8 +14882,33 @@ var TestModal = function (_React$Component) {
 						method
 					),
 					method === 'put' || method === 'post' ? _react2.default.createElement(
-						'div',
-						null,
+						'form',
+						{ className: 'form-inline' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Headers'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'ro-row' },
+							_react2.default.createElement(
+								'span',
+								null,
+								'Key'
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'Value'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'ro-row form-group' },
+							_react2.default.createElement('input', { name: 'headersKey' }),
+							_react2.default.createElement('input', { name: 'headersValue' })
+						),
 						_react2.default.createElement(
 							'h3',
 							null,
@@ -14881,16 +14930,16 @@ var TestModal = function (_React$Component) {
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'ro-row' },
-							_react2.default.createElement('input', null),
-							_react2.default.createElement('input', null)
+							{ className: 'ro-row form-group' },
+							_react2.default.createElement('input', { name: 'reqBodyKey', id: 'reqBodyKey', onChange: this.onChange }),
+							_react2.default.createElement('input', { name: 'reqBodyValue', onChange: this.onChange })
 						)
 					) : null
 				),
 				_react2.default.createElement(
 					'button',
 					{ onClick: function onClick() {
-							return _this2.handleClick(route);
+							return _this2.handleClick(route, method);
 						} },
 					'Test Route'
 				)

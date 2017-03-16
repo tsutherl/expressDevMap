@@ -46,7 +46,7 @@ export const setTestNode = (node) =>({
     node
 })
 
-export const getRouteTestResult = (result) => ({
+export const routeTestResult = (result) => ({
     type: RECEIVE_TEST_RESULT,
     result
 })
@@ -58,16 +58,18 @@ export const setRouteVerb = (verb) => ({
 /*---------------ASYNC ACTION CREATORS-----------------*/
 
 export const fakeRouteTest = (route, verb) => {
-    
-    //re-assigning route here because it was coming in as '//api/puppies, so this was just a quick fix to test the axios request
-    route = '/api/puppies' 
-    console.log("should be testing: ", route, verb)
-    axios[verb](route)
-            .then(res => console.log(res.data))
+    let routeResponse;
+    route = route.slice(1);
+
+    return (dispatch) => {axios[verb](route)
+            .then(res => {
+                routeResponse = res.data;
+                dispatch(routeTestResult(res.data));
+            })
             .catch(console.error)
-    return setRouteVerb(verb);
-    // store.dispatch(getRouteTestResult('totally fake test result'));
+    }
 }
+
 
 
 /*---------------REDUCER-----------------*/
