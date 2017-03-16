@@ -14971,21 +14971,20 @@ var Modal = function (_React$Component) {
 							this.props.testRoute
 						)
 					),
-					method === 'put' || method === 'post' ? _react2.default.createElement(
+					_react2.default.createElement(
 						'div',
-						null,
+						{ className: 'headers-body' },
 						_react2.default.createElement(
-							'div',
-							{ className: 'encoding-options', onClick: this.toggleOptions },
+							'h3',
+							null,
 							'Headers'
 						),
 						_react2.default.createElement(
-							'div',
-							{ className: 'encoding-options', onClick: this.toggleOptions },
+							'h3',
+							null,
 							'Body'
 						)
-					) : null,
-					this.state.currentOption === 'requestBody' ? _react2.default.createElement(_RequestBody2.default, null) : _react2.default.createElement(_Headers2.default, { onChange: this.onChange })
+					)
 				)
 			);
 		}

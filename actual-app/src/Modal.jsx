@@ -54,30 +54,34 @@ export default class Modal extends React.Component {
 		const route = this.props.testRoute;
 		const method = this.props.selectedRouteVerb;
 		return (
-		<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
-			<div className='info'>
-			<div className='nav'>
-				<button onClick={()=>this.handleClick(route, method)}>Test</button>
-				<div onClick={this.closeButton}>
-					<Closex />
+			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
+				<div className='info'>
+					<div className='nav'>
+						<button onClick={()=>this.handleClick(route, method)}>Test</button>
+						<div onClick={this.closeButton}>
+							<Closex />
+						</div>
+					</div>
+					<div className='testing'>
+						<h2 id='request-verb' >{method}</h2>
+						<h2>{this.props.testRoute}</h2>
+					</div>
+					<div className='headers-body'>
+						<h3>Headers</h3>
+						<h3>Body</h3>
+					</div>
+						{/*{method === 'put' || method === 'post' ? 
+							<div>
+								<div className='encoding-options' onClick={this.toggleOptions}>Headers</div>
+								<div className='encoding-options' onClick={this.toggleOptions}>Body</div>
+							</div> : 
+						null}
+							{this.state.currentOption === 'requestBody'? <RequestBody/> : <Headers onChange={this.onChange}/> }*/}
+						
 				</div>
 			</div>
-				<div className='testing'>
-					<h2 id='request-verb' >{method}</h2>
-					<h2>{this.props.testRoute}</h2>
-				</div>
-				{method === 'put' || method === 'post' ? 
-					<div>
-						<div className='encoding-options' onClick={this.toggleOptions}>Headers</div>
-						<div className='encoding-options' onClick={this.toggleOptions}>Body</div>
-					</div> : 
-				null}
-					{this.state.currentOption === 'requestBody'? <RequestBody/> : <Headers onChange={this.onChange}/> }
-					
-			</div>
-		</div>
-	)
-}
+		)
+	}
 }
 
 
