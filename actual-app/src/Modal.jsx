@@ -53,18 +53,19 @@ export default class Modal extends React.Component {
 	render() {
 		const route = this.props.testRoute;
 		const method = this.props.selectedRouteVerb;
-			return (
+		return (
 		<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 			<div className='info'>
 				<div onClick={this.closeButton}>
 					<Closex />
 				</div>
-				<h2>{method} {this.props.testRoute}</h2>
-				
+				<div id='request-verb' >{method}</div>
+				<div>{this.props.testRoute}</div>
+				<div>Test</div>
 				{method === 'put' || method === 'post' ? 
 					<div>
-						<button onClick={this.toggleOptions}>Headers</button>
-						<button onClick={this.toggleOptions}>Body</button>
+						<div className='encoding-options' onClick={this.toggleOptions}>Headers</div>
+						<div className='encoding-options' onClick={this.toggleOptions}>Body</div>
 					</div> : 
 				null}
 					{this.state.currentOption === 'requestBody'? <RequestBody/> : <Headers onChange={this.onChange}/> }

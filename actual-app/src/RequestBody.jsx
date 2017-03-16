@@ -15,6 +15,7 @@ const RequestBody = ({onChange}) => {
             of entering key-value pairs in form?  
             in that case, we need to use json.stringify(?) or json.parse to 
             grab user data and  put on local state */}
+            <textarea></textarea>
 
             </div>
     </form>)

@@ -47,6 +47,8 @@ body {
 }
 
 .modal .info {
+    display: flex;
+    flex-flow: row wrap;
     background: #fff;
     width: 100%;
     padding: 1.5em;
@@ -109,4 +111,12 @@ body {
 .modal .close-x path{
     fill: #333;
     fill-rule: nonzero;
+}
+
+.modal .encoding-options {
+    display: inline-block;
+}
+
+.modal #request-verb {
+    text-transform: uppercase;
 }
