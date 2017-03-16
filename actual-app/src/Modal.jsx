@@ -46,7 +46,7 @@ export default class Modal extends React.Component {
 		console.log("in onChange, here is this.reqBody ", this.state.reqBody);
 	}
 	toggleOptions (e) {
-		const update = this.state.currentOption === 'headers'?{currentOption: 'requestBody'} : {currentOption: 'requestBody'}
+		const update = this.state.currentOption === 'headers'?{currentOption: 'requestBody'} : {currentOption: 'headers'}
 		this.setState(update)
 	}
 
@@ -61,8 +61,13 @@ export default class Modal extends React.Component {
 				</div>
 				<h2>{method} {this.props.testRoute}</h2>
 				
-				{method === 'put' || method === 'post' ? <div><button onClick={this.toggleOptions}>Headers</button><button onClick={this.toggleOptions}>Body</button></div> : null}
-					{this.state.currentOptions === 'requestBody'? <RequestBody/> : <Headers onChange={this.onChange}/> }
+				{method === 'put' || method === 'post' ? 
+					<div>
+						<button onClick={this.toggleOptions}>Headers</button>
+						<button onClick={this.toggleOptions}>Body</button>
+					</div> : 
+				null}
+					{this.state.currentOption === 'requestBody'? <RequestBody/> : <Headers onChange={this.onChange}/> }
 					
 			</div>
 			<button onClick={()=>this.handleClick(route, method)}>Test Route</button>

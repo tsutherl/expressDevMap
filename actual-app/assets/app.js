@@ -14902,7 +14902,7 @@ var Modal = function (_React$Component) {
 	}, {
 		key: 'toggleOptions',
 		value: function toggleOptions(e) {
-			var update = this.state.currentOption === 'headers' ? { currentOption: 'requestBody' } : { currentOption: 'requestBody' };
+			var update = this.state.currentOption === 'headers' ? { currentOption: 'requestBody' } : { currentOption: 'headers' };
 			this.setState(update);
 		}
 	}, {
@@ -14944,7 +14944,7 @@ var Modal = function (_React$Component) {
 							'Body'
 						)
 					) : null,
-					this.state.currentOptions === 'requestBody' ? _react2.default.createElement(_RequestBody2.default, null) : _react2.default.createElement(_Headers2.default, { onChange: this.onChange })
+					this.state.currentOption === 'requestBody' ? _react2.default.createElement(_RequestBody2.default, null) : _react2.default.createElement(_Headers2.default, { onChange: this.onChange })
 				),
 				_react2.default.createElement(
 					'button',
