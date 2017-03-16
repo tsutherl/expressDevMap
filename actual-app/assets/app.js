@@ -13798,11 +13798,15 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = __webpack_require__(35);
+
 var _TreeContainer = __webpack_require__(156);
 
 var _TreeContainer2 = _interopRequireDefault(_TreeContainer);
 
-var _reactRedux = __webpack_require__(35);
+var _TestModalContainer = __webpack_require__(154);
+
+var _TestModalContainer2 = _interopRequireDefault(_TestModalContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13810,14 +13814,17 @@ var App = exports.App = function App(props) {
     return _react2.default.createElement(
         'div',
         null,
+        props.showModal ? _react2.default.createElement(_TestModalContainer2.default, null) : null,
         props.routes ? _react2.default.createElement(_TreeContainer2.default, null) : null
     );
 };
 
 var mapStateToProps = function mapStateToProps(_ref) {
-    var routes = _ref.routes;
+    var routes = _ref.routes,
+        showModal = _ref.showModal;
     return {
-        routes: routes
+        routes: routes,
+        showModal: showModal
     };
 };
 
@@ -15021,10 +15028,6 @@ var _d = __webpack_require__(158);
 
 var d3 = _interopRequireWildcard(_d);
 
-var _TestModalContainer = __webpack_require__(154);
-
-var _TestModalContainer2 = _interopRequireDefault(_TestModalContainer);
-
 var _store = __webpack_require__(44);
 
 var _store2 = _interopRequireDefault(_store);
@@ -15147,11 +15150,7 @@ var Tree = function (_React$Component) {
     key: 'render',
     value: function render() {
 
-      return _react2.default.createElement(
-        'div',
-        { ref: 'routeMap' },
-        this.props.showModal ? _react2.default.createElement(_TestModalContainer2.default, null) : null
-      );
+      return _react2.default.createElement('div', { ref: 'routeMap' });
     }
   }]);
 
