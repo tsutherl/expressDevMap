@@ -23,6 +23,7 @@
 body {
     margin: 0;
     background: #eee;
+    font-family: 'Roboto', sans-serif;
 }
 
 #app > div > div > svg {
@@ -111,23 +112,33 @@ body {
     fill-rule: nonzero;
 }
 
-/*TREE STYLING*/
-circle.router {
+/*************TREE STYLING****************/
+
+#tree circle {
+    box-shadow: inset 0px 0px 5px 0px rgba(51,51,3,1);
+}
+
+#tree circle.router {
     fill: #555;
 }
 
-circle.get {
+#tree circle.get {
     fill: #29AE74;
 }
 
-circle.put {
+#tree circle.put {
     fill: #F3A53F;
 }
 
-circle.post {
+#tree circle.post {
     fill: #2DBEDB;
 }
 
-circle.delete {
+#tree circle.delete {
     fill: #D03854;
+}
+
+#tree text {
+    font-weight: bold;
+    background: radial-gradient(#eeeeee 0%, rgba(238,238,238, 0) 100%)
 }

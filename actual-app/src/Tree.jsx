@@ -51,7 +51,7 @@ export default class Tree extends React.Component {
 
     
     // set the dimensions and margins of the diagram
-    var margin = {top: 20, right: 90, bottom: 30, left: 90},
+    var margin = {top: 20, right: 110, bottom: 30, left: 90},
         width = 660 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
@@ -72,7 +72,8 @@ export default class Tree extends React.Component {
     // moves the 'group' element to the top left margin
     var svg = d3.select(this.refs.routeMap).append("svg")
           .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom),
+          .attr("height", height + margin.top + margin.bottom)
+          .attr('id', 'tree'),
         g = svg.append("g")
           .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
@@ -119,7 +120,7 @@ export default class Tree extends React.Component {
     node.append("text")
       .attr("dy", 3) // move 3 px down for text location (I think)
       .attr("x", function(d) { return d.children ? 
-        -8 : 8}) // place text label on left if node has children, otherwise on right
+        -10 : 10}) // place text label on left if node has children, otherwise on right
       .style("text-anchor", function(d) { 
         return d.children ? "end" : "start"; }) 
       .text(function(d) { return d.children? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object
