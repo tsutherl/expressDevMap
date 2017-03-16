@@ -1,17 +1,49 @@
+@keyframes slidein {
+  from {
+    right: 100%;
+  }
+  to {
+    right: 70%
+  }
+}
+
+@keyframes slideout {
+  from {
+    right: 70%;
+  }
+  to {
+    right: 100%
+  }
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
+    margin: 0;
     background: #eee;
 }
 
-.modal {
-    background: #143E81;
+#app > div > div > svg {
+    display: block;
     margin: auto;
+}
+
+.modal {
+    height: 100%;
+    width: 30%;
+    background: #143E81;
+    right: 70%;
     position: absolute;
     overflow: hidden;
-    box-shadow: .125em .125em .5em 0 rgba(51,51,51,.75);
+    animation: 1s ease-in-out slidein;
+    box-shadow: -.125em 0 .5em 0 rgba(51,51,51,.75);
+}
+
+.modal.fadeOut {
+    right: 100%;
+    animation: 1s ease-in-out slideout;
 }
 
 .modal .info {
@@ -60,4 +92,21 @@ body {
     border-radius: .5em;
     border: #333 1px solid;
     width: 45%;
+}
+
+.modal .close-x {
+    position: absolute;
+    right: .5em;
+    top: .5em;
+    width: 1.5em;
+    height: 1.5em;
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    stroke-linejoin:r ound;
+    stroke-miterlimit: 1.41421;
+}
+
+.modal .close-x path{
+    fill: #333;
+    fill-rule: nonzero;
 }

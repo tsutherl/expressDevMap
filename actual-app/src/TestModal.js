@@ -1,23 +1,30 @@
 'use strict';
 
 import React from 'react';
+import Closex from './xImage'
 
 
 export default class TestModal extends React.Component {
 	constructor (props) {
 		super(props);
-		this.handleClick = this.handleClick.bind(this);
+
 		this.state = {
 			reqBody : {},
-			headers : {}
+			headers : {},
+			fadingOut: false,
 		}
+		this.handleClick = this.handleClick.bind(this);
 		this.onChange = this.onChange.bind(this);
+		this.closeButton = this.closeButton.bind(this);
 	}
 
 	handleClick(route, verb) {
 		this.props.testThisRoute(route, verb);
 	}
-
+	closeButton () {
+		this.setState({fadingOut: true})
+		setTimeout(this.props.hideModal, 1000)
+	}
 	// to do: change handle click to incorporate reqBody / headers for put or post 
 	// to do above, you will need to change the async action creator (in store ) to
 	// pass headers to axios request 
@@ -35,20 +42,21 @@ export default class TestModal extends React.Component {
 		console.log("in onChange, here is this.reqBody ", this.state.reqBody);
 	}
 
-
 	render() {
 		const route = this.props.testRoute;
 		const method = this.props.selectedRouteVerb;
 		console.log("props in testModal ", this.props);
 		console.log("method in testModal render ", method);
 			return (
-		<div className='modal'>
+		<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 			<div className='info'>
+				<div onClick={this.closeButton}>
+					<Closex />
+				</div>
 				<h2>Info</h2>
 				<p><b>Path: </b>{this.props.testRoute}</p>
 				<p><b>Method: </b>{method}</p>
-				{method === 'put' || method === 'post' ? 
-					
+				{method === 'put' || method === 'post' ? 			
 					<form className = "form-inline">
 						<h3>Headers</h3>
 						<div className='ro-row'>
