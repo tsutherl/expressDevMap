@@ -14791,22 +14791,36 @@ var Headers = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Headers.__proto__ || Object.getPrototypeOf(Headers)).call(this, props));
 
         _this.state = {
-            numKeyValue: [_react2.default.createElement(
-                'div',
-                { className: 'ro-row form-group' },
-                _react2.default.createElement('input', { name: 'headersKey', onclick: addNewInput, value: 'key' }),
-                _react2.default.createElement('input', { name: 'headersValue', onclick: addNewInput, value: 'value' })
-            )]
+            numKeyValue: []
         };
+        _this.addNewInput = _this.addNewInput.bind(_this);
         return _this;
     }
 
     _createClass(Headers, [{
+        key: 'addNewInput',
+        value: function addNewInput() {
+            console.log('this', this.state);
+            var updated = this.state.numKeyValue.concat(_react2.default.createElement(
+                'div',
+                { className: 'ro-row form-group' },
+                _react2.default.createElement('input', { name: 'headersKey', onClick: this.addNewInput, value: 'key' }),
+                _react2.default.createElement('input', { name: 'headersValue', onClick: this.addNewInput, value: 'value' })
+            ));
+            this.setState({ numKeyValue: updated });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'form',
                 { className: 'form-inline' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'ro-row form-group' },
+                    _react2.default.createElement('input', { name: 'headersKey', onClick: this.addNewInput, value: 'key' }),
+                    _react2.default.createElement('input', { name: 'headersValue', onClick: this.addNewInput, value: 'value' })
+                ),
                 this.state.numKeyValue.map(function (input) {
                     return input;
                 })
