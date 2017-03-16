@@ -15,7 +15,7 @@ export default class Tree extends React.Component {
   componentDidMount(){
 
     const clickHandler = (e) => { 
-      console.log("---e", e.children)
+      //console.log("---e", e.children)
         // click handler
         endRouteHandleClick(e);
       // e.children ? null :           // if node has children, toggleExpand
@@ -24,11 +24,11 @@ export default class Tree extends React.Component {
                                   // also need to make a popup to test the route!
 
     const endRouteHandleClick = (node) => {
-      console.log("node", typeof node)
+      //console.log("node", typeof node)
       let testRoute = getRoute(node);
       let verb = getVerb(node);
-      console.log("got verb", verb)
-      console.log("testroute", testRoute)
+      //console.log("got verb", verb)
+      //console.log("testroute", testRoute)
       store.dispatch(setRouteVerb(verb));
       store.dispatch(setTestRoute(testRoute));
       store.dispatch(setTestNode(node));
@@ -107,9 +107,12 @@ export default class Tree extends React.Component {
 
     // adds symbols as nodes
     node.append("circle")  // made all nodes circles instead of random shapes
-      .style("stroke", "black") // change node outline to black
-      .style("fill", function(d) { return d.data.children ? 'blue' : 'gray' ; })
-      .attr("r", 5)  // above line fills node blue if it has child nodes, otherwise gray
+      //.style("stroke", "black") // change node outline to black
+      //.style("fill", function(d) { return d.data.children ? 'pink' : 'gray' ; })
+      .attr("r", 7.5)  // above line fills node blue if it has child nodes, otherwise gray
+      .attr('class', function(d) {
+        console.log(!!d.data.verb)
+        return d.data.verb ? d.data.verb : 'router'})
       .on("click", clickHandler);
 
     // adds the text to the node

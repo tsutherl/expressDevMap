@@ -15009,8 +15009,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(4);
@@ -15053,7 +15051,7 @@ var Tree = function (_React$Component) {
     value: function componentDidMount() {
 
       var clickHandler = function clickHandler(e) {
-        console.log("---e", e.children);
+        //console.log("---e", e.children)
         // click handler
         endRouteHandleClick(e);
         // e.children ? null :           // if node has children, toggleExpand
@@ -15062,11 +15060,11 @@ var Tree = function (_React$Component) {
       // also need to make a popup to test the route!
 
       var endRouteHandleClick = function endRouteHandleClick(node) {
-        console.log("node", typeof node === 'undefined' ? 'undefined' : _typeof(node));
+        //console.log("node", typeof node)
         var testRoute = getRoute(node);
         var verb = getVerb(node);
-        console.log("got verb", verb);
-        console.log("testroute", testRoute);
+        //console.log("got verb", verb)
+        //console.log("testroute", testRoute)
         _store2.default.dispatch((0, _store.setRouteVerb)(verb));
         _store2.default.dispatch((0, _store.setTestRoute)(testRoute));
         _store2.default.dispatch((0, _store.setTestNode)(node));
@@ -15126,11 +15124,13 @@ var Tree = function (_React$Component) {
 
       // adds symbols as nodes
       node.append("circle") // made all nodes circles instead of random shapes
-      .style("stroke", "black") // change node outline to black
-      .style("fill", function (d) {
-        return d.data.children ? 'blue' : 'gray';
-      }).attr("r", 5) // above line fills node blue if it has child nodes, otherwise gray
-      .on("click", clickHandler);
+      //.style("stroke", "black") // change node outline to black
+      //.style("fill", function(d) { return d.data.children ? 'pink' : 'gray' ; })
+      .attr("r", 7.5) // above line fills node blue if it has child nodes, otherwise gray
+      .attr('class', function (d) {
+        console.log(!!d.data.verb);
+        return d.data.verb ? d.data.verb : 'router';
+      }).on("click", clickHandler);
 
       // adds the text to the node
       node.append("text").attr("dy", 3) // move 3 px down for text location (I think)

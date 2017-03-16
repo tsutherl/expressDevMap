@@ -15,16 +15,6 @@ const parseRoutes = require('./parse-routes');
 //in the docs, list all the routes that we are providing to them and 
     //what they do 
 
-<<<<<<< HEAD
-
-//helper function to get info when at terminal node
-const getNodeInfo = (middleware) => ({
-        path: middleware.route.path,
-        verb: Object.keys(middleware.route.methods)[0]//will there ever be more than one key?
-})
-
-//TODO: recursive function that can be called in /routes - (maybe to be moved into a utils file for more organized code?)
-=======
 //added second optional input to make the call for the routers much simpler
 const parseRoutes = (appRouterStack, path) => {
 
@@ -49,7 +39,6 @@ const parseRoutes = (appRouterStack, path) => {
 
     return routesObj
 }
->>>>>>> master
 
 
 module.exports = app => {

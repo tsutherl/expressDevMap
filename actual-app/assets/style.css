@@ -110,3 +110,24 @@ body {
     fill: #333;
     fill-rule: nonzero;
 }
+
+/*TREE STYLING*/
+circle.router {
+    fill: #555;
+}
+
+circle.get {
+    fill: #29AE74;
+}
+
+circle.put {
+    fill: #F3A53F;
+}
+
+circle.post {
+    fill: #2DBEDB;
+}
+
+circle.delete {
+    fill: #D03854;
+}
