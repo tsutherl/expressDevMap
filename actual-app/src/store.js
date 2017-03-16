@@ -2,6 +2,7 @@ import {createStore, applyMiddleware} from 'redux'
 
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
+import axios from 'axios';
 
 /*---------------CONSTANTS-----------------*/
 
@@ -11,9 +12,13 @@ const RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
 
 const SHOW_MODAL = 'SHOW_MODAL';
 
+const HIDE_MODAL = 'HIDE_MODAL';
+
 const SET_TEST_NODE = 'SET_TEST_NODE';
 
 const RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
+
+const SET_ROUTE_VERB = 'SET_ROUTE_VERB';
 
 /*---------------ACTION CREATORS-----------------*/
 
@@ -32,27 +37,45 @@ export const showModal = () => ({
     type: SHOW_MODAL
 })
 
+export const hideModal = () => ({
+    type: HIDE_MODAL
+})
+
 export const setTestNode = (node) =>({
     type: SET_TEST_NODE,
     node
 })
 
-export const getRouteTestResult = (result) => ({
+export const routeTestResult = (result) => ({
     type: RECEIVE_TEST_RESULT,
     result
 })
+
+export const setRouteVerb = (verb) => ({
+    type: SET_ROUTE_VERB, 
+    verb
+})
 /*---------------ASYNC ACTION CREATORS-----------------*/
 
-export const fakeRouteTest = (route) => {
-    console.log("this is a fake route test!  It doesn't test the route yet. ");
-    console.log("eventually, I will test this route: ", route);
-    store.dispatch(getRouteTestResult('totally fake test result'));
+export const fakeRouteTest = (route, verb) => {
+    let routeResponse;
+    route = route.slice(1);
+
+    return (dispatch) => {axios[verb](route)
+            .then(res => {
+                routeResponse = res.data;
+                dispatch(routeTestResult(res.data));
+            })
+            .catch(console.error)
+    }
 }
+
 
 
 /*---------------REDUCER-----------------*/
 
-const reducer = (state={showModal: false, activeTestNode: null}, action) => {
+const reducer = (state={showModal: false, activeTestNode: null, testRoute: null}, action) => {
+    console.log("ACTION", action)
     const newState = Object.assign({}, state)
     switch(action.type) {
         case RECEIVE_ROUTES:
@@ -67,8 +90,14 @@ const reducer = (state={showModal: false, activeTestNode: null}, action) => {
         case SHOW_MODAL:
             newState.showModal = true;
             break;
+        case HIDE_MODAL:
+            newState.showModal = false;
+            break;
         case RECEIVE_TEST_RESULT:
             newState.testResult = action.result;
+            break;
+        case SET_ROUTE_VERB: 
+            newState.selectedRouteVerb = action.verb;
             break;
         default:
             return state;
@@ -88,3 +117,14 @@ export default store;
 
  
 
+
+// const testRoute = (route, verb) => {
+//     verb = 'put';
+//     // if(verb === 'put'){
+//         console.log('IN TEST ROUTE')
+//         console.log('axios?', axios[verb]);
+//         axios[verb]('/backend-tree/routes')
+//             .then(res => console.log(res.data))
+//             .catch(console.error)
+//     // }
+// }
