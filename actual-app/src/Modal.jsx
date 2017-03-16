@@ -56,12 +56,16 @@ export default class Modal extends React.Component {
 		return (
 		<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 			<div className='info'>
+			<div className='nav'>
+				<button onClick={()=>this.handleClick(route, method)}>Test</button>
 				<div onClick={this.closeButton}>
 					<Closex />
 				</div>
-				<div id='request-verb' >{method}</div>
-				<div>{this.props.testRoute}</div>
-				<div>Test</div>
+			</div>
+				<div className='testing'>
+					<h2 id='request-verb' >{method}</h2>
+					<h2>{this.props.testRoute}</h2>
+				</div>
 				{method === 'put' || method === 'post' ? 
 					<div>
 						<div className='encoding-options' onClick={this.toggleOptions}>Headers</div>
@@ -71,7 +75,6 @@ export default class Modal extends React.Component {
 					{this.state.currentOption === 'requestBody'? <RequestBody/> : <Headers onChange={this.onChange}/> }
 					
 			</div>
-			<button onClick={()=>this.handleClick(route, method)}>Test Route</button>
 		</div>
 	)
 }

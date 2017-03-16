@@ -47,8 +47,6 @@ body {
 }
 
 .modal .info {
-    display: flex;
-    flex-flow: row wrap;
     background: #fff;
     width: 100%;
     padding: 1.5em;
@@ -64,7 +62,7 @@ body {
     margin-bottom: .5em;
 }
 
-.modal button {
+/*.modal button {
     display: block;
     padding: .5em 1em;
     border-radius: .5em;
@@ -73,7 +71,7 @@ body {
     color: #333;
     font-size: 100%;
     margin: 1em auto;
-}
+}*/
 
 .modal button:hover, .modal button:focus {
     background: #eee;
@@ -84,7 +82,6 @@ body {
 }
 
 .modal .ro-row {
-    display: flex;
     width: 100%;
     justify-content: space-around;
 }
@@ -113,10 +110,26 @@ body {
     fill-rule: nonzero;
 }
 
-.modal .encoding-options {
-    display: inline-block;
+.modal .testing {
+    display: flex;
+    align-items: stretch;
 }
 
-.modal #request-verb {
+.modal .testing h2 {
+    flex: 3;
+}
+
+.modal .testing #request-verb {
+    flex: 1;
     text-transform: uppercase;
 }
+
+.modal .nav {
+    display: flex;
+}
+
+
+
+
+
+

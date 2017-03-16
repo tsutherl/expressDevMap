@@ -14943,23 +14943,33 @@ var Modal = function (_React$Component) {
 					{ className: 'info' },
 					_react2.default.createElement(
 						'div',
-						{ onClick: this.closeButton },
-						_react2.default.createElement(_xImage2.default, null)
+						{ className: 'nav' },
+						_react2.default.createElement(
+							'button',
+							{ onClick: function onClick() {
+									return _this2.handleClick(route, method);
+								} },
+							'Test'
+						),
+						_react2.default.createElement(
+							'div',
+							{ onClick: this.closeButton },
+							_react2.default.createElement(_xImage2.default, null)
+						)
 					),
 					_react2.default.createElement(
 						'div',
-						{ id: 'request-verb' },
-						method
-					),
-					_react2.default.createElement(
-						'div',
-						null,
-						this.props.testRoute
-					),
-					_react2.default.createElement(
-						'div',
-						null,
-						'Test'
+						{ className: 'testing' },
+						_react2.default.createElement(
+							'h2',
+							{ id: 'request-verb' },
+							method
+						),
+						_react2.default.createElement(
+							'h2',
+							null,
+							this.props.testRoute
+						)
 					),
 					method === 'put' || method === 'post' ? _react2.default.createElement(
 						'div',
@@ -14976,13 +14986,6 @@ var Modal = function (_React$Component) {
 						)
 					) : null,
 					this.state.currentOption === 'requestBody' ? _react2.default.createElement(_RequestBody2.default, null) : _react2.default.createElement(_Headers2.default, { onChange: this.onChange })
-				),
-				_react2.default.createElement(
-					'button',
-					{ onClick: function onClick() {
-							return _this2.handleClick(route, method);
-						} },
-					'Test Route'
 				)
 			);
 		}
