@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 
 import {fakeRouteTest, hideModal} from './store';
 
-import TestModal from './TestModal';
+import Modal from './Modal.jsx';
 
 const mapStateToProps = ({testRoute, activeTestNode, selectedRouteVerb }) =>
 	({ testRoute, activeTestNode, selectedRouteVerb});
@@ -21,4 +21,4 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 
-export default connect (mapStateToProps, mapDispatchToProps)(TestModal);
+export default connect (mapStateToProps, mapDispatchToProps)(Modal);

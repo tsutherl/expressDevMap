@@ -2,9 +2,11 @@
 
 import React from 'react';
 import Closex from './xImage'
+import Headers from './Headers.jsx'
+import RequestBody from './RequestBody.jsx'
 
 
-export default class TestModal extends React.Component {
+export default class Modal extends React.Component {
 	constructor (props) {
 		super(props);
 
@@ -12,10 +14,12 @@ export default class TestModal extends React.Component {
 			reqBody : {},
 			headers : {},
 			fadingOut: false,
+			currentOption: 'headers',
 		}
 		this.handleClick = this.handleClick.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.closeButton = this.closeButton.bind(this);
+		this.toggleOptions = this.toggleOptions.bind(this)
 	}
 
 	handleClick(route, verb) {
@@ -41,49 +45,25 @@ export default class TestModal extends React.Component {
 		}
 		console.log("in onChange, here is this.reqBody ", this.state.reqBody);
 	}
+	toggleOptions (e) {
+		const update = this.state.currentOption === 'headers'?{currentOption: 'requestBody'} : {currentOption: 'requestBody'}
+		this.setState(update)
+	}
 
 	render() {
 		const route = this.props.testRoute;
 		const method = this.props.selectedRouteVerb;
-		console.log("props in testModal ", this.props);
-		console.log("method in testModal render ", method);
 			return (
 		<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 			<div className='info'>
 				<div onClick={this.closeButton}>
 					<Closex />
 				</div>
-				<h2>Info</h2>
-				<p><b>Path: </b>{this.props.testRoute}</p>
-				<p><b>Method: </b>{method}</p>
-				{method === 'put' || method === 'post' ? 			
-					<form className = "form-inline">
-						<h3>Headers</h3>
-						<div className='ro-row'>
-							<span>Key</span><span>Value</span>
-						</div>
-						<div className='ro-row form-group'>
-							<input name="headersKey"></input>
-							<input name="headersValue"></input>
-						{/*  button here to add another set (key-value pair) for headers
-							would have to capture their data separately */}
-						</div>
-
-						<h3>Request Body</h3>
-						<div className='ro-row'>
-							<span>Key</span><span>Value</span>
-						</div>
-						<div className='ro-row form-group'>
-							<input name="reqBodyKey" id="reqBodyKey" onChange={this.onChange}></input>
-							<input name="reqBodyValue" onChange={this.onChange}></input>
-
-						{/* add option to have text field where user can enter JSON instead
-						of entering key-value pairs in form?  
-						in that case, we need to use json.stringify(?) or json.parse to 
-						grab user data and  put on local state */}
-
-						</div>
-					</form> : null }
+				<h2>{method} {this.props.testRoute}</h2>
+				
+				{method === 'put' || method === 'post' ? <div><button onClick={this.toggleOptions}>Headers</button><button onClick={this.toggleOptions}>Body</button></div> : null}
+					{this.state.currentOptions === 'requestBody'? <RequestBody/> : <Headers onChange={this.onChange}/> }
+					
 			</div>
 			<button onClick={()=>this.handleClick(route, method)}>Test Route</button>
 		</div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import * as d3 from "d3"
 
-import TestModalContainer from './TestModalContainer';
+import ModalContainer from './ModalContainer';
 import store, { setTestRoute, showModal, setTestNode, setRouteVerb } from './store';
 
 
@@ -126,7 +126,7 @@ export default class Tree extends React.Component {
   
     return(
       <div ref="routeMap">
-        {this.props.showModal ? <TestModalContainer/> : null}
+        {this.props.showModal ? <ModalContainer/> : null}
       </div>
     )
   }
