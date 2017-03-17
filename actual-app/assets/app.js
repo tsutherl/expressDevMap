@@ -15048,13 +15048,7 @@ var Tree = function (_React$Component) {
       var _this2 = this;
 
       var clickHandler = function clickHandler(e) {
-        //console.log("---e", e.children)
-        // click handler
         endRouteHandleClick(e);
-
-        // prevSelected
-        //   .attr('r', 7.5)
-        //   .attr('class', `${prevSelected.className.baseVal.slice(0,-9)}`)
         // e.children ? null :           // if node has children, toggleExpand
         // endRouteHandleClick(e);     // else, getRoute and
       }; // dispatch route to state as testRoute
@@ -15091,11 +15085,30 @@ var Tree = function (_React$Component) {
         g.selectAll('text').attr("x", function (d) {
           return d.children ? -10 : 10;
         }); //reset text position
+        g.selectAll('path').attr('class', 'link').style("stroke-opacity", 0.4).style("stroke-width", 1.5);
       };
 
-      var alterNode = function alterNode(node) {
+      var alterEndNode = function alterEndNode(node) {
         d3.select(node).attr('r', 15);
         d3.select(node.nextSibling).attr('x', 17.5);
+      };
+
+      //want to refactor this to take better advantage of d3
+      var alterPath = function alterPath(e) {
+        var pathEnds = [];
+        var paths = g.selectAll('.link')._groups[0];
+        while (e.parent) {
+          pathEnds.push(e.y + ',' + e.x);
+          e = e.parent;
+        }
+        paths.forEach(function (path) {
+          var info = path.getAttribute('d');
+          var cPlace = info.indexOf('C');
+          if (pathEnds.indexOf(info.slice(1, cPlace)) > -1) {
+            path.setAttribute('class', 'link selected');
+          }
+        });
+        g.selectAll('.link.selected').style('stroke-opacity', 0.8).style('stroke-width', 3);
       };
 
       // set the dimensions and margins of the diagram
@@ -15144,8 +15157,13 @@ var Tree = function (_React$Component) {
         return d.data.verb ? d.data.verb : 'router';
       }).on("click", function (e) {
         resetTree();
-        clickHandler(e); // modal functionality
-        alterNode(this);
+        if (e.children) {
+          console.log('THAT IS A ROUTER');
+        } else {
+          clickHandler(e); // modal functionality
+          alterEndNode(this);
+        }
+        alterPath(e);
       });
 
       // adds the text to the node
@@ -15158,9 +15176,6 @@ var Tree = function (_React$Component) {
       }).text(function (d) {
         return d.children ? '' + d.data.name : d.data.name + ' [' + d.data.verb + ']';
       }); // 'name' is key on routes object
-
-      g.selectAll('circle.router') //to remove the handler from the router nodes
-      .on('click', null);
     }
   }, {
     key: 'render',

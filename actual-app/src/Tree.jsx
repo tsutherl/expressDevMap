@@ -12,13 +12,7 @@ export default class Tree extends React.Component {
   componentDidMount(){
 
     const clickHandler = (e) => { 
-      //console.log("---e", e.children)
-        // click handler
         endRouteHandleClick(e);
-        
-        // prevSelected
-        //   .attr('r', 7.5)
-        //   .attr('class', `${prevSelected.className.baseVal.slice(0,-9)}`)
       // e.children ? null :           // if node has children, toggleExpand
       // endRouteHandleClick(e);     // else, getRoute and
     }                             // dispatch route to state as testRoute
@@ -55,14 +49,40 @@ export default class Tree extends React.Component {
         .attr('r', 7.5);//reset circle size
       g.selectAll('text')
         .attr("x", function(d) { return d.children ?  -10 : 10});//reset text position
+      g.selectAll('path')
+        .attr('class', 'link')
+        .style("stroke-opacity", 0.4)
+        .style("stroke-width", 1.5);
     }
 
-    const alterNode = (node) => {
+    const alterEndNode = (node) => {
       d3.select(node)
         .attr('r', 15)
       d3.select(node.nextSibling)
         .attr('x', 17.5)
     }
+
+    //want to refactor this to take better advantage of d3
+    const alterPath = (e) => {
+      let pathEnds = [];
+      const paths = g.selectAll('.link')._groups[0]
+      while (e.parent) {
+        pathEnds.push(`${e.y},${e.x}`)
+        e = e.parent
+      }
+      paths.forEach(path => {
+        const info = path.getAttribute('d')
+        const cPlace = info.indexOf('C');
+        if (pathEnds.indexOf(info.slice(1,cPlace)) > -1){
+          path.setAttribute('class', 'link selected')
+        }
+      })
+      g.selectAll('.link.selected')
+        .style('stroke-opacity', 0.8)
+        .style('stroke-width', 3)
+    }
+
+
 
     
     // set the dimensions and margins of the diagram
@@ -109,8 +129,6 @@ export default class Tree extends React.Component {
             + " " + d.parent.y + "," + d.parent.x;
           });
 
-
-
     // adds each node as a group
     var node = g.selectAll(".node")
         .data(nodes.descendants())
@@ -129,8 +147,13 @@ export default class Tree extends React.Component {
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
         resetTree();
-        clickHandler(e) // modal functionality
-        alterNode(this);
+        if (e.children) {
+          console.log('THAT IS A ROUTER')
+        } else {
+          clickHandler(e) // modal functionality
+          alterEndNode(this);
+        }
+        alterPath(e);
       });
 
     // adds the text to the node
@@ -141,9 +164,6 @@ export default class Tree extends React.Component {
       .style("text-anchor", function(d) { 
         return d.children ? "end" : "start"; }) 
       .text(function(d) { return d.children? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object
-
-    g.selectAll('circle.router')//to remove the handler from the router nodes
-      .on('click', null);
 }                                              
 
   render() {
