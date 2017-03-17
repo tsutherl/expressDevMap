@@ -46,7 +46,9 @@ export default class Tree extends React.Component {
 
     const resetTree = () => {
       g.selectAll('circle')
-        .attr('r', 7.5);//reset circle size
+        .attr('r', 7.5)//reset circle size
+        .style('stroke-width', 1)
+        .style("stroke-opacity", 0.4)
       g.selectAll('text')
         .attr("x", function(d) { return d.children ?  -10 : 10});//reset text position
       g.selectAll('path')
@@ -55,11 +57,13 @@ export default class Tree extends React.Component {
         .style("stroke-width", 1.5);
     }
 
-    const alterEndNode = (node) => {
+    const alterNode = (node) => {
       d3.select(node)
         .attr('r', 15)
+        .style('stroke-width', 1.5)
+        .style('stroke-opacity', 0.8)
       d3.select(node.nextSibling)
-        .attr('x', 17.5)
+        .attr('x', function(d) { return d.children ?  -17.5 : 17.5})
     }
 
     //want to refactor this to take better advantage of d3
@@ -142,7 +146,7 @@ export default class Tree extends React.Component {
     // adds symbols as nodes
     node.append("circle")  // made all nodes circles instead of random shapes
       .style("stroke", "black") // change node outline to black
-      //.style("fill", function(d) { return d.data.children ? 'pink' : 'gray' ; })
+      .style('stroke-opacity', .4)
       .attr("r", 7.5)  // above line fills node blue if it has child nodes, otherwise gray
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
@@ -151,8 +155,8 @@ export default class Tree extends React.Component {
           console.log('THAT IS A ROUTER')
         } else {
           clickHandler(e) // modal functionality
-          alterEndNode(this);
         }
+        alterNode(this);
         alterPath(e);
       });
 
