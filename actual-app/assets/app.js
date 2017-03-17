@@ -15047,13 +15047,6 @@ var Tree = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var clickHandler = function clickHandler(e) {
-        endRouteHandleClick(e);
-        // e.children ? null :           // if node has children, toggleExpand
-        // endRouteHandleClick(e);     // else, getRoute and
-      }; // dispatch route to state as testRoute
-      // also need to make a popup to test the route!
-
       var endRouteHandleClick = function endRouteHandleClick(node) {
         //console.log("node", typeof node)
         var testRoute = getRoute(node);
@@ -15063,7 +15056,11 @@ var Tree = function (_React$Component) {
         _this2.props.setRouteVerb(verb);
         _this2.props.setTestRoute(testRoute);
         _this2.props.setTestNode(node);
-        _this2.props.showModalNow();
+        if (!_this2.props.showModal) _this2.props.showModalNow();
+      };
+
+      var routerHandleClick = function routerHandleClick(node) {
+        if (_this2.props.showModal) _this2.props.hideModal();
       };
 
       var getRoute = function getRoute(node) {
@@ -15160,9 +15157,9 @@ var Tree = function (_React$Component) {
       }).on("click", function (e) {
         resetTree();
         if (e.children) {
-          console.log('THAT IS A ROUTER');
+          routerHandleClick(e);
         } else {
-          clickHandler(e); // modal functionality
+          endRouteHandleClick(e); // modal functionality
         }
         alterNode(this);
         alterPath(e);
@@ -15243,6 +15240,9 @@ var mapDispatch = function mapDispatch(dispatch) {
 		},
 		showModalNow: function showModalNow() {
 			dispatch((0, _store.showModal)());
+		},
+		hideModal: function hideModal() {
+			dispatch((0, _store.hideModal)());
 		}
 	};
 };

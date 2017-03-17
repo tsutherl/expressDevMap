@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Tree from './Tree.jsx'
-import { setTestRoute, showModal, setTestNode, setRouteVerb } from './store'
+import { setTestRoute, showModal, setTestNode, setRouteVerb, hideModal } from './store'
 
 
 
@@ -23,6 +23,9 @@ const mapDispatch = (dispatch) => ({
 	},
 	showModalNow: () => {
 		dispatch(showModal())
+	},
+	hideModal: () => {
+		dispatch(hideModal())
 	}
 })
 

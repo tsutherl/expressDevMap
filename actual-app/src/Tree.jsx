@@ -11,13 +11,6 @@ export default class Tree extends React.Component {
 
   componentDidMount(){
 
-    const clickHandler = (e) => { 
-        endRouteHandleClick(e);
-      // e.children ? null :           // if node has children, toggleExpand
-      // endRouteHandleClick(e);     // else, getRoute and
-    }                             // dispatch route to state as testRoute
-                                  // also need to make a popup to test the route!
-
     const endRouteHandleClick = (node) => {
       //console.log("node", typeof node)
       let testRoute = getRoute(node);
@@ -27,7 +20,11 @@ export default class Tree extends React.Component {
       this.props.setRouteVerb(verb);
       this.props.setTestRoute(testRoute);
       this.props.setTestNode(node);
-      this.props.showModalNow();
+      if (!this.props.showModal) this.props.showModalNow();
+    }
+
+    const routerHandleClick = (node) => {
+      if (this.props.showModal) this.props.hideModal();
     }
 
     const getRoute = (node) => {
@@ -152,9 +149,9 @@ export default class Tree extends React.Component {
       .on("click", function (e) {
         resetTree();
         if (e.children) {
-          console.log('THAT IS A ROUTER')
+          routerHandleClick(e);
         } else {
-          clickHandler(e) // modal functionality
+          endRouteHandleClick(e); // modal functionality
         }
         alterNode(this);
         alterPath(e);
