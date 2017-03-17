@@ -115,18 +115,21 @@ export default class Tree extends React.Component {
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
         g.selectAll('circle')
-          //.attr('stroke', 'none')
-          .attr('r', 7.5);// setting all circles back to normal sixe
+          .attr('r', 7.5);
+        g.selectAll('text')
+          .attr("x", function(d) { return d.children ? 
+        -10 : 10});// setting all circles back to normal sixe
         clickHandler(e) // modal functionality
-        console.log('~*~*~*~*~*~*~*~*~', )
+        console.log('~*~*~*~*~*~*~*~*~', this.nextSibling)
         d3.select(this)
           .attr('r', 15)
-          //.attr('stroke', 'black')// resize selected node
+        d3.select(this.nextSibling)
+          .attr('x', 17.5)
       });
 
     // adds the text to the node
     node.append("text")
-      .attr("dy", 3) // move 3 px down for text location (I think)
+      .attr("dy", 5) // move 3 px down for text location (I think)
       .attr("x", function(d) { return d.children ? 
         -10 : 10}) // place text label on left if node has children, otherwise on right
       .style("text-anchor", function(d) { 
