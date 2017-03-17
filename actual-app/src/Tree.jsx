@@ -141,7 +141,9 @@ export default class Tree extends React.Component {
       .style("text-anchor", function(d) { 
         return d.children ? "end" : "start"; }) 
       .text(function(d) { return d.children? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object
-  
+
+    g.selectAll('circle.router')//to remove the handler from the router nodes
+      .on('click', null);
 }                                              
 
   render() {
