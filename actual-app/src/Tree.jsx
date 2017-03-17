@@ -35,7 +35,7 @@ export default class Tree extends React.Component {
     const getRoute = (node) => {
       const routeSteps = [];
       let current = node;
-      while (current){
+      while (current.parent){
         routeSteps.unshift(current.data.name);
         current = current.parent;
         }
@@ -108,10 +108,12 @@ export default class Tree extends React.Component {
       //.style("stroke", "black") // change node outline to black
       //.style("fill", function(d) { return d.data.children ? 'pink' : 'gray' ; })
       .attr("r", 7.5)  // above line fills node blue if it has child nodes, otherwise gray
-      .attr('class', function(d) {
-        console.log(!!d.data.verb)
-        return d.data.verb ? d.data.verb : 'router'})
-      .on("click", clickHandler);
+      .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
+      .on("click", function (e) {
+        clickHandler(e) //modal functionality
+        d3.select(this).attr('r', 15)
+                .attr('class', `${this.className.baseVal} selected`) //tree visuals
+      });
 
     // adds the text to the node
     node.append("text")
@@ -121,7 +123,14 @@ export default class Tree extends React.Component {
       .style("text-anchor", function(d) { 
         return d.children ? "end" : "start"; }) 
       .text(function(d) { return d.children? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object
-  }                                              
+  
+    // g.selectAll('circle.get').on("click", function () {
+    //   console.log('did this run?')
+    //   d3.select(this).attr('r', 25)
+    //             .style("fill","lightcoral")
+    //             .style("stroke","red");
+    // })
+}                                              
 
   render() {
   

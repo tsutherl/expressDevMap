@@ -123,7 +123,7 @@ body {
 }
 
 #tree circle.get {
-    fill: #29AE74;
+    fill: #2DBEDB;
 }
 
 #tree circle.put {
@@ -131,11 +131,15 @@ body {
 }
 
 #tree circle.post {
-    fill: #2DBEDB;
+    fill: #673AB7;
 }
 
 #tree circle.delete {
     fill: #D03854;
+}
+
+#tree circle.selected {
+    fill: #85AD52;
 }
 
 #tree text {
