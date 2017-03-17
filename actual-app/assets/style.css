@@ -110,3 +110,12 @@ body {
     fill: #333;
     fill-rule: nonzero;
 }
+
+#response {
+    background:red;
+    width: 25%;
+    height: 90%;
+    position: absolute;
+    left: 30%;
+    top: 5%;
+}
