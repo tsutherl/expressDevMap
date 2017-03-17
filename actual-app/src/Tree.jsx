@@ -15,6 +15,10 @@ export default class Tree extends React.Component {
       //console.log("---e", e.children)
         // click handler
         endRouteHandleClick(e);
+        
+        // prevSelected
+        //   .attr('r', 7.5)
+        //   .attr('class', `${prevSelected.className.baseVal.slice(0,-9)}`)
       // e.children ? null :           // if node has children, toggleExpand
       // endRouteHandleClick(e);     // else, getRoute and
     }                             // dispatch route to state as testRoute
@@ -110,9 +114,11 @@ export default class Tree extends React.Component {
       .attr("r", 7.5)  // above line fills node blue if it has child nodes, otherwise gray
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
-        clickHandler(e) //modal functionality
-        d3.select(this).attr('r', 15)
-                .attr('class', `${this.className.baseVal} selected`) //tree visuals
+        g.selectAll('circle')
+          .attr('r', 7.5);// setting all circles back to normal sixe
+        clickHandler(e) // modal functionality
+        d3.select(this)
+          .attr('r', 15)// resize selected node
       });
 
     // adds the text to the node
