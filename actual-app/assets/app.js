@@ -15093,6 +15093,11 @@ var Tree = function (_React$Component) {
         }); //reset text position
       };
 
+      var alterNode = function alterNode(node) {
+        d3.select(node).attr('r', 15);
+        d3.select(node.nextSibling).attr('x', 17.5);
+      };
+
       // set the dimensions and margins of the diagram
       var margin = { top: 20, right: 110, bottom: 30, left: 90 },
           width = 660 - margin.left - margin.right,
@@ -15140,9 +15145,7 @@ var Tree = function (_React$Component) {
       }).on("click", function (e) {
         resetTree();
         clickHandler(e); // modal functionality
-        console.log('~*~*~*~*~*~*~*~*~', this.nextSibling);
-        d3.select(this).attr('r', 15);
-        d3.select(this.nextSibling).attr('x', 17.5);
+        alterNode(this);
       });
 
       // adds the text to the node
@@ -15155,13 +15158,6 @@ var Tree = function (_React$Component) {
       }).text(function (d) {
         return d.children ? '' + d.data.name : d.data.name + ' [' + d.data.verb + ']';
       }); // 'name' is key on routes object
-
-      // g.selectAll('circle.get').on("click", function () {
-      //   console.log('did this run?')
-      //   d3.select(this).attr('r', 25)
-      //             .style("fill","lightcoral")
-      //             .style("stroke","red");
-      // })
     }
   }, {
     key: 'render',
