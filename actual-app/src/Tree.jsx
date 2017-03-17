@@ -109,16 +109,19 @@ export default class Tree extends React.Component {
 
     // adds symbols as nodes
     node.append("circle")  // made all nodes circles instead of random shapes
-      //.style("stroke", "black") // change node outline to black
+      .style("stroke", "black") // change node outline to black
       //.style("fill", function(d) { return d.data.children ? 'pink' : 'gray' ; })
       .attr("r", 7.5)  // above line fills node blue if it has child nodes, otherwise gray
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
         g.selectAll('circle')
+          //.attr('stroke', 'none')
           .attr('r', 7.5);// setting all circles back to normal sixe
         clickHandler(e) // modal functionality
+        console.log('~*~*~*~*~*~*~*~*~', )
         d3.select(this)
-          .attr('r', 15)// resize selected node
+          .attr('r', 15)
+          //.attr('stroke', 'black')// resize selected node
       });
 
     // adds the text to the node
