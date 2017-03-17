@@ -1,11 +1,17 @@
+'use strict';
+
+import axios from 'axios';
+
 import React from 'react';
 import {render} from 'react-dom';
-import AppContainer from './AppContainer.jsx'
-import { Provider } from 'react-redux'
-import store, {loadRoutes} from './store'
+import { Provider } from 'react-redux';
 import {Router, Route, Link, hashHistory} from 'react-router';
 
-import axios from 'axios'
+import AppContainer from './AppContainer.jsx'
+import store from './reducers/store';
+
+//need to refactor reducer imports
+import { loadRoutes}  from './reducers/routeReducer'; 
 
 
 //this is OUR axios call to our GET /routes that is sending back information about our client's express routes
