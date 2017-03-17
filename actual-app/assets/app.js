@@ -15023,10 +15023,6 @@ var _TestModalContainer = __webpack_require__(154);
 
 var _TestModalContainer2 = _interopRequireDefault(_TestModalContainer);
 
-var _store = __webpack_require__(44);
-
-var _store2 = _interopRequireDefault(_store);
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -15049,6 +15045,7 @@ var Tree = function (_React$Component) {
   _createClass(Tree, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
 
       var clickHandler = function clickHandler(e) {
         //console.log("---e", e.children)
@@ -15065,10 +15062,10 @@ var Tree = function (_React$Component) {
         var verb = getVerb(node);
         //console.log("got verb", verb)
         //console.log("testroute", testRoute)
-        _store2.default.dispatch((0, _store.setRouteVerb)(verb));
-        _store2.default.dispatch((0, _store.setTestRoute)(testRoute));
-        _store2.default.dispatch((0, _store.setTestNode)(node));
-        _store2.default.dispatch((0, _store.showModal)());
+        _this2.props.setRouteVerb(verb);
+        _this2.props.setTestRoute(testRoute);
+        _this2.props.setTestNode(node);
+        _this2.props.showModalNow();
       };
 
       var getRoute = function getRoute(node) {
@@ -15181,6 +15178,8 @@ var _Tree = __webpack_require__(155);
 
 var _Tree2 = _interopRequireDefault(_Tree);
 
+var _store = __webpack_require__(44);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapState = function mapState(_ref) {
@@ -15192,7 +15191,24 @@ var mapState = function mapState(_ref) {
 	return { routes: routes, testRoute: testRoute, showModal: showModal, activeTestNode: activeTestNode, selectedRouteVerb: selectedRouteVerb };
 };
 
-exports.default = (0, _reactRedux.connect)(mapState)(_Tree2.default);
+var mapDispatch = function mapDispatch(dispatch) {
+	return {
+		setRouteVerb: function setRouteVerb(verb) {
+			dispatch((0, _store.setRouteVerb)(verb));
+		},
+		setTestRoute: function setTestRoute(testRoute) {
+			dispatch((0, _store.setTestRoute)(testRoute));
+		},
+		setTestNode: function setTestNode(node) {
+			dispatch((0, _store.setTestNode)(node));
+		},
+		showModalNow: function showModalNow() {
+			dispatch((0, _store.showModal)());
+		}
+	};
+};
+
+exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(_Tree2.default);
 
 /***/ }),
 /* 157 */

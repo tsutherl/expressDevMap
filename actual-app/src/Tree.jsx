@@ -2,14 +2,11 @@ import React from 'react'
 import * as d3 from "d3"
 
 import TestModalContainer from './TestModalContainer';
-import store, { setTestRoute, showModal, setTestNode, setRouteVerb } from './store';
 
 
 export default class Tree extends React.Component {
   constructor(props){
-    super(props);
-      
-        
+    super(props);   
   }
 
   componentDidMount(){
@@ -29,10 +26,10 @@ export default class Tree extends React.Component {
       let verb = getVerb(node);
       //console.log("got verb", verb)
       //console.log("testroute", testRoute)
-      store.dispatch(setRouteVerb(verb));
-      store.dispatch(setTestRoute(testRoute));
-      store.dispatch(setTestNode(node));
-      store.dispatch(showModal());
+      this.props.setRouteVerb(verb);
+      this.props.setTestRoute(testRoute);
+      this.props.setTestNode(node);
+      this.props.showModalNow();
     }
 
     const getRoute = (node) => {
