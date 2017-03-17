@@ -14946,7 +14946,7 @@ var Modal = function (_React$Component) {
 						{ className: 'nav' },
 						_react2.default.createElement(
 							'button',
-							{ onClick: function onClick() {
+							{ className: 'nav-children', onClick: function onClick() {
 									return _this2.handleClick(route, method);
 								} },
 							'Test'
