@@ -2,8 +2,11 @@ import React from 'react'
 import * as d3 from "d3"
 
 import TestModalContainer from './TestModalContainer';
-import store, { setTestRoute, showModal, setTestNode, setRouteVerb } from './store';
 
+import store from './reducers/store';
+
+import { setTestRoute, setTestNode, setRouteVerb } from './reducers/selectedReducer';
+import { showModal } from './reducers/modalReducer';
 
 export default class Tree extends React.Component {
   constructor(props){
