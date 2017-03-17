@@ -23,20 +23,16 @@ export const hideModal = () => ({
 
 /*---------------- REDUCER ---------------- */
 
-export const modalReducer = (state={showModal: false}, action) => {
-
-	const newState = Object.assign({}, state);
-
+export const modalReducer = (state=false, action) => {
 	switch(action.type) {
 	 	case SHOW_MODAL:
-            newState.showModal = true;
-            break;
+            return true;
+          	break;
         case HIDE_MODAL:
-            newState.showModal = false;
+            return false;
             break;
     }
-
-    return newState;
+    return state;
 }
 
 

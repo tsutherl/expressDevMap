@@ -5,8 +5,8 @@ import TestModalContainer from './TestModalContainer';
 
 import store from './reducers/store';
 
-import { setTestRoute, showModal, setTestNode, setRouteVerb } from './reducers/selectedReducer';
-
+import { setTestRoute, setTestNode, setRouteVerb } from './reducers/selectedReducer';
+import { showModal } from './reducers/modalReducer';
 
 export default class Tree extends React.Component {
   constructor(props){

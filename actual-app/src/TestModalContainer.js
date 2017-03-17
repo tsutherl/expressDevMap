@@ -8,8 +8,8 @@ import { routeTestAsync } from './reducers/selectedReducer';
 
 import TestModal from './TestModal';
 
-const mapStateToProps = ({testRoute, activeTestNode, selectedRouteVerb }) =>
-	({ testRoute, activeTestNode, selectedRouteVerb});
+const mapStateToProps = ({ selected }) =>
+	({ selected });
 
 const mapDispatchToProps = (dispatch) => ({
 	testThisRoute : (route, verb) => {

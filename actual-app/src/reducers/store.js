@@ -15,8 +15,8 @@ import { selectedReducer } from './selectedReducer';
 
 // combine reducers into a rootReducer
 const rootReducer = combineReducers({
-    route: routeReducer,
-    modal: modalReducer,
+    routes: routeReducer,
+    showModal: modalReducer,
     selected: selectedReducer
 });
 

@@ -8960,8 +8960,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // combine reducers into a rootReducer
 var rootReducer = (0, _redux.combineReducers)({
-    route: _routeReducer.routeReducer,
-    modal: _modalReducer.modalReducer,
+    routes: _routeReducer.routeReducer,
+    showModal: _modalReducer.modalReducer,
     selected: _selectedReducer.selectedReducer
 });
 
@@ -9271,22 +9271,18 @@ var hideModal = exports.hideModal = function hideModal() {
 /*---------------- REDUCER ---------------- */
 
 var modalReducer = exports.modalReducer = function modalReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { showModal: false };
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
     var action = arguments[1];
-
-
-    var newState = Object.assign({}, state);
 
     switch (action.type) {
         case SHOW_MODAL:
-            newState.showModal = true;
+            return true;
             break;
         case HIDE_MODAL:
-            newState.showModal = false;
+            return false;
             break;
     }
-
-    return newState;
+    return state;
 };
 
 /***/ }),
@@ -14835,6 +14831,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// need to grab route & method from store -- this.selected.testRoute, this.selected.selectedRout
+
 var TestModal = function (_React$Component) {
 	_inherits(TestModal, _React$Component);
 
@@ -14888,8 +14886,8 @@ var TestModal = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
-			var route = this.props.testRoute;
-			var method = this.props.selectedRouteVerb;
+			var route = this.props.selected.testRoute;
+			var method = this.props.selected.selectedRouteVerb;
 			console.log("props in testModal ", this.props);
 			console.log("method in testModal render ", method);
 			return _react2.default.createElement(
@@ -15027,10 +15025,8 @@ var _TestModal2 = _interopRequireDefault(_TestModal);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(_ref) {
-	var testRoute = _ref.testRoute,
-	    activeTestNode = _ref.activeTestNode,
-	    selectedRouteVerb = _ref.selectedRouteVerb;
-	return { testRoute: testRoute, activeTestNode: activeTestNode, selectedRouteVerb: selectedRouteVerb };
+	var selected = _ref.selected;
+	return { selected: selected };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -15080,6 +15076,8 @@ var _store2 = _interopRequireDefault(_store);
 
 var _selectedReducer = __webpack_require__(46);
 
+var _modalReducer = __webpack_require__(85);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -15121,7 +15119,7 @@ var Tree = function (_React$Component) {
         _store2.default.dispatch((0, _selectedReducer.setRouteVerb)(verb));
         _store2.default.dispatch((0, _selectedReducer.setTestRoute)(testRoute));
         _store2.default.dispatch((0, _selectedReducer.setTestNode)(node));
-        _store2.default.dispatch((0, _selectedReducer.showModal)());
+        _store2.default.dispatch((0, _modalReducer.showModal)());
       };
 
       var getRoute = function getRoute(node) {
@@ -15270,17 +15268,18 @@ var loadRoutes = exports.loadRoutes = function loadRoutes(routes) {
 
 /*---------------REDUCER-----------------*/
 
-var routeReducer = exports.routeReducer = function routeReducer(state, action) {
+var routeReducer = exports.routeReducer = function routeReducer() {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	var action = arguments[1];
 
-	var newState = Object.assign({}, state);
 
 	switch (action.type) {
 		case RECEIVE_ROUTES:
-			newState.routes = action.routes;
-			break;
+			return action.routes;
+
 	}
 
-	return newState;
+	return state;
 };
 
 /***/ }),

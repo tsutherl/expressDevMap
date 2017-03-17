@@ -16,15 +16,13 @@ export const loadRoutes = routes => ({
 /*---------------REDUCER-----------------*/
 
 
-export const routeReducer = (state, action) => {
-
-	const newState = Object.assign({}, state)
+export const routeReducer = (state = null, action) => {
 
 	switch (action.type){
 		case RECEIVE_ROUTES:
-		newState.routes = action.routes;
-            break;
+		return action.routes;
+            
 	}
 
-	return newState;
+	return state;
 }
