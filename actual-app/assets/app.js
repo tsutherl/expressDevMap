@@ -15086,6 +15086,13 @@ var Tree = function (_React$Component) {
         return node.data.verb;
       };
 
+      var resetTree = function resetTree() {
+        g.selectAll('circle').attr('r', 7.5); //reset circle size
+        g.selectAll('text').attr("x", function (d) {
+          return d.children ? -10 : 10;
+        }); //reset text position
+      };
+
       // set the dimensions and margins of the diagram
       var margin = { top: 20, right: 110, bottom: 30, left: 90 },
           width = 660 - margin.left - margin.right,
@@ -15131,10 +15138,7 @@ var Tree = function (_React$Component) {
       .attr('class', function (d) {
         return d.data.verb ? d.data.verb : 'router';
       }).on("click", function (e) {
-        g.selectAll('circle').attr('r', 7.5);
-        g.selectAll('text').attr("x", function (d) {
-          return d.children ? -10 : 10;
-        }); // setting all circles back to normal sixe
+        resetTree();
         clickHandler(e); // modal functionality
         console.log('~*~*~*~*~*~*~*~*~', this.nextSibling);
         d3.select(this).attr('r', 15);

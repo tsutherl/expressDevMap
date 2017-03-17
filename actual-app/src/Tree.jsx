@@ -50,6 +50,13 @@ export default class Tree extends React.Component {
       return node.data.verb;
     }
 
+    const resetTree = () => {
+      g.selectAll('circle')
+        .attr('r', 7.5);//reset circle size
+      g.selectAll('text')
+        .attr("x", function(d) { return d.children ?  -10 : 10});//reset text position
+    }
+
     
     // set the dimensions and margins of the diagram
     var margin = {top: 20, right: 110, bottom: 30, left: 90},
@@ -114,11 +121,7 @@ export default class Tree extends React.Component {
       .attr("r", 7.5)  // above line fills node blue if it has child nodes, otherwise gray
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
-        g.selectAll('circle')
-          .attr('r', 7.5);
-        g.selectAll('text')
-          .attr("x", function(d) { return d.children ? 
-        -10 : 10});// setting all circles back to normal sixe
+        resetTree();
         clickHandler(e) // modal functionality
         console.log('~*~*~*~*~*~*~*~*~', this.nextSibling)
         d3.select(this)
