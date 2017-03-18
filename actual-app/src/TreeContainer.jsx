@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Tree from './Tree.jsx'
 
 import { setTestRoute, setTestNode, setRouteVerb } from './reducers/selectedReducer';
-import { showModal } from './reducers/modalReducer';
+import { showModal, hideModal } from './reducers/modalReducer';
 
 
 

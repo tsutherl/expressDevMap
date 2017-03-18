@@ -15088,19 +15088,9 @@ var mapDispatch = function mapDispatch(dispatch) {
 		showModalNow: function showModalNow() {
 			dispatch((0, _modalReducer.showModal)());
 		},
-		hideModal: function (_hideModal) {
-			function hideModal() {
-				return _hideModal.apply(this, arguments);
-			}
-
-			hideModal.toString = function () {
-				return _hideModal.toString();
-			};
-
-			return hideModal;
-		}(function () {
-			dispatch(hideModal());
-		})
+		hideModal: function hideModal() {
+			dispatch((0, _modalReducer.hideModal)());
+		}
 	};
 };
 
