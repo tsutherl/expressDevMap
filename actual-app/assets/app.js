@@ -5730,163 +5730,7 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = setInnerHTML;
 
 /***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.fakeRouteTest = exports.setRouteVerb = exports.routeTestResult = exports.setTestNode = exports.hideModal = exports.showModal = exports.setTestRoute = exports.loadRoutes = undefined;
-
-var _redux = __webpack_require__(131);
-
-var _reduxLogger = __webpack_require__(299);
-
-var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-
-var _reduxThunk = __webpack_require__(300);
-
-var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-var _axios = __webpack_require__(78);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/*---------------CONSTANTS-----------------*/
-
-var RECEIVE_ROUTES = 'RECEIVE_ROUTES';
-
-var RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
-
-var SHOW_MODAL = 'SHOW_MODAL';
-
-var HIDE_MODAL = 'HIDE_MODAL';
-
-var SET_TEST_NODE = 'SET_TEST_NODE';
-
-var RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
-
-var SET_ROUTE_VERB = 'SET_ROUTE_VERB';
-
-/*---------------ACTION CREATORS-----------------*/
-
-var loadRoutes = exports.loadRoutes = function loadRoutes(routes) {
-    return {
-        type: RECEIVE_ROUTES,
-        routes: routes
-    };
-};
-
-var setTestRoute = exports.setTestRoute = function setTestRoute(testRoute) {
-    return {
-        type: RECEIVE_TEST_ROUTE,
-        testRoute: testRoute
-    };
-};
-
-var showModal = exports.showModal = function showModal() {
-    return {
-        type: SHOW_MODAL
-    };
-};
-
-var hideModal = exports.hideModal = function hideModal() {
-    return {
-        type: HIDE_MODAL
-    };
-};
-
-var setTestNode = exports.setTestNode = function setTestNode(node) {
-    return {
-        type: SET_TEST_NODE,
-        node: node
-    };
-};
-
-var routeTestResult = exports.routeTestResult = function routeTestResult(result) {
-    return {
-        type: RECEIVE_TEST_RESULT,
-        result: result
-    };
-};
-
-var setRouteVerb = exports.setRouteVerb = function setRouteVerb(verb) {
-    return {
-        type: SET_ROUTE_VERB,
-        verb: verb
-    };
-};
-/*---------------ASYNC ACTION CREATORS-----------------*/
-
-var fakeRouteTest = exports.fakeRouteTest = function fakeRouteTest(route, verb) {
-    var routeResponse = void 0;
-    route = route.slice(1);
-
-    return function (dispatch) {
-        _axios2.default[verb](route).then(function (res) {
-            routeResponse = res.data;
-            dispatch(routeTestResult(res.data));
-        }).catch(console.error);
-    };
-};
-
-/*---------------REDUCER-----------------*/
-
-var reducer = function reducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { showModal: false, activeTestNode: null, testRoute: null };
-    var action = arguments[1];
-
-    console.log("ACTION", action);
-    var newState = Object.assign({}, state);
-    switch (action.type) {
-        case RECEIVE_ROUTES:
-            newState.routes = action.routes;
-            break;
-        case RECEIVE_TEST_ROUTE:
-            newState.testRoute = action.testRoute;
-            break;
-        case SET_TEST_NODE:
-            newState.activeTestNode = action.node;
-            break;
-        case SHOW_MODAL:
-            newState.showModal = true;
-            break;
-        case HIDE_MODAL:
-            newState.showModal = false;
-            break;
-        case RECEIVE_TEST_RESULT:
-            newState.testResult = action.result;
-            break;
-        case SET_ROUTE_VERB:
-            newState.selectedRouteVerb = action.verb;
-            break;
-        default:
-            return state;
-    }
-    return newState;
-};
-
-var store = (0, _redux.createStore)(reducer, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)({ collapsed: true })));
-
-exports.default = store;
-
-// const testRoute = (route, verb) => {
-//     verb = 'put';
-//     // if(verb === 'put'){
-//         console.log('IN TEST ROUTE')
-//         console.log('axios?', axios[verb]);
-//         axios[verb]('/backend-tree/routes')
-//             .then(res => console.log(res.data))
-//             .catch(console.error)
-//     // }
-// }
-
-/***/ }),
+/* 44 */,
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14795,6 +14639,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// need to grab route & method from store -- this.selected.testRoute, this.selected.selectedRout
+
 var TestModal = function (_React$Component) {
 	_inherits(TestModal, _React$Component);
 
@@ -14848,8 +14694,8 @@ var TestModal = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
-			var route = this.props.testRoute;
-			var method = this.props.selectedRouteVerb;
+			var route = this.props.selected.testRoute;
+			var method = this.props.selected.selectedRouteVerb;
 			console.log("props in testModal ", this.props);
 			console.log("method in testModal render ", method);
 			return _react2.default.createElement(
@@ -14976,7 +14822,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(35);
 
-var _store = __webpack_require__(44);
+var _modalReducer = __webpack_require__(310);
+
+var _selectedReducer = __webpack_require__(311);
 
 var _TestModal = __webpack_require__(153);
 
@@ -14985,20 +14833,18 @@ var _TestModal2 = _interopRequireDefault(_TestModal);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(_ref) {
-	var testRoute = _ref.testRoute,
-	    activeTestNode = _ref.activeTestNode,
-	    selectedRouteVerb = _ref.selectedRouteVerb;
-	return { testRoute: testRoute, activeTestNode: activeTestNode, selectedRouteVerb: selectedRouteVerb };
+	var selected = _ref.selected;
+	return { selected: selected };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	return {
 		testThisRoute: function testThisRoute(route, verb) {
-			dispatch((0, _store.fakeRouteTest)(route, verb));
+			dispatch((0, _selectedReducer.routeTestAsync)(route, verb));
 		},
 		hideModal: function hideModal() {
 			console.log('in the function');
-			dispatch((0, _store.hideModal)());
+			dispatch((0, _modalReducer.hideModal)());
 		}
 	};
 };
@@ -15026,16 +14872,6 @@ var _d = __webpack_require__(158);
 
 var d3 = _interopRequireWildcard(_d);
 
-<<<<<<< HEAD
-var _TestModalContainer = __webpack_require__(154);
-
-var _TestModalContainer2 = _interopRequireDefault(_TestModalContainer);
-=======
-var _store = __webpack_require__(44);
-
-var _store2 = _interopRequireDefault(_store);
->>>>>>> move-modal
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -15056,7 +14892,7 @@ var Tree = function (_React$Component) {
   }
 
   _createClass(Tree, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
@@ -15111,7 +14947,7 @@ var Tree = function (_React$Component) {
         var pathEnds = [];
         var paths = g.selectAll('.link')._groups[0];
         while (e.parent) {
-          pathEnds.push(e.y + ',' + e.x);
+          pathEnds.push(e.y + "," + e.x);
           e = e.parent;
         }
         paths.forEach(function (path) {
@@ -15186,14 +15022,14 @@ var Tree = function (_React$Component) {
       .style("text-anchor", function (d) {
         return d.children ? "end" : "start";
       }).text(function (d) {
-        return d.children ? '' + d.data.name : d.data.name + ' [' + d.data.verb + ']';
+        return d.children ? "" + d.data.name : d.data.name + " [" + d.data.verb + "]";
       }); // 'name' is key on routes object
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
 
-      return _react2.default.createElement('div', { ref: 'routeMap' });
+      return _react2.default.createElement("div", { ref: "routeMap" });
     }
   }]);
 
@@ -15223,7 +15059,9 @@ var _Tree = __webpack_require__(155);
 
 var _Tree2 = _interopRequireDefault(_Tree);
 
-var _store = __webpack_require__(44);
+var _selectedReducer = __webpack_require__(311);
+
+var _modalReducer = __webpack_require__(310);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15239,20 +15077,30 @@ var mapState = function mapState(_ref) {
 var mapDispatch = function mapDispatch(dispatch) {
 	return {
 		setRouteVerb: function setRouteVerb(verb) {
-			dispatch((0, _store.setRouteVerb)(verb));
+			dispatch((0, _selectedReducer.setRouteVerb)(verb));
 		},
 		setTestRoute: function setTestRoute(testRoute) {
-			dispatch((0, _store.setTestRoute)(testRoute));
+			dispatch((0, _selectedReducer.setTestRoute)(testRoute));
 		},
 		setTestNode: function setTestNode(node) {
-			dispatch((0, _store.setTestNode)(node));
+			dispatch((0, _selectedReducer.setTestNode)(node));
 		},
 		showModalNow: function showModalNow() {
-			dispatch((0, _store.showModal)());
+			dispatch((0, _modalReducer.showModal)());
 		},
-		hideModal: function hideModal() {
-			dispatch((0, _store.hideModal)());
-		}
+		hideModal: function (_hideModal) {
+			function hideModal() {
+				return _hideModal.apply(this, arguments);
+			}
+
+			hideModal.toString = function () {
+				return _hideModal.toString();
+			};
+
+			return hideModal;
+		}(function () {
+			dispatch(hideModal());
+		})
 	};
 };
 
@@ -48302,27 +48150,29 @@ module.exports = function(module) {
 "use strict";
 
 
+var _axios = __webpack_require__(78);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(134);
 
+var _reactRedux = __webpack_require__(35);
+
+var _reactRouter = __webpack_require__(135);
+
 var _AppContainer = __webpack_require__(133);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
-var _reactRedux = __webpack_require__(35);
-
-var _store = __webpack_require__(44);
+var _store = __webpack_require__(313);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _reactRouter = __webpack_require__(135);
-
-var _axios = __webpack_require__(78);
-
-var _axios2 = _interopRequireDefault(_axios);
+var _routeReducer = __webpack_require__(312);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48338,9 +48188,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var getRoutes = function getRoutes() {
     (0, _axios2.default)('/backend-tree/routes').then(function (routes) {
         console.log('OBJ', routes.data);
-        _store2.default.dispatch((0, _store.loadRoutes)(routes.data));
+        _store2.default.dispatch((0, _routeReducer.loadRoutes)(routes.data));
     });
 };
+
+//need to refactor reducer imports
+
 
 (0, _reactDom.render)(_react2.default.createElement(
     _reactRedux.Provider,
@@ -48351,6 +48204,245 @@ var getRoutes = function getRoutes() {
         _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default, onEnter: getRoutes })
     )
 ), document.getElementById('app'));
+
+/***/ }),
+/* 310 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*---------------CONSTANTS-----------------*/
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var SHOW_MODAL = 'SHOW_MODAL';
+
+var HIDE_MODAL = 'HIDE_MODAL';
+
+/*---------------ACTION CREATORS-----------------*/
+
+var showModal = exports.showModal = function showModal() {
+    return {
+        type: SHOW_MODAL
+    };
+};
+
+var hideModal = exports.hideModal = function hideModal() {
+    return {
+        type: HIDE_MODAL
+    };
+};
+
+/*---------------- REDUCER ---------------- */
+
+var modalReducer = exports.modalReducer = function modalReducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var action = arguments[1];
+
+    switch (action.type) {
+        case SHOW_MODAL:
+            return true;
+            break;
+        case HIDE_MODAL:
+            return false;
+            break;
+    }
+    return state;
+};
+
+/***/ }),
+/* 311 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.selectedReducer = exports.routeTestAsync = exports.setRouteVerb = exports.routeTestResult = exports.setTestNode = exports.setTestRoute = undefined;
+
+var _axios = __webpack_require__(78);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// action creators and reducers in this file deal with all the information we need
+// to select a route end point (node from our map) to test, put that route's information
+// on our store, make an asynchronous request to test the route, and return the results
+// of that test to the store
+
+
+/*---------------CONSTANTS-----------------*/
+
+var RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
+
+var SET_TEST_NODE = 'SET_TEST_NODE';
+
+var SET_ROUTE_VERB = 'SET_ROUTE_VERB';
+
+var RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
+
+/*---------------ACTION CREATORS-----------------*/
+
+var setTestRoute = exports.setTestRoute = function setTestRoute(testRoute) {
+    return {
+        type: RECEIVE_TEST_ROUTE,
+        testRoute: testRoute
+    };
+};
+
+var setTestNode = exports.setTestNode = function setTestNode(node) {
+    return {
+        type: SET_TEST_NODE,
+        node: node
+    };
+};
+
+var routeTestResult = exports.routeTestResult = function routeTestResult(result) {
+    return {
+        type: RECEIVE_TEST_RESULT,
+        result: result
+    };
+};
+
+var setRouteVerb = exports.setRouteVerb = function setRouteVerb(verb) {
+    return {
+        type: SET_ROUTE_VERB,
+        verb: verb
+    };
+};
+
+/*---------------ASYNC ACTION CREATORS-----------------*/
+
+var routeTestAsync = exports.routeTestAsync = function routeTestAsync(route, verb) {
+    var routeResponse = void 0;
+    route = route.slice(1);
+
+    return function (dispatch) {
+        _axios2.default[verb](route).then(function (res) {
+            routeResponse = res.data;
+            dispatch(routeTestResult(res.data));
+        }).catch(console.error);
+    };
+};
+
+var selectedReducer = exports.selectedReducer = function selectedReducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { activeTestNode: null, testRoute: null };
+    var action = arguments[1];
+
+
+    var newState = Object.assign({}, state);
+
+    switch (action.type) {
+
+        case RECEIVE_TEST_ROUTE:
+            newState.testRoute = action.testRoute;
+            break;
+        case SET_TEST_NODE:
+            newState.activeTestNode = action.node;
+            break;
+        case RECEIVE_TEST_RESULT:
+            newState.testResult = action.result;
+            break;
+        case SET_ROUTE_VERB:
+            newState.selectedRouteVerb = action.verb;
+            break;
+        default:
+            return state;
+    }
+    return newState;
+};
+
+/***/ }),
+/* 312 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*--------------- CONSTANT -----------------*/
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var RECEIVE_ROUTES = 'RECEIVE_ROUTES';
+
+/*---------------ACTION CREATOR-----------------*/
+
+var loadRoutes = exports.loadRoutes = function loadRoutes(routes) {
+	return {
+		type: RECEIVE_ROUTES,
+		routes: routes
+	};
+};
+
+/*---------------REDUCER-----------------*/
+
+var routeReducer = exports.routeReducer = function routeReducer() {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	var action = arguments[1];
+
+
+	switch (action.type) {
+		case RECEIVE_ROUTES:
+			return action.routes;
+
+	}
+
+	return state;
+};
+
+/***/ }),
+/* 313 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _axios = __webpack_require__(78);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _redux = __webpack_require__(131);
+
+var _reduxLogger = __webpack_require__(299);
+
+var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
+var _reduxThunk = __webpack_require__(300);
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _modalReducer = __webpack_require__(310);
+
+var _routeReducer = __webpack_require__(312);
+
+var _selectedReducer = __webpack_require__(311);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// combine reducers into a rootReducer
+var rootReducer = (0, _redux.combineReducers)({
+    routes: _routeReducer.routeReducer,
+    showModal: _modalReducer.modalReducer,
+    selected: _selectedReducer.selectedReducer
+});
+
+// construct our store with rootReducer and middleware
+
+
+// import reducers from other files
+var store = (0, _redux.createStore)(rootReducer, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)({ collapsed: true })));
+
+exports.default = store;
 
 /***/ })
 /******/ ]);

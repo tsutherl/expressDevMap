@@ -2,7 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Tree from './Tree.jsx'
-import { setTestRoute, showModal, setTestNode, setRouteVerb, hideModal } from './store'
+
+import { setTestRoute, setTestNode, setRouteVerb } from './reducers/selectedReducer';
+import { showModal } from './reducers/modalReducer';
 
 
 

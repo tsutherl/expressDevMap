@@ -3,21 +3,21 @@
 1 verbose cli   '/usr/local/bin/npm',
 1 verbose cli   'run',
 1 verbose cli   'run-example' ]
-2 info using npm@3.10.3
-3 info using node@v6.7.0
+2 info using npm@3.10.8
+3 info using node@v7.0.0
 4 verbose run-script [ 'prerun-example', 'run-example', 'postrun-example' ]
 5 info lifecycle backend-tree@1.0.0~prerun-example: backend-tree@1.0.0
 6 silly lifecycle backend-tree@1.0.0~prerun-example: no script for prerun-example, continuing
 7 info lifecycle backend-tree@1.0.0~run-example: backend-tree@1.0.0
 8 verbose lifecycle backend-tree@1.0.0~run-example: unsafe-perm in lifecycle true
-9 verbose lifecycle backend-tree@1.0.0~run-example: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/Niz/Documents/GH_Fellow/backend-tree/example-app/node_modules/.bin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin:/Applications/Postgres.app/Contents/Versions/latest/bin
-10 verbose lifecycle backend-tree@1.0.0~run-example: CWD: /Users/Niz/Documents/GH_Fellow/backend-tree/example-app
+9 verbose lifecycle backend-tree@1.0.0~run-example: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/caraweber/Documents/GHA Fellowship/backend-tree/example-app/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Postgres.app/Contents/Versions/latest/bin
+10 verbose lifecycle backend-tree@1.0.0~run-example: CWD: /Users/caraweber/Documents/GHA Fellowship/backend-tree/example-app
 11 silly lifecycle backend-tree@1.0.0~run-example: Args: [ '-c', 'node index.js' ]
 12 silly lifecycle backend-tree@1.0.0~run-example: Returned: code: 1  signal: null
 13 info lifecycle backend-tree@1.0.0~run-example: Failed to exec run-example script
 14 verbose stack Error: backend-tree@1.0.0 run-example: `node index.js`
 14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:242:16)
+14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at EventEmitter.emit (events.js:191:7)
 14 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:40:14)
@@ -26,11 +26,11 @@
 14 verbose stack     at maybeClose (internal/child_process.js:877:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid backend-tree@1.0.0
-16 verbose cwd /Users/Niz/Documents/GH_Fellow/backend-tree/example-app
+16 verbose cwd /Users/caraweber/Documents/GHA Fellowship/backend-tree/example-app
 17 error Darwin 15.6.0
 18 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "run-example"
-19 error node v6.7.0
-20 error npm  v3.10.3
+19 error node v7.0.0
+20 error npm  v3.10.8
 21 error code ELIFECYCLE
 22 error backend-tree@1.0.0 run-example: `node index.js`
 22 error Exit status 1

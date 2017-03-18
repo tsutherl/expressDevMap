@@ -3,6 +3,7 @@
 import React from 'react';
 import Closex from './xImage'
 
+// need to grab route & method from store -- this.selected.testRoute, this.selected.selectedRout
 
 export default class TestModal extends React.Component {
 	constructor (props) {
@@ -43,8 +44,8 @@ export default class TestModal extends React.Component {
 	}
 
 	render() {
-		const route = this.props.testRoute;
-		const method = this.props.selectedRouteVerb;
+		const route = this.props.selected.testRoute;
+		const method = this.props.selected.selectedRouteVerb;
 		console.log("props in testModal ", this.props);
 		console.log("method in testModal render ", method);
 			return (
