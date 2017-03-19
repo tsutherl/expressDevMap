@@ -2,13 +2,13 @@
 1 verbose cli [ '/usr/local/Cellar/node/7.4.0/bin/node',
 1 verbose cli   '/usr/local/bin/npm',
 1 verbose cli   'run',
-1 verbose cli   'run-example' ]
+1 verbose cli   'example' ]
 2 info using npm@4.0.5
 3 info using node@v7.4.0
 4 verbose stack Error: ENOENT: no such file or directory, open '/Users/tatianasutherland/coding-stuffs/portfolio/backend-tree/package.json'
 5 verbose cwd /Users/tatianasutherland/coding-stuffs/portfolio/backend-tree
 6 error Darwin 16.1.0
-7 error argv "/usr/local/Cellar/node/7.4.0/bin/node" "/usr/local/bin/npm" "run" "run-example"
+7 error argv "/usr/local/Cellar/node/7.4.0/bin/node" "/usr/local/bin/npm" "run" "example"
 8 error node v7.4.0
 9 error npm  v4.0.5
 10 error path /Users/tatianasutherland/coding-stuffs/portfolio/backend-tree/package.json

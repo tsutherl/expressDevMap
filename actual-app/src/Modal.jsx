@@ -15,6 +15,8 @@ export default class Modal extends React.Component {
 			headers : {},
 			fadingOut: false,
 			currentOption: 'headers',
+			options: ['headers', 'body'],
+			idx: 0
 		}
 		this.handleClick = this.handleClick.bind(this);
 		this.onChange = this.onChange.bind(this);
@@ -31,7 +33,12 @@ export default class Modal extends React.Component {
 	}
 	// to do: change handle click to incorporate reqBody / headers for put or post 
 	// to do above, you will need to change the async action creator (in store ) to
-	// pass headers to axios request 
+	// pass headers to axios request
+
+	toggleOptions(evt) {
+		const idx = +evt.target.value;
+		this.setState({ idx });
+	} 
 
 	onChange(e) {
 		switch(e.target.name){
@@ -45,12 +52,13 @@ export default class Modal extends React.Component {
 		}
 		console.log("in onChange, here is this.reqBody ", this.state.reqBody);
 	}
-	toggleOptions (e) {
+	toggleType (evt) {
 		const update = this.state.currentOption === 'headers'?{currentOption: 'requestBody'} : {currentOption: 'headers'}
 		this.setState(update)
 	}
 
 	render() {
+		const option = this.state.options[this.state.idx]
 		const route = this.props.testRoute;
 		const method = this.props.selectedRouteVerb;
 		return (
@@ -62,12 +70,25 @@ export default class Modal extends React.Component {
 					</div>
 					<div className='testing'>
 						<h2 id='request-verb' >{method}</h2>
-						<h2>{this.props.testRoute}</h2>
+						<h2>{this.props.testRoute}:::::::::::::::::::::::::::::</h2>
 					</div>
 					<div className='headers-body'>
-						<h3 id='headers'>Headers</h3>
-						<h3 id='body'>Body</h3>
+						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
+						<button className={`headers ${option === 'body'? 'selected' : ''}`}value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
+					<div className='radio-buttons'>
+						<div id='radio-urlencoded'>
+							<input type="radio" name="radio" />
+							<label for="radio01"><span></span>urlencoded</label>
+						</div>
+
+						<div id='radio-json'>
+							<input type="radio" name="radio" />
+							<label for="radio02"><span></span>JSON</label>
+						</div>
+					</div>
+					<Headers/>
+
 						{/*{method === 'put' || method === 'post' ? 
 							<div>
 								<div className='encoding-options' onClick={this.toggleOptions}>Headers</div>

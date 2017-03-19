@@ -25,8 +25,8 @@ class Headers extends React.Component {
         return(
             <form className = "form-inline">
                 <div className='ro-row form-group'>
-                    <input name="headersKey" onClick={this.addNewInput} value='key'></input>
-                    <input name="headersValue" onClick={this.addNewInput} value='value'></input>
+                    <input className="headersKey" onClick={this.addNewInput} value='key'></input>
+                    <input className="headersValue" onClick={this.addNewInput} value='value'></input>
                 {/*  button here to add another set (key-value pair) for headers
                     would have to capture their data separately */}
                 </div>

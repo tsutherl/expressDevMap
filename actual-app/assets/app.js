@@ -14818,8 +14818,8 @@ var Headers = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'ro-row form-group' },
-                    _react2.default.createElement('input', { name: 'headersKey', onClick: this.addNewInput, value: 'key' }),
-                    _react2.default.createElement('input', { name: 'headersValue', onClick: this.addNewInput, value: 'value' })
+                    _react2.default.createElement('input', { className: 'headersKey', onClick: this.addNewInput, value: 'key' }),
+                    _react2.default.createElement('input', { className: 'headersValue', onClick: this.addNewInput, value: 'value' })
                 ),
                 this.state.numKeyValue.map(function (input) {
                     return input;
@@ -14884,7 +14884,9 @@ var Modal = function (_React$Component) {
 			reqBody: {},
 			headers: {},
 			fadingOut: false,
-			currentOption: 'headers'
+			currentOption: 'headers',
+			options: ['headers', 'body'],
+			idx: 0
 		};
 		_this.handleClick = _this.handleClick.bind(_this);
 		_this.onChange = _this.onChange.bind(_this);
@@ -14906,8 +14908,14 @@ var Modal = function (_React$Component) {
 		}
 		// to do: change handle click to incorporate reqBody / headers for put or post 
 		// to do above, you will need to change the async action creator (in store ) to
-		// pass headers to axios request 
+		// pass headers to axios request
 
+	}, {
+		key: 'toggleOptions',
+		value: function toggleOptions(evt) {
+			var idx = +evt.target.value;
+			this.setState({ idx: idx });
+		}
 	}, {
 		key: 'onChange',
 		value: function onChange(e) {
@@ -14923,8 +14931,8 @@ var Modal = function (_React$Component) {
 			console.log("in onChange, here is this.reqBody ", this.state.reqBody);
 		}
 	}, {
-		key: 'toggleOptions',
-		value: function toggleOptions(e) {
+		key: 'toggleType',
+		value: function toggleType(evt) {
 			var update = this.state.currentOption === 'headers' ? { currentOption: 'requestBody' } : { currentOption: 'headers' };
 			this.setState(update);
 		}
@@ -14933,6 +14941,7 @@ var Modal = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
+			var option = this.state.options[this.state.idx];
 			var route = this.props.testRoute;
 			var method = this.props.selectedRouteVerb;
 			return _react2.default.createElement(
@@ -14964,23 +14973,51 @@ var Modal = function (_React$Component) {
 						_react2.default.createElement(
 							'h2',
 							null,
-							this.props.testRoute
+							this.props.testRoute,
+							':::::::::::::::::::::::::::::'
 						)
 					),
 					_react2.default.createElement(
 						'div',
 						{ className: 'headers-body' },
 						_react2.default.createElement(
-							'h3',
-							{ id: 'headers' },
+							'button',
+							{ className: 'headers ' + (option === 'headers' ? 'selected' : ''), value: 0, onClick: this.toggleOptions },
 							'Headers'
 						),
 						_react2.default.createElement(
-							'h3',
-							{ id: 'body' },
+							'button',
+							{ className: 'headers ' + (option === 'body' ? 'selected' : ''), value: 1, onClick: this.toggleOptions },
 							'Body'
 						)
-					)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'radio-buttons' },
+						_react2.default.createElement(
+							'div',
+							{ id: 'radio-urlencoded' },
+							_react2.default.createElement('input', { type: 'radio', name: 'radio' }),
+							_react2.default.createElement(
+								'label',
+								{ 'for': 'radio01' },
+								_react2.default.createElement('span', null),
+								'urlencoded'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ id: 'radio-json' },
+							_react2.default.createElement('input', { type: 'radio', name: 'radio' }),
+							_react2.default.createElement(
+								'label',
+								{ 'for': 'radio02' },
+								_react2.default.createElement('span', null),
+								'JSON'
+							)
+						)
+					),
+					_react2.default.createElement(_Headers2.default, null)
 				)
 			);
 		}
