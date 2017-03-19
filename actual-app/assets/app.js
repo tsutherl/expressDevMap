@@ -14951,11 +14951,7 @@ var Modal = function (_React$Component) {
 								} },
 							'Test'
 						),
-						_react2.default.createElement(
-							'div',
-							{ onClick: this.closeButton },
-							_react2.default.createElement(_xImage2.default, null)
-						)
+						_react2.default.createElement(_xImage2.default, { onClick: this.closeButton })
 					),
 					_react2.default.createElement(
 						'div',
@@ -14976,12 +14972,12 @@ var Modal = function (_React$Component) {
 						{ className: 'headers-body' },
 						_react2.default.createElement(
 							'h3',
-							null,
+							{ id: 'headers' },
 							'Headers'
 						),
 						_react2.default.createElement(
 							'h3',
-							null,
+							{ id: 'body' },
 							'Body'
 						)
 					)

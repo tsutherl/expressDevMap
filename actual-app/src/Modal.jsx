@@ -58,17 +58,15 @@ export default class Modal extends React.Component {
 				<div className='info'>
 					<div className='nav'>
 						<button className='nav-children' onClick={()=>this.handleClick(route, method)}>Test</button>
-						<div onClick={this.closeButton}>
-							<Closex />
-						</div>
+						<Closex onClick={this.closeButton}/>
 					</div>
 					<div className='testing'>
 						<h2 id='request-verb' >{method}</h2>
 						<h2>{this.props.testRoute}</h2>
 					</div>
 					<div className='headers-body'>
-						<h3>Headers</h3>
-						<h3>Body</h3>
+						<h3 id='headers'>Headers</h3>
+						<h3 id='body'>Body</h3>
 					</div>
 						{/*{method === 'put' || method === 'post' ? 
 							<div>
