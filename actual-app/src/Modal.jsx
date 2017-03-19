@@ -3,6 +3,7 @@
 import React from 'react';
 import Closex from './xImage'
 import Headers from './Headers.jsx'
+import Body from './Body.jsx'
 import RequestBody from './RequestBody.jsx'
 
 
@@ -52,10 +53,7 @@ export default class Modal extends React.Component {
 		}
 		console.log("in onChange, here is this.reqBody ", this.state.reqBody);
 	}
-	toggleType (evt) {
-		const update = this.state.currentOption === 'headers'?{currentOption: 'requestBody'} : {currentOption: 'headers'}
-		this.setState(update)
-	}
+	
 
 	render() {
 		const option = this.state.options[this.state.idx]
@@ -76,18 +74,8 @@ export default class Modal extends React.Component {
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
 						<button className={`headers ${option === 'body'? 'selected' : ''}`}value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
-					<div className='radio-buttons'>
-						<div id='radio-urlencoded'>
-							<input type="radio" name="radio" />
-							<label for="radio01"><span></span>urlencoded</label>
-						</div>
-
-						<div id='radio-json'>
-							<input type="radio" name="radio" />
-							<label for="radio02"><span></span>JSON</label>
-						</div>
-					</div>
-					<Headers/>
+					{option === 'headers' ? <Headers/> : <Body/> }
+					
 
 						{/*{method === 'put' || method === 'post' ? 
 							<div>

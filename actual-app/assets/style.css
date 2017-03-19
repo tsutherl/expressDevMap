@@ -136,9 +136,12 @@ body {
     border-bottom: 1px solid #999999;
 }
 
-.modal .headers-body h3 {
+.modal .headers-body button {
     margin: 0;
-    padding: .6em .6em ;    
+    padding: 1.3em 3em ;
+    text-decoration: none;
+    border: none;
+    background-color: white;    
 }
 
 .modal .headers-body .selected {
