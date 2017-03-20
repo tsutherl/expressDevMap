@@ -29,6 +29,7 @@ export default class Modal extends React.Component {
 		this.props.testThisRoute(route, verb);
 	}
 	closeButton () {
+		console.log('trying to close')
 		this.setState({fadingOut: true})
 		setTimeout(this.props.hideModal, 1000)
 	}
