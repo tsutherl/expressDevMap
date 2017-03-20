@@ -83,7 +83,7 @@ body {
     flex: 3;
     align-self: center;
     margin: 0;
-    padding: .3em;
+    padding: 1.1em;
     border: 1px solid #999999;
     border-left: 0;
     /*max-width:400px;
@@ -92,8 +92,8 @@ body {
     white-space: nowrap; 
     width: 12em; 
     overflow: hidden; 
-    border: 1px solid #000000;
     text-overflow:ellipsis;
+    font-size: 14px;
 
 }
 
@@ -107,8 +107,9 @@ body {
     text-transform: uppercase;
     align-self: center;
     margin: 0;
-    padding: .3em;
+    padding: .9em;
     border: 1px solid #999999;
+    font-size: 16px;
 }
 
 .modal .nav {
@@ -143,10 +144,11 @@ body {
 
 .modal .headers-body button {
     margin: 0;
-    padding: 1.3em 3em ;
+    padding: 1em 3em ;
     text-decoration: none;
     border: none;
-    background-color: white;    
+    background-color: white; 
+    font-size: 14px;   
 }
 
 .modal .headers-body .selected {
@@ -177,8 +179,13 @@ body {
     border-bottom: 2px solid #94584f;
 }
 
+* {
+    font-family: "Helvetica Neue", Helvetica;
+}
 
-
+svg text {
+    font-size: 12px;
+}
 
 
 

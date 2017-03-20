@@ -9279,7 +9279,7 @@ var Headers = function (_React$Component) {
             keyValuePairs: [0]
         };
         _this.addInput = _this.addInput.bind(_this);
-        // this.removeInput = this.removeInput.bind(this)
+        _this.removeInput = _this.removeInput.bind(_this);
         return _this;
     }
 

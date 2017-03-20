@@ -7,7 +7,7 @@ class Headers extends React.Component {
             keyValuePairs: [0]
         }
         this.addInput = this.addInput.bind(this)
-        // this.removeInput = this.removeInput.bind(this)
+        this.removeInput = this.removeInput.bind(this)
     }
 
     removeInput(idx) {
