@@ -12,8 +12,15 @@ export default class Modal extends React.Component {
 		super(props);
 
 		this.state = {
-			reqBody : {},
-			headers : {},
+			testingInfo: {
+				reqBody: {
+					headers: {},
+					body: {
+						urlencoded: {},
+						json: {}
+					}
+				}
+			},
 			fadingOut: false,
 			currentOption: 'headers',
 			options: ['headers', 'body'],

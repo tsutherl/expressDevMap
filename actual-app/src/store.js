@@ -18,7 +18,9 @@ const SET_TEST_NODE = 'SET_TEST_NODE';
 
 const RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
 
-const SET_ROUTE_VERB = 'SET_ROUTE_VERB';
+const SET_ROUTE_VERB = 'RECEIVE_TEST_VERB';
+
+const 
 
 /*---------------ACTION CREATORS-----------------*/
 
