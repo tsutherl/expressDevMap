@@ -168,14 +168,15 @@ body {
     padding: .8em .7em 1em;
 }
 
-.ro-row input {
+.form-input input {
     border: 0;
     outline: 0;
     background: transparent;
     border-bottom: 1px solid #999999;
+    margin: 0 .6em;
 }
 
-.ro-row input:focus {
+.form-input input:focus {
     border-bottom: 2px solid #94584f;
 }
 
@@ -186,6 +187,17 @@ body {
 svg text {
     font-size: 12px;
 }
+
+.modal .form .form-input {
+    display: flex;
+    padding: 1em 1em .1em;
+}
+
+.modal textarea {
+    margin: 1.3em;
+}
+
+
 
 
 

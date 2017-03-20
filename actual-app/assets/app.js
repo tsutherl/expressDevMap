@@ -9309,13 +9309,13 @@ var Headers = function (_React$Component) {
 
             return _react2.default.createElement(
                 'form',
-                { className: 'form-inline' },
+                { className: 'form' },
                 this.state.keyValuePairs.map(function (num) {
                     return _react2.default.createElement(
                         'div',
-                        { key: num, className: 'ro-row form-group' },
-                        _react2.default.createElement('input', { className: 'headersKey', onClick: _this2.addInput.bind(_this2, num) }),
-                        _react2.default.createElement('input', { className: 'headersValue', onClick: _this2.addInput.bind(_this2, num) }),
+                        { key: num, className: 'form-input' },
+                        _react2.default.createElement('input', { className: 'headersKey', onClick: _this2.addInput.bind(_this2, num), placeholder: 'key' }),
+                        _react2.default.createElement('input', { className: 'headersValue', onClick: _this2.addInput.bind(_this2, num), placeholder: 'value' }),
                         _react2.default.createElement(
                             'button',
                             { onClick: _this2.removeInput.bind(_this2, num) },

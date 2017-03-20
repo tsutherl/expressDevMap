@@ -27,13 +27,13 @@ class Headers extends React.Component {
     }
     render() {
         return(
-            <form className = "form-inline">
+            <form className = "form">
                 {
                     this.state.keyValuePairs.map((num) => {
                         return(
-                            <div key={num} className='ro-row form-group'>
-                                <input className="headersKey" onClick={this.addInput.bind(this, num)}></input>
-                                <input className="headersValue" onClick={this.addInput.bind(this, num)}></input>
+                            <div key={num} className='form-input'>
+                                <input className="headersKey" onClick={this.addInput.bind(this, num)} placeholder='key'></input>
+                                <input className="headersValue" onClick={this.addInput.bind(this, num)} placeholder='value'></input>
                                 <button onClick={this.removeInput.bind(this, num)} >x</button> 
                             </div>
                         )
