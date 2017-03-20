@@ -86,15 +86,20 @@ body {
     padding: .3em;
     border: 1px solid #999999;
     border-left: 0;
-    max-width:400px;
+    /*max-width:400px;
     white-space:nowrap; 
-    overflow:hidden;
+    overflow:hidden;*/
+    white-space: nowrap; 
+    width: 12em; 
+    overflow: hidden; 
+    border: 1px solid #000000;
     text-overflow:ellipsis;
 
 }
 
 .modal .testing h2:hover {
-   overflow:visible;
+   text-overflow: inherit;
+   overflow: visible;
 }
 
 .modal .testing #request-verb {

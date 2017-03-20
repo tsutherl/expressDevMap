@@ -4,34 +4,40 @@ class Headers extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            numKeyValue: []
+            keyValuePairs: [0]
         }
-        this.addNewInput = this.addNewInput.bind(this)
+        this.addInput = this.addInput.bind(this)
+        // this.removeInput = this.removeInput.bind(this)
     }
 
-    addNewInput () {
-        console.log('this', this.state)
-        const updated = this.state.numKeyValue.concat(
-            <div className='ro-row form-group'>
-                <input name="headersKey" onClick={this.addNewInput} value='key'></input>
-                <input name="headersValue" onClick={this.addNewInput} value='value'></input>
-            {/*  button here to add another set (key-value pair) for headers
-                would have to capture their data separately */}
-            </div>
-        )
-        this.setState({numKeyValue: updated})
+    removeInput(idx) {
+        const newState = this.state.keyValuePairs;
+        if (newState.indexOf(idx) > -1 && idx > 0) {
+            newState.splice(idx, 1);
+            this.setState({keyValuePairs: newState})
+        }
+    }
+
+    addInput (idx) {
+        const {keyValuePairs} = this.state
+        if (idx === keyValuePairs.length - 1) {
+            let newState = keyValuePairs.concat(keyValuePairs.length)
+            this.setState({keyValuePairs: newState})
+        }
     }
     render() {
         return(
             <form className = "form-inline">
-                <div className='ro-row form-group'>
-                    <input className="headersKey" onClick={this.addNewInput} value='key'></input>
-                    <input className="headersValue" onClick={this.addNewInput} value='value'></input>
-                {/*  button here to add another set (key-value pair) for headers
-                    would have to capture their data separately */}
-                </div>
                 {
-                    this.state.numKeyValue.map(input => input)
+                    this.state.keyValuePairs.map((num) => {
+                        return(
+                            <div key={num} className='ro-row form-group'>
+                                <input className="headersKey" onClick={this.addInput.bind(this, num)}></input>
+                                <input className="headersValue" onClick={this.addInput.bind(this, num)}></input>
+                                <button onClick={this.removeInput.bind(this, num)} >x</button> 
+                            </div>
+                        )
+                    })
                 }
             </form>
         )
@@ -39,4 +45,8 @@ class Headers extends React.Component {
 }
 
 export default Headers
+
+//if clicked and it is the last thing in the array 
+//  add another key and value with a key value set to its index in the array
+//else do nothing
 

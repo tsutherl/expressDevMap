@@ -68,7 +68,7 @@ export default class Modal extends React.Component {
 					</div>
 					<div className='testing'>
 						<h2 id='request-verb' >{method}</h2>
-						<h2>{this.props.testRoute}:::::::::::::::::::::::::::::</h2>
+						<h2>{this.props.testRoute}thisIsAllTheOverflowText</h2>
 					</div>
 					<div className='headers-body'>
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
