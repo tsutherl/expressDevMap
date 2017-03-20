@@ -30,9 +30,13 @@ body {
     margin: auto;
 }
 
+/*TODO: fix positioning on small screen 
+media query probably needed 
+if view width is less than 1000 we'll have media query that does sth different*/
 .modal {
     height: 100%;
     width: 30%;
+    min-width: 300px;
     right: 70%;
     position: absolute;
     overflow: hidden;
@@ -147,7 +151,7 @@ body {
     padding: 1em 3em ;
     text-decoration: none;
     border: none;
-    background-color: white; 
+    background-color: transparent; 
     font-size: 14px;   
 }
 
