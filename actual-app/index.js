@@ -18,7 +18,6 @@ const parseRoutes = require('./parse-routes');
 //added second optional input to make the call for the routers much simpler
 
 
-
 module.exports = app => {
 
     const router = express.Router();
