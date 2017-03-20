@@ -16,11 +16,11 @@ const HIDE_MODAL = 'HIDE_MODAL';
 
 const SET_TEST_NODE = 'SET_TEST_NODE';
 
-const RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
+const RECEIVE_TEST_RESPONSE = 'RECEIVE_TEST_RESPONSE';
 
-const SET_ROUTE_VERB = 'RECEIVE_TEST_VERB';
+const SET_TEST_VERB = 'RECEIVE_TEST_VERB';
 
-const 
+const RECEIVE_TEST_REQUEST = 'RECEIVE_TEST_REQUEST'
 
 /*---------------ACTION CREATORS-----------------*/
 
@@ -48,29 +48,79 @@ export const setTestNode = (node) =>({
     node
 })
 
-export const routeTestResult = (result) => ({
-    type: RECEIVE_TEST_RESULT,
+export const routeTestResponse = (result) => ({
+    type: RECEIVE_TEST_RESPONSE,
     result
 })
 
 export const setRouteVerb = (verb) => ({
-    type: SET_ROUTE_VERB, 
+    type: SET_TEST_VERB, 
     verb
+})
+
+export const makeRequest = (requestInfo) => ({
+    type: RECEIVE_TEST_REQUEST,
+    requestInfo
 })
 /*---------------ASYNC ACTION CREATORS-----------------*/
 
-export const fakeRouteTest = (route, verb) => {
+//previously used to test route
+// export const fakeRouteTest = (route, verb) => {
+//     let routeResponse;
+//     route = route.slice(1);
+
+//     return (dispatch) => {axios[verb](route)
+//             .then(res => {
+//                 routeResponse = res.data;
+//                 dispatch(routeTestResult(res.data));
+//             })
+//             .catch(console.error)
+//     }
+// }
+
+//STUPID QUESTION: why can we just make an axios request from here and it properly hits example apps routes - need to just step through the logic for this
+
+
+export const testRoute = (route, verb, info) => {
+    console.log('testing routes', route, verb, info)
     let routeResponse;
     route = route.slice(1);
-
-    return (dispatch) => {axios[verb](route)
-            .then(res => {
-                routeResponse = res.data;
-                dispatch(routeTestResult(res.data));
-            })
-            .catch(console.error)
+    if (verb === 'post' || verb === 'put') {
+        return (dispatch) => {
+            const headers = {headers: info.headers}
+            const body = info.body
+            axios[verb](route, body, headers)  
+                .then(res => {
+                    routeResponse = res.data;
+                    dispatch(routeTestResponse(res.data));
+                })
+                .catch(console.error)
+        }
+    } else {
+        return (dispatch) => {
+            const headers = {headers: info.headers}
+            axios[verb](route, headers)
+                .then(res => {
+                    routeResponse = res.data;
+                    dispatch(routeTestResponse(res.data));
+                })
+                .catch(console.error)
+        }
     }
 }
+
+// export const fakeRouteTest = (route, verb) => {
+//     let routeResponse;
+//     route = route.slice(1);
+
+//     return (dispatch) => {axios[verb](route)
+//             .then(res => {
+//                 routeResponse = res.data;
+//                 dispatch(routeTestResult(res.data));
+//             })
+//             .catch(console.error)
+//     }
+// }
 
 
 
@@ -95,10 +145,10 @@ const reducer = (state={showModal: false, activeTestNode: null, testRoute: null}
         case HIDE_MODAL:
             newState.showModal = false;
             break;
-        case RECEIVE_TEST_RESULT:
+        case RECEIVE_TEST_RESPONSE:
             newState.testResult = action.result;
             break;
-        case SET_ROUTE_VERB: 
+        case SET_TEST_VERB: 
             newState.selectedRouteVerb = action.verb;
             break;
         default:

@@ -9,7 +9,7 @@ export default class Tree extends React.Component {
   constructor(props){
     super(props);
       
-        
+          
   }
 
   componentDidMount(){

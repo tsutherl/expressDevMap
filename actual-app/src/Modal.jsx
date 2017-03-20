@@ -13,13 +13,8 @@ export default class Modal extends React.Component {
 
 		this.state = {
 			testingInfo: {
-				reqBody: {
-					headers: {},
-					body: {
-						urlencoded: {},
-						json: {}
-					}
-				}
+				headers: {},
+				body: {}
 			},
 			fadingOut: false,
 			currentOption: 'headers',
@@ -32,8 +27,8 @@ export default class Modal extends React.Component {
 		this.toggleOptions = this.toggleOptions.bind(this)
 	}
 
-	handleClick(route, verb) {
-		this.props.testThisRoute(route, verb);
+	handleClick(route, verb, testingInfo) {
+		this.props.testThisRoute(route, verb, testingInfo);
 	}
 	closeButton () {
 		console.log('trying to close')
@@ -67,11 +62,13 @@ export default class Modal extends React.Component {
 		const option = this.state.options[this.state.idx]
 		const route = this.props.testRoute;
 		const method = this.props.selectedRouteVerb;
+		const {testingInfo} = this.state
+		console.log('testingInfo', testingInfo)
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
 					<div className='nav'>
-						<button className='nav-children' onClick={()=>this.handleClick(route, method)}>Test</button>
+						<button className='nav-children' onClick={()=>this.handleClick(route, method, testingInfo)}>Test</button>
 						<Closex onClick={this.closeButton}/>
 					</div>
 					<div className='testing'>
