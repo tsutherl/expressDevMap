@@ -14991,6 +14991,7 @@ var Modal = function (_React$Component) {
 	}, {
 		key: 'onChange',
 		value: function onChange(e) {
+			// console.log(setting the s)
 			switch (e.target.name) {
 				case "key":
 					this.setState({ testingInfo: { headers: _defineProperty({}, e.target.value, null), body: {} } });

@@ -42,6 +42,7 @@ export default class Modal extends React.Component {
 	} 
 
 	onChange(e) {
+		// console.log(setting the s)
 		switch(e.target.name){
 			case "key":
 				this.setState({testingInfo: {headers: {[e.target.value]: null}, body: {}}});
