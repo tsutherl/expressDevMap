@@ -16,6 +16,7 @@ const mapStateToProps = ({ selected }) =>
 
 const mapDispatchToProps = (dispatch) => ({
 	testThisRoute : (route, verb, testingInfo) => {
+		console.log('testing this route oh yea')
 		dispatch(testRoute(route, verb, testingInfo));
 	},
 	hideModal : () => {

@@ -15104,6 +15104,7 @@ var mapStateToProps = function mapStateToProps(_ref) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	return {
 		testThisRoute: function testThisRoute(route, verb, testingInfo) {
+			console.log('testing this route oh yea');
 			dispatch((0, _requestReducer.testRoute)(route, verb, testingInfo));
 		},
 		hideModal: function hideModal() {
@@ -48790,6 +48791,7 @@ var RECEIVE_TEST_REQUEST = 'RECEIVE_TEST_REQUEST';
 /*---------------ACTION CREATORS-----------------*/
 
 var makeRequest = exports.makeRequest = function makeRequest(requestInfo) {
+    console.log('making a request');
     return {
         type: RECEIVE_TEST_REQUEST,
         requestInfo: requestInfo
@@ -48811,6 +48813,7 @@ var testRoute = exports.testRoute = function testRoute(route, verb, info) {
             _axios2.default[verb](route, body, headers).then(function (res) {
                 routeResponse = res.data;
                 dispatch((0, _responseReducer.routeTestResponse)(res.data));
+                dispatch(makeRequest(info));
             }).catch(console.error);
         };
     } else {
@@ -48819,6 +48822,7 @@ var testRoute = exports.testRoute = function testRoute(route, verb, info) {
             _axios2.default[verb](route, headers).then(function (res) {
                 routeResponse = res.data;
                 dispatch((0, _responseReducer.routeTestResponse)(res.data));
+                dispatch(makeRequest(info));
             }).catch(console.error);
         };
     }
@@ -48832,7 +48836,7 @@ var requestReducer = exports.requestReducer = function requestReducer() {
 
     switch (action.type) {
         case RECEIVE_TEST_REQUEST:
-            return;
+            return action.requestInfo;
     }
     return state;
 };
@@ -48868,8 +48872,8 @@ var responseReducer = exports.responseReducer = function responseReducer() {
 
     switch (action.type) {
         case RECEIVE_TEST_RESULT:
-            //TODO: what do we want the response to look like?
-            return 'TODO';
+            //TODO: what exactly do we want the response to look like? an object probably with more info than this
+            return action.result;
     }
     return state;
 };

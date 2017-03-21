@@ -11,10 +11,13 @@ const RECEIVE_TEST_REQUEST = 'RECEIVE_TEST_REQUEST'
 /*---------------ACTION CREATORS-----------------*/
 
 
-export const makeRequest = (requestInfo) => ({
+export const makeRequest = (requestInfo) => {
+    console.log('making a request')
+    return {
     type: RECEIVE_TEST_REQUEST,
     requestInfo
-})
+    }
+}
 
 
 
@@ -34,6 +37,8 @@ export const testRoute = (route, verb, info) => {
                 .then(res => {
                     routeResponse = res.data;
                     dispatch(routeTestResponse(res.data));
+                    dispatch(makeRequest(info))
+                    
                 })
                 .catch(console.error)
         }
@@ -44,6 +49,8 @@ export const testRoute = (route, verb, info) => {
                 .then(res => {
                     routeResponse = res.data;
                     dispatch(routeTestResponse(res.data));
+                    dispatch(makeRequest(info))
+
                 })
                 .catch(console.error)
         }
@@ -57,7 +64,7 @@ export const testRoute = (route, verb, info) => {
 export const requestReducer = (state={}, action) => {
 	switch(action.type) {
 	 	case RECEIVE_TEST_REQUEST:
-         return 
+         return action.requestInfo 
     }
     return state;
 }

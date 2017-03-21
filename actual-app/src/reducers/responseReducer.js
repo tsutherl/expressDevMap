@@ -22,8 +22,8 @@ export const routeTestResponse = (result) => ({
 export const responseReducer = (state={}, action) => {
 	switch(action.type) {
 	 	case RECEIVE_TEST_RESULT:
-            //TODO: what do we want the response to look like?
-            return 'TODO'
+         //TODO: what exactly do we want the response to look like? an object probably with more info than this
+            return action.result 
     }
     return state;
 }
