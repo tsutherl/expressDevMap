@@ -48554,7 +48554,8 @@ exports.default = function (props) {
     { id: 'search-bar' },
     _react2.default.createElement(_reactTypeahead.Typeahead, {
       options: props.routeList,
-      maxVisible: 10
+      maxVisible: 10,
+      placeholder: 'Filter Routes'
     })
   );
 };

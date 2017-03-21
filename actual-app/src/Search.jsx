@@ -8,6 +8,7 @@ export default (props) => {
       <Typeahead 
         options={props.routeList}
         maxVisible={10}
+        placeholder={'Filter Routes'}
       />
     </div>
   )
