@@ -48477,7 +48477,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var treeToRoutes = function treeToRoutes(array, prefix, node) {
   var currString = '' + prefix + node.name;
-  array.push(currString + ' ' + (node.verb ? node.verb : 'router'));
+  array.push((node.verb ? node.verb.toUpperCase() : 'ROUTER') + ': ' + currString);
   if (node.children) {
     node.children.forEach(function (child) {
       treeToRoutes(array, currString, child);
@@ -48552,11 +48552,20 @@ exports.default = function (props) {
   return _react2.default.createElement(
     'div',
     { id: 'search-bar' },
-    _react2.default.createElement(_reactTypeahead.Typeahead, {
-      options: props.routeList,
-      maxVisible: 10,
-      placeholder: 'Filter Routes'
-    })
+    _react2.default.createElement(
+      'div',
+      { className: 'search-inner' },
+      _react2.default.createElement(_reactTypeahead.Typeahead, {
+        options: props.routeList,
+        maxVisible: 10,
+        placeholder: 'Filter Routes'
+      }),
+      _react2.default.createElement(
+        'button',
+        null,
+        'Select Path'
+      )
+    )
   );
 };
 

@@ -168,12 +168,26 @@ h1 {
     color: #333;
 }
 
-#search-bar input{
+#search-bar .search-inner {
+    display: flex;
+}
+
+#search-bar input, #search-bar button {
     padding: 1em;
-    border-radius: .5em;
     border: .1em #555 solid;
     font-size: 1em;
+}
+
+#search-bar input {
+    border-top-left-radius: .5em;
+    border-bottom-left-radius: .5em;
     width: 300px;
+}
+
+#search-bar button {
+    border-top-right-radius: .5em;
+    border-bottom-right-radius: .5em;
+    border-left: none;
 }
 
 #search-bar ul.typeahead-selector {

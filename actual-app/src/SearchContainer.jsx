@@ -5,7 +5,7 @@ import Search from './Search.jsx';
 
 const treeToRoutes = (array, prefix, node) => {
   const currString = `${prefix}${node.name}`
-  array.push(`${currString} ${node.verb ? node.verb : 'router'}`);
+  array.push(`${node.verb ? node.verb.toUpperCase() : 'ROUTER'}: ${currString}`);
   if (node.children){
     node.children.forEach(child => {
       treeToRoutes(array, currString , child)
