@@ -26,6 +26,10 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+h1 {
+    text-align: center;
+}
+
 #app > div > div > svg {
     display: block;
     margin: auto;
@@ -155,4 +159,11 @@ body {
     position: absolute;
     left: 30%;
     top: 5%;
+}
+
+/*************SEARCH BAR****************/
+#search-bar input{
+    padding: 1em;
+    border-radius: .5em;
+    border: .1em #333 solid;
 }
