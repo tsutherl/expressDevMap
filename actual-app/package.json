@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config ./build/webpack.config.js",
-    "build-watch": "npm run build -- -w"
+    "build-watch": "npm run build -- -w",
+    "test-backend": "mocha ./tests/backend/**/*.spec.js",
+    "test-frontend": "mocha ./tests/frontend/**/*.spec.js --compilers js:babel-register"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +29,12 @@
     "babel-loader": "^6.3.2",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
+    "babel-register": "^6.24.0",
+    "chai": "^3.5.0",
+    "enzyme": "^2.7.1",
+    "mocha": "^3.2.0",
+    "react-addons-test-utils": "^15.4.2",
+    "sinon": "^2.0.0",
     "webpack": "^2.2.1"
   }
 }

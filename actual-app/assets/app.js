@@ -9295,100 +9295,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 84 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Headers = function (_React$Component) {
-    _inherits(Headers, _React$Component);
-
-    function Headers(props) {
-        _classCallCheck(this, Headers);
-
-        var _this = _possibleConstructorReturn(this, (Headers.__proto__ || Object.getPrototypeOf(Headers)).call(this, props));
-
-        _this.state = {
-            keyValuePairs: [0]
-        };
-        _this.addInput = _this.addInput.bind(_this);
-        _this.removeInput = _this.removeInput.bind(_this);
-        return _this;
-    }
-
-    _createClass(Headers, [{
-        key: 'removeInput',
-        value: function removeInput(idx) {
-            var newState = this.state.keyValuePairs;
-            if (newState.indexOf(idx) > -1 && idx > 0) {
-                newState.splice(idx, 1);
-                this.setState({ keyValuePairs: newState });
-            }
-        }
-    }, {
-        key: 'addInput',
-        value: function addInput(idx) {
-            var keyValuePairs = this.state.keyValuePairs;
-
-            if (idx === keyValuePairs.length - 1) {
-                var newState = keyValuePairs.concat(keyValuePairs.length);
-                this.setState({ keyValuePairs: newState });
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            return _react2.default.createElement(
-                'form',
-                { className: 'form' },
-                this.state.keyValuePairs.map(function (num) {
-                    return _react2.default.createElement(
-                        'div',
-                        { key: num, className: 'form-input' },
-                        _react2.default.createElement('input', { name: 'key', className: 'headersKey', onChange: _this2.props.onChange, onClick: _this2.addInput.bind(_this2, num), placeholder: 'key' }),
-                        _react2.default.createElement('input', { className: 'headersValue', onChange: _this2.props.onChange, onClick: _this2.addInput.bind(_this2, num), placeholder: 'value' }),
-                        _react2.default.createElement(
-                            'button',
-                            { onClick: _this2.removeInput.bind(_this2, num) },
-                            'x'
-                        )
-                    );
-                })
-            );
-        }
-    }]);
-
-    return Headers;
-}(_react2.default.Component);
-
-exports.default = Headers;
-
-//if clicked and it is the last thing in the array 
-//  add another key and value with a key value set to its index in the array
-//else do nothing
-
-/***/ }),
+/* 84 */,
 /* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13944,11 +13851,15 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = __webpack_require__(35);
+
 var _TreeContainer = __webpack_require__(160);
 
 var _TreeContainer2 = _interopRequireDefault(_TreeContainer);
 
-var _reactRedux = __webpack_require__(35);
+var _TestModalContainer = __webpack_require__(319);
+
+var _TestModalContainer2 = _interopRequireDefault(_TestModalContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13956,14 +13867,17 @@ var App = exports.App = function App(props) {
     return _react2.default.createElement(
         'div',
         null,
+        props.showModal ? _react2.default.createElement(_TestModalContainer2.default, null) : null,
         props.routes ? _react2.default.createElement(_TreeContainer2.default, null) : null
     );
 };
 
 var mapStateToProps = function mapStateToProps(_ref) {
-    var routes = _ref.routes;
+    var routes = _ref.routes,
+        showModal = _ref.showModal;
     return {
-        routes: routes
+        routes: routes,
+        showModal: showModal
     };
 };
 
@@ -14904,414 +14818,16 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 154 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Headers = __webpack_require__(84);
-
-var _Headers2 = _interopRequireDefault(_Headers);
-
-var _Json = __webpack_require__(155);
-
-var _Json2 = _interopRequireDefault(_Json);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Body = function (_React$Component) {
-    _inherits(Body, _React$Component);
-
-    function Body(props) {
-        _classCallCheck(this, Body);
-
-        var _this = _possibleConstructorReturn(this, (Body.__proto__ || Object.getPrototypeOf(Body)).call(this));
-
-        _this.state = {
-            typeSelected: 'urlencoded'
-        };
-        _this.toggleType = _this.toggleType.bind(_this);
-        return _this;
-    }
-
-    _createClass(Body, [{
-        key: 'toggleType',
-        value: function toggleType(evt) {
-            this.setState({ typeSelected: evt.target.value });
-            // const idx = +evt.target.value;
-            // this.setState({ idx });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: 'body' },
-                _react2.default.createElement(
-                    'form',
-                    { className: 'radio-buttons' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'radio' },
-                        _react2.default.createElement(
-                            'label',
-                            null,
-                            _react2.default.createElement('input', { type: 'radio', value: 'urlencoded', checked: this.state.typeSelected === 'urlencoded', onChange: this.toggleType }),
-                            'urlencoded'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'radio' },
-                        _react2.default.createElement(
-                            'label',
-                            null,
-                            _react2.default.createElement('input', { type: 'radio', value: 'json', checked: this.state.typeSelected === 'json', onChange: this.toggleType }),
-                            'JSON'
-                        )
-                    )
-                ),
-                this.state.typeSelected === 'urlencoded' ? _react2.default.createElement(_Headers2.default, null) : _react2.default.createElement(_Json2.default, null)
-            );
-        }
-    }]);
-
-    return Body;
-}(_react2.default.Component);
-
-exports.default = Body;
-
-/***/ }),
-/* 155 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Json = function (_React$Component) {
-    _inherits(Json, _React$Component);
-
-    function Json(props) {
-        _classCallCheck(this, Json);
-
-        return _possibleConstructorReturn(this, (Json.__proto__ || Object.getPrototypeOf(Json)).call(this, props));
-    }
-
-    _createClass(Json, [{
-        key: "render",
-        value: function render() {
-            return _react2.default.createElement("textarea", { rows: "4", cols: "50" });
-        }
-    }]);
-
-    return Json;
-}(_react2.default.Component);
-
-exports.default = Json;
-
-/***/ }),
-/* 156 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _xImage = __webpack_require__(161);
-
-var _xImage2 = _interopRequireDefault(_xImage);
-
-var _Headers = __webpack_require__(84);
-
-var _Headers2 = _interopRequireDefault(_Headers);
-
-var _Body = __webpack_require__(154);
-
-var _Body2 = _interopRequireDefault(_Body);
-
-var _RequestBody = __webpack_require__(158);
-
-var _RequestBody2 = _interopRequireDefault(_RequestBody);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Modal = function (_React$Component) {
-	_inherits(Modal, _React$Component);
-
-	function Modal(props) {
-		_classCallCheck(this, Modal);
-
-		var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
-
-		_this.state = {
-			testingInfo: {
-				headers: {},
-				body: {}
-			},
-			fadingOut: false,
-			currentOption: 'headers',
-			options: ['headers', 'body'],
-			idx: 0
-		};
-		_this.handleClick = _this.handleClick.bind(_this);
-		_this.onChange = _this.onChange.bind(_this);
-		_this.closeButton = _this.closeButton.bind(_this);
-		_this.toggleOptions = _this.toggleOptions.bind(_this);
-		return _this;
-	}
-
-	_createClass(Modal, [{
-		key: 'handleClick',
-		value: function handleClick(route, verb, testingInfo) {
-			this.props.testThisRoute(route, verb, testingInfo);
-		}
-	}, {
-		key: 'closeButton',
-		value: function closeButton() {
-			this.setState({ fadingOut: true });
-			setTimeout(this.props.hideModal, 1000);
-		}
-	}, {
-		key: 'toggleOptions',
-		value: function toggleOptions(evt) {
-			var idx = +evt.target.value;
-			this.setState({ idx: idx });
-		}
-	}, {
-		key: 'onChange',
-		value: function onChange(e) {
-			switch (e.target.name) {
-				case "key":
-					this.setState({ testingInfo: { headers: _defineProperty({}, e.target.value, null), body: {} } });
-					break;
-				case "value":
-					var key = document.getElementById("reqBodyKey").value;
-					this.setState({ testingInfo: { headers: _defineProperty({}, key, e.target.value), body: {} } });
-					break;
-			}
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			var _this2 = this;
-
-			var option = this.state.options[this.state.idx];
-			var route = this.props.testRoute;
-			var method = this.props.selectedRouteVerb;
-			var testingInfo = this.state.testingInfo;
-
-			console.log('testingInfo', testingInfo);
-			return _react2.default.createElement(
-				'div',
-				{ className: this.state.fadingOut ? 'modal fadeOut' : 'modal' },
-				_react2.default.createElement(
-					'div',
-					{ className: 'info' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'nav' },
-						_react2.default.createElement(
-							'button',
-							{ className: 'nav-children', onClick: function onClick() {
-									return _this2.handleClick(route, method, testingInfo);
-								} },
-							'Test'
-						),
-						_react2.default.createElement(_xImage2.default, { onClick: this.closeButton })
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'testing' },
-						_react2.default.createElement(
-							'h2',
-							{ id: 'request-verb' },
-							method
-						),
-						_react2.default.createElement(
-							'h2',
-							null,
-							this.props.testRoute,
-							'thisIsAllTheOverflowText'
-						)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'headers-body' },
-						_react2.default.createElement(
-							'button',
-							{ className: 'headers ' + (option === 'headers' ? 'selected' : ''), value: 0, onClick: this.toggleOptions },
-							'Headers'
-						),
-						_react2.default.createElement(
-							'button',
-							{ className: 'headers ' + (option === 'body' ? 'selected' : ''), value: 1, onClick: this.toggleOptions },
-							'Body'
-						)
-					),
-					option === 'headers' ? _react2.default.createElement(_Headers2.default, { onChange: this.onChange }) : _react2.default.createElement(_Body2.default, null)
-				)
-			);
-		}
-	}]);
-
-	return Modal;
-}(_react2.default.Component);
-
-exports.default = Modal;
-
-/***/ }),
+/* 154 */,
+/* 155 */,
+/* 156 */,
 /* 157 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(35);
-
-var _store = __webpack_require__(44);
-
-var _Modal = __webpack_require__(156);
-
-var _Modal2 = _interopRequireDefault(_Modal);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mapStateToProps = function mapStateToProps(_ref) {
-	var testRoute = _ref.testRoute,
-	    activeTestNode = _ref.activeTestNode,
-	    selectedRouteVerb = _ref.selectedRouteVerb;
-	return { testRoute: testRoute, activeTestNode: activeTestNode, selectedRouteVerb: selectedRouteVerb };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	return {
-		testThisRoute: function testThisRoute(route, verb, testingInfo) {
-			dispatch((0, _store.testRoute)(route, verb, testingInfo));
-		},
-		hideModal: function hideModal() {
-			console.log('in the function');
-			dispatch((0, _store.hideModal)());
-		}
-	};
-};
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Modal2.default);
+throw new Error("Module build failed: Duplicate declaration \"hideModal\"\n\n\u001b[0m \u001b[90m  6 | \u001b[39m\u001b[36mimport\u001b[39m {testRoute\u001b[33m,\u001b[39m hideModal} from \u001b[32m'./store'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m  7 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 | \u001b[39m\u001b[36mimport\u001b[39m { hideModal } from \u001b[32m'./reducers/modalReducer'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m    | \u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 | \u001b[39m\u001b[36mimport\u001b[39m { routeTestAsync } from \u001b[32m'./reducers/selectedReducer'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 10 | \u001b[39m\n \u001b[90m 11 | \u001b[39m\u001b[0m\n");
 
 /***/ }),
-/* 158 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var RequestBody = function RequestBody(_ref) {
-    var onChange = _ref.onChange;
-
-    return _react2.default.createElement(
-        'form',
-        { className: 'form-inline' },
-        _react2.default.createElement(
-            'h3',
-            null,
-            'Request Body'
-        ),
-        _react2.default.createElement(
-            'div',
-            { className: 'ro-row' },
-            _react2.default.createElement(
-                'span',
-                null,
-                'Key'
-            ),
-            _react2.default.createElement(
-                'span',
-                null,
-                'Value'
-            )
-        ),
-        _react2.default.createElement(
-            'div',
-            { className: 'ro-row form-group' },
-            _react2.default.createElement('input', { name: 'reqBodyKey', id: 'reqBodyKey', onChange: onChange }),
-            _react2.default.createElement('input', { name: 'reqBodyValue', onChange: onChange }),
-            _react2.default.createElement('textarea', null)
-        )
-    );
-};
-
-exports.default = RequestBody;
-
-/***/ }),
+/* 158 */,
 /* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15321,8 +14837,6 @@ exports.default = RequestBody;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -15364,32 +14878,28 @@ var Tree = function (_React$Component) {
   _createClass(Tree, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-
-      var clickHandler = function clickHandler(e) {
-        console.log("---e", e.children);
-        // click handler
-        endRouteHandleClick(e);
-        // e.children ? null :           // if node has children, toggleExpand
-        // endRouteHandleClick(e);     // else, getRoute and
-      }; // dispatch route to state as testRoute
-      // also need to make a popup to test the route!
+      var _this2 = this;
 
       var endRouteHandleClick = function endRouteHandleClick(node) {
-        console.log("node", typeof node === 'undefined' ? 'undefined' : _typeof(node));
+        //console.log("node", typeof node)
         var testRoute = getRoute(node);
         var verb = getVerb(node);
-        console.log("got verb", verb);
-        console.log("testroute", testRoute);
-        _store2.default.dispatch((0, _store.setRouteVerb)(verb));
-        _store2.default.dispatch((0, _store.setTestRoute)(testRoute));
-        _store2.default.dispatch((0, _store.setTestNode)(node));
-        _store2.default.dispatch((0, _store.showModal)());
+        //console.log("got verb", verb)
+        //console.log("testroute", testRoute)
+        _this2.props.setRouteVerb(verb);
+        _this2.props.setTestRoute(testRoute);
+        _this2.props.setTestNode(node);
+        if (!_this2.props.showModal) _this2.props.showModalNow();
+      };
+
+      var routerHandleClick = function routerHandleClick(node) {
+        if (_this2.props.showModal) _this2.props.hideModal();
       };
 
       var getRoute = function getRoute(node) {
         var routeSteps = [];
         var current = node;
-        while (current) {
+        while (current.parent) {
           routeSteps.unshift(current.data.name);
           current = current.parent;
         }
@@ -15400,8 +14910,42 @@ var Tree = function (_React$Component) {
         return node.data.verb;
       };
 
+      var resetTree = function resetTree() {
+        g.selectAll('circle').attr('r', 7.5) //reset circle size
+        .style('stroke-width', 1).style("stroke-opacity", 0.4);
+        g.selectAll('text').attr("x", function (d) {
+          return d.children ? -10 : 10;
+        }); //reset text position
+        g.selectAll('path').attr('class', 'link').style("stroke-opacity", 0.4).style("stroke-width", 1.5);
+      };
+
+      var alterNode = function alterNode(node) {
+        d3.select(node).attr('r', 15).style('stroke-width', 1.5).style('stroke-opacity', 0.8);
+        d3.select(node.nextSibling).attr('x', function (d) {
+          return d.children ? -17.5 : 17.5;
+        });
+      };
+
+      //want to refactor this to take better advantage of d3
+      var alterPath = function alterPath(e) {
+        var pathEnds = [];
+        var paths = g.selectAll('.link')._groups[0];
+        while (e.parent) {
+          pathEnds.push(e.y + ',' + e.x);
+          e = e.parent;
+        }
+        paths.forEach(function (path) {
+          var info = path.getAttribute('d');
+          var cPlace = info.indexOf('C');
+          if (pathEnds.indexOf(info.slice(1, cPlace)) > -1) {
+            path.setAttribute('class', 'link selected');
+          }
+        });
+        g.selectAll('.link.selected').style('stroke-opacity', 0.8).style('stroke-width', 3);
+      };
+
       // set the dimensions and margins of the diagram
-      var margin = { top: 20, right: 90, bottom: 30, left: 90 },
+      var margin = { top: 20, right: 110, bottom: 30, left: 90 },
           width = 660 - margin.left - margin.right,
           height = 500 - margin.top - margin.bottom;
 
@@ -15419,7 +14963,7 @@ var Tree = function (_React$Component) {
       // append the svg object to the body of the page
       // appends a 'group' element to 'svg'
       // moves the 'group' element to the top left margin
-      var svg = d3.select(this.refs.routeMap).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom),
+      var svg = d3.select(this.refs.routeMap).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).attr('id', 'tree'),
           g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       // adds the links between the nodes
@@ -15440,15 +14984,24 @@ var Tree = function (_React$Component) {
       // adds symbols as nodes
       node.append("circle") // made all nodes circles instead of random shapes
       .style("stroke", "black") // change node outline to black
-      .style("fill", function (d) {
-        return d.data.children ? 'blue' : 'gray';
-      }).attr("r", 5) // above line fills node blue if it has child nodes, otherwise gray
-      .on("click", clickHandler);
+      .style('stroke-opacity', .4).attr("r", 7.5) // above line fills node blue if it has child nodes, otherwise gray
+      .attr('class', function (d) {
+        return d.data.verb ? d.data.verb : 'router';
+      }).on("click", function (e) {
+        resetTree();
+        if (e.children) {
+          routerHandleClick(e);
+        } else {
+          endRouteHandleClick(e); // modal functionality
+        }
+        alterNode(this);
+        alterPath(e);
+      });
 
       // adds the text to the node
-      node.append("text").attr("dy", 3) // move 3 px down for text location (I think)
+      node.append("text").attr("dy", 5) // move 3 px down for text location (I think)
       .attr("x", function (d) {
-        return d.children ? -8 : 8;
+        return d.children ? -10 : 10;
       }) // place text label on left if node has children, otherwise on right
       .style("text-anchor", function (d) {
         return d.children ? "end" : "start";
@@ -15494,6 +15047,10 @@ var _Tree = __webpack_require__(159);
 
 var _Tree2 = _interopRequireDefault(_Tree);
 
+var _selectedReducer = __webpack_require__(315);
+
+var _modalReducer = __webpack_require__(314);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapState = function mapState(_ref) {
@@ -15505,38 +15062,30 @@ var mapState = function mapState(_ref) {
 	return { routes: routes, testRoute: testRoute, showModal: showModal, activeTestNode: activeTestNode, selectedRouteVerb: selectedRouteVerb };
 };
 
-exports.default = (0, _reactRedux.connect)(mapState)(_Tree2.default);
-
-/***/ }),
-/* 161 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// const xImage = 
-
-exports.default = function (_ref) {
-  var onClick = _ref.onClick;
-
-  return _react2.default.createElement(
-    "svg",
-    { onClick: onClick, role: "img", "aria-label": "close the popup tray", width: "100%", height: "100%", viewBox: "0 0 365 365", version: "1.1", xmlns: "http://www.w3.org/2000/svg", className: "close-x" },
-    _react2.default.createElement("path", { id: "x-mark-icon", d: "M350.652,315.131c7.807,-7.811 7.804,-20.472 -0.006,-28.28c-31.461,-31.457 -104.496,-104.481 -104.496,-104.481c0,0 73.014,-73.019 104.475,-104.482c3.751,-3.752 5.859,-8.84 5.858,-14.145c-0.001,-5.306 -2.11,-10.393 -5.863,-14.144c-10.561,-10.554 -24.929,-24.913 -35.489,-35.465c-7.811,-7.807 -20.472,-7.804 -28.28,0.006c-31.453,31.457 -104.463,104.478 -104.463,104.478c0,0 -73.025,-73.015 -104.482,-104.467c-7.809,-7.808 -20.468,-7.809 -28.279,-0.003c-10.556,10.549 -24.918,24.903 -35.476,35.454c-3.753,3.751 -5.861,8.839 -5.862,14.144c-0.001,5.306 2.107,10.394 5.858,14.145c31.466,31.464 104.492,104.485 104.492,104.485c0,0 -73.032,73.043 -104.488,104.504c-7.808,7.809 -7.809,20.468 -0.003,28.279c10.549,10.556 24.903,24.918 35.454,35.476c3.751,3.753 8.839,5.861 14.144,5.862c5.306,0.001 10.394,-2.107 14.145,-5.858c31.468,-31.47 104.504,-104.512 104.504,-104.512c0,0 73.036,73.032 104.503,104.498c3.752,3.751 8.84,5.858 14.146,5.857c5.305,-0.001 10.393,-2.109 14.143,-5.862l35.465,-35.489Z" })
-  );
+var mapDispatch = function mapDispatch(dispatch) {
+	return {
+		setRouteVerb: function setRouteVerb(verb) {
+			dispatch((0, _selectedReducer.setRouteVerb)(verb));
+		},
+		setTestRoute: function setTestRoute(testRoute) {
+			dispatch((0, _selectedReducer.setTestRoute)(testRoute));
+		},
+		setTestNode: function setTestNode(node) {
+			dispatch((0, _selectedReducer.setTestNode)(node));
+		},
+		showModalNow: function showModalNow() {
+			dispatch((0, _modalReducer.showModal)());
+		},
+		hideModal: function hideModal() {
+			dispatch((0, _modalReducer.hideModal)());
+		}
+	};
 };
 
+exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(_Tree2.default);
+
 /***/ }),
+/* 161 */,
 /* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -48559,27 +48108,29 @@ module.exports = function(module) {
 "use strict";
 
 
+var _axios = __webpack_require__(78);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(135);
 
+var _reactRedux = __webpack_require__(35);
+
+var _reactRouter = __webpack_require__(136);
+
 var _AppContainer = __webpack_require__(134);
 
 var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
-var _reactRedux = __webpack_require__(35);
-
-var _store = __webpack_require__(44);
+var _store = __webpack_require__(317);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _reactRouter = __webpack_require__(136);
-
-var _axios = __webpack_require__(78);
-
-var _axios2 = _interopRequireDefault(_axios);
+var _routeReducer = __webpack_require__(316);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48595,9 +48146,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var getRoutes = function getRoutes() {
     (0, _axios2.default)('/backend-tree/routes').then(function (routes) {
         console.log('OBJ', routes.data);
-        _store2.default.dispatch((0, _store.loadRoutes)(routes.data));
+        _store2.default.dispatch((0, _routeReducer.loadRoutes)(routes.data));
     });
 };
+
+//need to refactor reducer imports
+
 
 (0, _reactDom.render)(_react2.default.createElement(
     _reactRedux.Provider,
@@ -48608,6 +48162,252 @@ var getRoutes = function getRoutes() {
         _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default, onEnter: getRoutes })
     )
 ), document.getElementById('app'));
+
+/***/ }),
+/* 314 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*---------------CONSTANTS-----------------*/
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var SHOW_MODAL = 'SHOW_MODAL';
+
+var HIDE_MODAL = 'HIDE_MODAL';
+
+/*---------------ACTION CREATORS-----------------*/
+
+var showModal = exports.showModal = function showModal() {
+    return {
+        type: SHOW_MODAL
+    };
+};
+
+var hideModal = exports.hideModal = function hideModal() {
+    return {
+        type: HIDE_MODAL
+    };
+};
+
+/*---------------- REDUCER ---------------- */
+
+var modalReducer = exports.modalReducer = function modalReducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var action = arguments[1];
+
+    switch (action.type) {
+        case SHOW_MODAL:
+            return true;
+            break;
+        case HIDE_MODAL:
+            return false;
+            break;
+    }
+    return state;
+};
+
+/***/ }),
+/* 315 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.selectedReducer = exports.routeTestAsync = exports.setRouteVerb = exports.routeTestResult = exports.setTestNode = exports.setTestRoute = undefined;
+
+var _axios = __webpack_require__(78);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// action creators and reducers in this file deal with all the information we need
+// to select a route end point (node from our map) to test, put that route's information
+// on our store, make an asynchronous request to test the route, and return the results
+// of that test to the store
+
+
+/*---------------CONSTANTS-----------------*/
+
+var RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
+
+var SET_TEST_NODE = 'SET_TEST_NODE';
+
+var SET_ROUTE_VERB = 'SET_ROUTE_VERB';
+
+var RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
+
+/*---------------ACTION CREATORS-----------------*/
+
+var setTestRoute = exports.setTestRoute = function setTestRoute(testRoute) {
+    return {
+        type: RECEIVE_TEST_ROUTE,
+        testRoute: testRoute
+    };
+};
+
+var setTestNode = exports.setTestNode = function setTestNode(node) {
+    return {
+        type: SET_TEST_NODE,
+        node: node
+    };
+};
+
+var routeTestResult = exports.routeTestResult = function routeTestResult(result) {
+    return {
+        type: RECEIVE_TEST_RESULT,
+        result: result
+    };
+};
+
+var setRouteVerb = exports.setRouteVerb = function setRouteVerb(verb) {
+    return {
+        type: SET_ROUTE_VERB,
+        verb: verb
+    };
+};
+
+/*---------------ASYNC ACTION CREATORS-----------------*/
+
+var routeTestAsync = exports.routeTestAsync = function routeTestAsync(route, verb) {
+    var routeResponse = void 0;
+    route = route.slice(1);
+
+    return function (dispatch) {
+        _axios2.default[verb](route).then(function (res) {
+            routeResponse = res.data;
+            dispatch(routeTestResult(res.data));
+        }).catch(console.error);
+    };
+};
+
+var selectedReducer = exports.selectedReducer = function selectedReducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { activeTestNode: null, testRoute: null };
+    var action = arguments[1];
+
+
+    var newState = Object.assign({}, state);
+
+    switch (action.type) {
+
+        case RECEIVE_TEST_ROUTE:
+            newState.testRoute = action.testRoute;
+            break;
+        case SET_TEST_NODE:
+            newState.activeTestNode = action.node;
+            break;
+        case RECEIVE_TEST_RESULT:
+            newState.testResult = action.result;
+            break;
+        case SET_ROUTE_VERB:
+            newState.selectedRouteVerb = action.verb;
+            break;
+        default:
+            return state;
+    }
+    return newState;
+};
+
+/***/ }),
+/* 316 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*--------------- CONSTANT -----------------*/
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var RECEIVE_ROUTES = 'RECEIVE_ROUTES';
+
+/*---------------ACTION CREATOR-----------------*/
+
+var loadRoutes = exports.loadRoutes = function loadRoutes(routes) {
+	return {
+		type: RECEIVE_ROUTES,
+		routes: routes
+	};
+};
+
+/*---------------REDUCER-----------------*/
+
+var routeReducer = exports.routeReducer = function routeReducer() {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	var action = arguments[1];
+
+
+	switch (action.type) {
+		case RECEIVE_ROUTES:
+			return action.routes;
+
+	}
+
+	return state;
+};
+
+/***/ }),
+/* 317 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _axios = __webpack_require__(78);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _redux = __webpack_require__(132);
+
+var _reduxLogger = __webpack_require__(303);
+
+var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+
+var _reduxThunk = __webpack_require__(304);
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _modalReducer = __webpack_require__(314);
+
+var _routeReducer = __webpack_require__(316);
+
+var _selectedReducer = __webpack_require__(315);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// combine reducers into a rootReducer
+var rootReducer = (0, _redux.combineReducers)({
+    routes: _routeReducer.routeReducer,
+    showModal: _modalReducer.modalReducer,
+    selected: _selectedReducer.selectedReducer
+});
+
+// construct our store with rootReducer and middleware
+
+
+// import reducers from other files
+var store = (0, _redux.createStore)(rootReducer, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)({ collapsed: true })));
+
+exports.default = store;
+
+/***/ }),
+/* 318 */,
+/* 319 */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/tatianasutherland/coding-stuffs/portfolio/backend-tree/actual-app/src/TestModalContainer.js'");
 
 /***/ })
 /******/ ]);

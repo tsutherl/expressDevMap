@@ -23,6 +23,7 @@
 body {
     margin: 0;
     background: #eee;
+    font-family: 'Roboto', sans-serif;
 }
 
 #app > div > div > svg {
@@ -180,6 +181,7 @@ body {
     border-bottom: 2px solid #94584f;
 }
 
+<<<<<<< HEAD
 * {
     font-family: "Helvetica Neue", Helvetica;
 }
@@ -207,3 +209,49 @@ svg text {
 
 
 
+=======
+/*************TREE STYLING****************/
+
+/*#tree circle {
+    box-shadow: inset 0px 0px 5px 0px rgba(51,51,3,1);
+}*/
+
+#tree circle.router {
+    fill: #555;
+}
+
+#tree circle.get {
+    fill: #2DBEDB;
+}
+
+#tree circle.put {
+    fill: #F3A53F;
+}
+
+#tree circle.post {
+    fill: #673AB7;
+}
+
+#tree circle.delete {
+    fill: #D03854;
+}
+
+#tree circle.selected {
+    fill: #85AD52;
+}
+
+#tree text {
+    display: block;
+    font-weight: bold;
+    background: #eeeeee;
+}
+
+#response {
+    background:red;
+    width: 25%;
+    height: 90%;
+    position: absolute;
+    left: 30%;
+    top: 5%;
+}
+>>>>>>> master

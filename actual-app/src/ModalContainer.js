@@ -5,10 +5,14 @@ import {connect} from 'react-redux';
 
 import {testRoute, hideModal} from './store';
 
+import { hideModal } from './reducers/modalReducer';
+import { routeTestAsync } from './reducers/selectedReducer';
+
+
 import Modal from './Modal.jsx';
 
-const mapStateToProps = ({testRoute, activeTestNode, selectedRouteVerb }) =>
-	({ testRoute, activeTestNode, selectedRouteVerb});
+const mapStateToProps = ({ selected }) =>
+	({ selected });
 
 const mapDispatchToProps = (dispatch) => ({
 	testThisRoute : (route, verb, testingInfo) => {

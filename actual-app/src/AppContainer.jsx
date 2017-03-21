@@ -1,6 +1,8 @@
 import React from 'react';
-import TreeContainer from './TreeContainer.jsx'
 import {connect} from 'react-redux';
+
+import TreeContainer from './TreeContainer.jsx'
+import TestModalContainer from './TestModalContainer'
 
 
 
@@ -8,13 +10,15 @@ import {connect} from 'react-redux';
 export const App = (props) => {
     return(
         <div>
+            {props.showModal ? <TestModalContainer/> : null}
             {props.routes ? <TreeContainer/> : null }
         </div>    
     )
 } 
 
-const mapStateToProps = ({routes}) => ({
-    routes
+const mapStateToProps = ({routes, showModal}) => ({
+    routes,
+    showModal
 })
 
 
