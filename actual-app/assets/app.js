@@ -9366,8 +9366,8 @@ var Headers = function (_React$Component) {
                     return _react2.default.createElement(
                         'div',
                         { key: num, className: 'form-input' },
-                        _react2.default.createElement('input', { className: 'headersKey', onClick: _this2.addInput.bind(_this2, num), placeholder: 'key' }),
-                        _react2.default.createElement('input', { className: 'headersValue', onClick: _this2.addInput.bind(_this2, num), placeholder: 'value' }),
+                        _react2.default.createElement('input', { name: 'key', className: 'headersKey', onChange: _this2.props.onChange, onClick: _this2.addInput.bind(_this2, num), placeholder: 'key' }),
+                        _react2.default.createElement('input', { className: 'headersValue', onChange: _this2.props.onChange, onClick: _this2.addInput.bind(_this2, num), placeholder: 'value' }),
                         _react2.default.createElement(
                             'button',
                             { onClick: _this2.removeInput.bind(_this2, num) },
@@ -15120,14 +15120,9 @@ var Modal = function (_React$Component) {
 	}, {
 		key: 'closeButton',
 		value: function closeButton() {
-			console.log('trying to close');
 			this.setState({ fadingOut: true });
 			setTimeout(this.props.hideModal, 1000);
 		}
-		// to do: change handle click to incorporate reqBody / headers for put or post 
-		// to do above, you will need to change the async action creator (in store ) to
-		// pass headers to axios request
-
 	}, {
 		key: 'toggleOptions',
 		value: function toggleOptions(evt) {
@@ -15138,15 +15133,14 @@ var Modal = function (_React$Component) {
 		key: 'onChange',
 		value: function onChange(e) {
 			switch (e.target.name) {
-				case "reqBodyKey":
-					this.setState({ reqBody: _defineProperty({}, e.target.value, null) });
+				case "key":
+					this.setState({ testingInfo: { headers: _defineProperty({}, e.target.value, null), body: {} } });
 					break;
-				case "reqBodyValue":
+				case "value":
 					var key = document.getElementById("reqBodyKey").value;
-					this.setState({ reqBody: _defineProperty({}, key, e.target.value) });
+					this.setState({ testingInfo: { headers: _defineProperty({}, key, e.target.value), body: {} } });
 					break;
 			}
-			console.log("in onChange, here is this.reqBody ", this.state.reqBody);
 		}
 	}, {
 		key: 'render',
@@ -15206,7 +15200,7 @@ var Modal = function (_React$Component) {
 							'Body'
 						)
 					),
-					option === 'headers' ? _react2.default.createElement(_Headers2.default, null) : _react2.default.createElement(_Body2.default, null)
+					option === 'headers' ? _react2.default.createElement(_Headers2.default, { onChange: this.onChange }) : _react2.default.createElement(_Body2.default, null)
 				)
 			);
 		}

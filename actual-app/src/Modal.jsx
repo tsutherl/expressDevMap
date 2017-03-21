@@ -31,13 +31,9 @@ export default class Modal extends React.Component {
 		this.props.testThisRoute(route, verb, testingInfo);
 	}
 	closeButton () {
-		console.log('trying to close')
 		this.setState({fadingOut: true})
 		setTimeout(this.props.hideModal, 1000)
 	}
-	// to do: change handle click to incorporate reqBody / headers for put or post 
-	// to do above, you will need to change the async action creator (in store ) to
-	// pass headers to axios request
 
 	toggleOptions(evt) {
 		const idx = +evt.target.value;
@@ -46,17 +42,15 @@ export default class Modal extends React.Component {
 
 	onChange(e) {
 		switch(e.target.name){
-			case "reqBodyKey":
-				this.setState({reqBody: {[e.target.value] : null}});
+			case "key":
+				this.setState({testingInfo: {headers: {[e.target.value]: null}, body: {}}});
 				break;
-			case "reqBodyValue":
+			case "value":
 				let key = document.getElementById("reqBodyKey").value;
-				this.setState({reqBody: {[key] : e.target.value}});
+				this.setState({testingInfo: {headers: {[key]: e.target.value}, body: {}}});
 				break;
 		}
-		console.log("in onChange, here is this.reqBody ", this.state.reqBody);
 	}
-	
 
 	render() {
 		const option = this.state.options[this.state.idx]
@@ -79,16 +73,7 @@ export default class Modal extends React.Component {
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
 						<button className={`headers ${option === 'body'? 'selected' : ''}`}value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
-					{option === 'headers' ? <Headers/> : <Body/> }
-					
-
-						{/*{method === 'put' || method === 'post' ? 
-							<div>
-								<div className='encoding-options' onClick={this.toggleOptions}>Headers</div>
-								<div className='encoding-options' onClick={this.toggleOptions}>Body</div>
-							</div> : 
-						null}
-							{this.state.currentOption === 'requestBody'? <RequestBody/> : <Headers onChange={this.onChange}/> }*/}
+					{option === 'headers' ? <Headers onChange={this.onChange}/> : <Body/> }
 						
 				</div>
 			</div>
