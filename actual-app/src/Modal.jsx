@@ -54,10 +54,10 @@ export default class Modal extends React.Component {
 
 	render() {
 		const option = this.state.options[this.state.idx]
-		const route = this.props.testRoute;
-		const method = this.props.selectedRouteVerb;
+		const route = this.props.selected.testRoute;
+		const method = this.props.selected.selectedRouteVerb;
 		const {testingInfo} = this.state
-		console.log('testingInfo', testingInfo)
+		console.log('verb????', this.props.selected)
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
@@ -67,7 +67,7 @@ export default class Modal extends React.Component {
 					</div>
 					<div className='testing'>
 						<h2 id='request-verb' >{method}</h2>
-						<h2>{this.props.testRoute}thisIsAllTheOverflowText</h2>
+						<h2>{route}</h2>
 					</div>
 					<div className='headers-body'>
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>

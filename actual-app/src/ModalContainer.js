@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 
 import {testRoute, hideModal} from './store';
 
-import { hideModal } from './reducers/modalReducer';
+// import { hideModal } from './reducers/modalReducer';
 import { routeTestAsync } from './reducers/selectedReducer';
 
 

@@ -181,7 +181,6 @@ body {
     border-bottom: 2px solid #94584f;
 }
 
-<<<<<<< HEAD
 * {
     font-family: "Helvetica Neue", Helvetica;
 }
@@ -198,19 +197,6 @@ svg text {
 .modal textarea {
     margin: 1.3em;
 }
-
-
-
-
-
-
-
-
-
-
-
-=======
-/*************TREE STYLING****************/
 
 /*#tree circle {
     box-shadow: inset 0px 0px 5px 0px rgba(51,51,3,1);
@@ -254,4 +240,4 @@ svg text {
     left: 30%;
     top: 5%;
 }
->>>>>>> master
+
