@@ -139,7 +139,6 @@ export default class Tree extends React.Component {
   }
 
   render() {
-    console.log('PROPS in render', this.props)
   
     return(
       <div>

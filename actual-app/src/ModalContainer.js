@@ -3,23 +3,25 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+import {testRoute} from './reducers/requestReducer';
 import { hideModal } from './reducers/modalReducer';
 import { routeTestAsync } from './reducers/selectedReducer';
 
-import TestModal from './TestModal';
+
+import Modal from './Modal.jsx';
 
 const mapStateToProps = ({ selected }) =>
 	({ selected });
 
 const mapDispatchToProps = (dispatch) => ({
-	testThisRoute : (route, verb) => {
-		dispatch(routeTestAsync(route, verb));
+	testThisRoute : (route, verb, testingInfo) => {
+		console.log('testing this route oh yea')
+		dispatch(testRoute(route, verb, testingInfo));
 	},
 	hideModal : () => {
-		console.log('in the function')
 		dispatch(hideModal());
 	}
 })
 
 
-export default connect (mapStateToProps, mapDispatchToProps)(TestModal);
+export default connect (mapStateToProps, mapDispatchToProps)(Modal);

@@ -18,8 +18,6 @@ const SET_TEST_NODE = 'SET_TEST_NODE';
 
 const SET_ROUTE_VERB = 'SET_ROUTE_VERB';
 
-const RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
-
 
 /*---------------ACTION CREATORS-----------------*/
 
@@ -33,11 +31,6 @@ export const setTestRoute = testRoute => ({
 export const setTestNode = (node) =>({
     type: SET_TEST_NODE,
     node
-})
-
-export const routeTestResult = (result) => ({
-    type: RECEIVE_TEST_RESULT,
-    result
 })
 
 export const setRouteVerb = (verb) => ({
@@ -74,9 +67,6 @@ export const selectedReducer = (state={activeTestNode: null, testRoute: null}, a
             break;
         case SET_TEST_NODE:
             newState.activeTestNode = action.node;
-            break;
-        case RECEIVE_TEST_RESULT:
-            newState.testResult = action.result;
             break;
         case SET_ROUTE_VERB: 
             newState.selectedRouteVerb = action.verb;

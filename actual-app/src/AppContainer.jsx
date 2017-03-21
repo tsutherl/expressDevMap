@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import TreeContainer from './TreeContainer.jsx'
-import TestModalContainer from './TestModalContainer'
+import ModalContainer from './ModalContainer.js'
 
 
 
@@ -10,7 +10,7 @@ import TestModalContainer from './TestModalContainer'
 export const App = (props) => {
     return(
         <div>
-            {props.showModal ? <TestModalContainer/> : null}
+            {props.showModal ? <ModalContainer/> : null}
             {props.routes ? <TreeContainer/> : null }
         </div>    
     )

@@ -1,20 +1,19 @@
 import React from 'react'
 import * as d3 from "d3"
 
+import ModalContainer from './ModalContainer';
+
 
 export default class Tree extends React.Component {
   constructor(props){
-    super(props);   
+    super(props);
   }
 
   componentDidMount(){
 
     const endRouteHandleClick = (node) => {
-      //console.log("node", typeof node)
       let testRoute = getRoute(node);
       let verb = getVerb(node);
-      //console.log("got verb", verb)
-      //console.log("testroute", testRoute)
       this.props.setRouteVerb(verb);
       this.props.setTestRoute(testRoute);
       this.props.setTestNode(node);
@@ -169,6 +168,7 @@ export default class Tree extends React.Component {
   
     return(
       <div ref="routeMap">
+        {this.props.showModal ? <ModalContainer/> : null}
       </div>
     )
   }
