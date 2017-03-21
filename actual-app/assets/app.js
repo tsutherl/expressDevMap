@@ -5736,205 +5736,58 @@ module.exports = setInnerHTML;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.testRoute = exports.makeRequest = exports.setRouteVerb = exports.routeTestResponse = exports.setTestNode = exports.hideModal = exports.showModal = exports.setTestRoute = exports.loadRoutes = undefined;
+// /*---------------CONSTANTS-----------------*/
 
-var _redux = __webpack_require__(132);
 
-var _reduxLogger = __webpack_require__(303);
+// const RECEIVE_TEST_RESPONSE = 'RECEIVE_TEST_RESPONSE';
 
-var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-var _reduxThunk = __webpack_require__(304);
+// /*---------------ACTION CREATORS-----------------*/
 
-var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _axios = __webpack_require__(78);
+// export const routeTestResponse = (result) => ({
+//     type: RECEIVE_TEST_RESPONSE,
+//     result
+// })
 
-var _axios2 = _interopRequireDefault(_axios);
+// export const setRouteVerb = (verb) => ({
+//     type: SET_TEST_VERB, 
+//     verb
+// })
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/*---------------CONSTANTS-----------------*/
+// /*---------------REDUCER-----------------*/
 
-var RECEIVE_ROUTES = 'RECEIVE_ROUTES';
-
-var RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
-
-var SHOW_MODAL = 'SHOW_MODAL';
-
-var HIDE_MODAL = 'HIDE_MODAL';
-
-var SET_TEST_NODE = 'SET_TEST_NODE';
-
-var RECEIVE_TEST_RESPONSE = 'RECEIVE_TEST_RESPONSE';
-
-var SET_TEST_VERB = 'RECEIVE_TEST_VERB';
-
-var RECEIVE_TEST_REQUEST = 'RECEIVE_TEST_REQUEST';
-
-/*---------------ACTION CREATORS-----------------*/
-
-var loadRoutes = exports.loadRoutes = function loadRoutes(routes) {
-    return {
-        type: RECEIVE_ROUTES,
-        routes: routes
-    };
-};
-
-var setTestRoute = exports.setTestRoute = function setTestRoute(testRoute) {
-    return {
-        type: RECEIVE_TEST_ROUTE,
-        testRoute: testRoute
-    };
-};
-
-var showModal = exports.showModal = function showModal() {
-    return {
-        type: SHOW_MODAL
-    };
-};
-
-var hideModal = exports.hideModal = function hideModal() {
-    return {
-        type: HIDE_MODAL
-    };
-};
-
-var setTestNode = exports.setTestNode = function setTestNode(node) {
-    return {
-        type: SET_TEST_NODE,
-        node: node
-    };
-};
-
-var routeTestResponse = exports.routeTestResponse = function routeTestResponse(result) {
-    return {
-        type: RECEIVE_TEST_RESPONSE,
-        result: result
-    };
-};
-
-var setRouteVerb = exports.setRouteVerb = function setRouteVerb(verb) {
-    return {
-        type: SET_TEST_VERB,
-        verb: verb
-    };
-};
-
-var makeRequest = exports.makeRequest = function makeRequest(requestInfo) {
-    return {
-        type: RECEIVE_TEST_REQUEST,
-        requestInfo: requestInfo
-    };
-};
-/*---------------ASYNC ACTION CREATORS-----------------*/
-
-//previously used to test route
-// export const fakeRouteTest = (route, verb) => {
-//     let routeResponse;
-//     route = route.slice(1);
-
-//     return (dispatch) => {axios[verb](route)
-//             .then(res => {
-//                 routeResponse = res.data;
-//                 dispatch(routeTestResult(res.data));
-//             })
-//             .catch(console.error)
+// const reducer = (state={showModal: false, activeTestNode: null, testRoute: null}, action) => {
+//     const newState = Object.assign({}, state)
+//     switch(action.type) {
+//         case RECEIVE_ROUTES:
+//             newState.routes = action.routes;
+//             break
+//         case RECEIVE_TEST_ROUTE:
+//             newState.testRoute = action.testRoute;
+//             break;
+//         case SET_TEST_NODE:
+//             newState.activeTestNode = action.node;
+//             break;
+//         case SHOW_MODAL:
+//             newState.showModal = true;
+//             break;
+//         case HIDE_MODAL:
+//             newState.showModal = false;
+//             break;
+//         case RECEIVE_TEST_RESPONSE:
+//             newState.testResult = action.result;
+//             break;
+//         case SET_TEST_VERB: 
+//             newState.selectedRouteVerb = action.verb;
+//             break;
+//         default:
+//             return state;
 //     }
+//     return newState
 // }
 
-//STUPID QUESTION: why can we just make an axios request from here and it properly hits example apps routes - need to just step through the logic for this
-
-
-var testRoute = exports.testRoute = function testRoute(route, verb, info) {
-    var routeResponse = void 0;
-    route = route.slice(1);
-    if (verb === 'post' || verb === 'put') {
-        return function (dispatch) {
-            var headers = { headers: info.headers };
-            var body = info.body;
-            _axios2.default[verb](route, body, headers).then(function (res) {
-                routeResponse = res.data;
-                dispatch(routeTestResponse(res.data));
-            }).catch(console.error);
-        };
-    } else {
-        return function (dispatch) {
-            var headers = { headers: info.headers };
-            _axios2.default[verb](route, headers).then(function (res) {
-                routeResponse = res.data;
-                dispatch(routeTestResponse(res.data));
-            }).catch(console.error);
-        };
-    }
-};
-
-// export const fakeRouteTest = (route, verb) => {
-//     let routeResponse;
-//     route = route.slice(1);
-
-//     return (dispatch) => {axios[verb](route)
-//             .then(res => {
-//                 routeResponse = res.data;
-//                 dispatch(routeTestResult(res.data));
-//             })
-//             .catch(console.error)
-//     }
-// }
-
-
-/*---------------REDUCER-----------------*/
-
-var reducer = function reducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { showModal: false, activeTestNode: null, testRoute: null };
-    var action = arguments[1];
-
-    var newState = Object.assign({}, state);
-    switch (action.type) {
-        case RECEIVE_ROUTES:
-            newState.routes = action.routes;
-            break;
-        case RECEIVE_TEST_ROUTE:
-            newState.testRoute = action.testRoute;
-            break;
-        case SET_TEST_NODE:
-            newState.activeTestNode = action.node;
-            break;
-        case SHOW_MODAL:
-            newState.showModal = true;
-            break;
-        case HIDE_MODAL:
-            newState.showModal = false;
-            break;
-        case RECEIVE_TEST_RESPONSE:
-            newState.testResult = action.result;
-            break;
-        case SET_TEST_VERB:
-            newState.selectedRouteVerb = action.verb;
-            break;
-        default:
-            return state;
-    }
-    return newState;
-};
-
-var store = (0, _redux.createStore)(reducer, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)({ collapsed: true })));
-
-exports.default = store;
-
-// const testRoute = (route, verb) => {
-//     verb = 'put';
-//     // if(verb === 'put'){
-//         console.log('IN TEST ROUTE')
-//         console.log('axios?', axios[verb]);
-//         axios[verb]('/backend-tree/routes')
-//             .then(res => console.log(res.data))
-//             .catch(console.error)
-//     // }
-// }
 
 /***/ }),
 /* 45 */
@@ -15120,6 +14973,7 @@ var Modal = function (_React$Component) {
 	_createClass(Modal, [{
 		key: 'handleClick',
 		value: function handleClick(route, verb, testingInfo) {
+			console.log('handleingClick');
 			this.props.testThisRoute(route, verb, testingInfo);
 		}
 	}, {
@@ -15231,7 +15085,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(35);
 
-var _store = __webpack_require__(44);
+var _requestReducer = __webpack_require__(320);
 
 var _selectedReducer = __webpack_require__(315);
 
@@ -15250,10 +15104,10 @@ var mapStateToProps = function mapStateToProps(_ref) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	return {
 		testThisRoute: function testThisRoute(route, verb, testingInfo) {
-			dispatch((0, _store.testRoute)(route, verb, testingInfo));
+			dispatch((0, _requestReducer.testRoute)(route, verb, testingInfo));
 		},
 		hideModal: function hideModal() {
-			dispatch((0, _store.hideModal)());
+			dispatch((0, _requestReducer.hideModal)());
 		}
 	};
 };
@@ -48731,7 +48585,7 @@ var modalReducer = exports.modalReducer = function modalReducer() {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.selectedReducer = exports.routeTestAsync = exports.setRouteVerb = exports.routeTestResult = exports.setTestNode = exports.setTestRoute = undefined;
+exports.selectedReducer = exports.routeTestAsync = exports.setRouteVerb = exports.setTestNode = exports.setTestRoute = undefined;
 
 var _axios = __webpack_require__(78);
 
@@ -48753,8 +48607,6 @@ var SET_TEST_NODE = 'SET_TEST_NODE';
 
 var SET_ROUTE_VERB = 'SET_ROUTE_VERB';
 
-var RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
-
 /*---------------ACTION CREATORS-----------------*/
 
 var setTestRoute = exports.setTestRoute = function setTestRoute(testRoute) {
@@ -48768,13 +48620,6 @@ var setTestNode = exports.setTestNode = function setTestNode(node) {
     return {
         type: SET_TEST_NODE,
         node: node
-    };
-};
-
-var routeTestResult = exports.routeTestResult = function routeTestResult(result) {
-    return {
-        type: RECEIVE_TEST_RESULT,
-        result: result
     };
 };
 
@@ -48813,9 +48658,6 @@ var selectedReducer = exports.selectedReducer = function selectedReducer() {
             break;
         case SET_TEST_NODE:
             newState.activeTestNode = action.node;
-            break;
-        case RECEIVE_TEST_RESULT:
-            newState.testResult = action.result;
             break;
         case SET_ROUTE_VERB:
             newState.selectedRouteVerb = action.verb;
@@ -48896,13 +48738,19 @@ var _routeReducer = __webpack_require__(316);
 
 var _selectedReducer = __webpack_require__(315);
 
+var _requestReducer = __webpack_require__(320);
+
+var _responseReducer = __webpack_require__(321);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // combine reducers into a rootReducer
 var rootReducer = (0, _redux.combineReducers)({
     routes: _routeReducer.routeReducer,
     showModal: _modalReducer.modalReducer,
-    selected: _selectedReducer.selectedReducer
+    selected: _selectedReducer.selectedReducer,
+    request: _requestReducer.requestReducer,
+    response: _responseReducer.responseReducer
 });
 
 // construct our store with rootReducer and middleware
@@ -48912,6 +48760,119 @@ var rootReducer = (0, _redux.combineReducers)({
 var store = (0, _redux.createStore)(rootReducer, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)({ collapsed: true })));
 
 exports.default = store;
+
+/***/ }),
+/* 318 */,
+/* 319 */,
+/* 320 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.requestReducer = exports.testRoute = exports.makeRequest = undefined;
+
+var _axios = __webpack_require__(78);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _responseReducer = __webpack_require__(321);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/*---------------CONSTANTS-----------------*/
+
+var RECEIVE_TEST_REQUEST = 'RECEIVE_TEST_REQUEST';
+
+/*---------------ACTION CREATORS-----------------*/
+
+var makeRequest = exports.makeRequest = function makeRequest(requestInfo) {
+    return {
+        type: RECEIVE_TEST_REQUEST,
+        requestInfo: requestInfo
+    };
+};
+
+/*---------------THUNK-----------------*/
+
+//STUPID QUESTION: why can we just make an axios request from here and it properly hits example apps routes - need to just step through the logic for this
+
+
+var testRoute = exports.testRoute = function testRoute(route, verb, info) {
+    var routeResponse = void 0;
+    route = route.slice(1);
+    if (verb === 'post' || verb === 'put') {
+        return function (dispatch) {
+            var headers = { headers: info.headers };
+            var body = info.body;
+            _axios2.default[verb](route, body, headers).then(function (res) {
+                routeResponse = res.data;
+                dispatch((0, _responseReducer.routeTestResponse)(res.data));
+            }).catch(console.error);
+        };
+    } else {
+        return function (dispatch) {
+            var headers = { headers: info.headers };
+            _axios2.default[verb](route, headers).then(function (res) {
+                routeResponse = res.data;
+                dispatch((0, _responseReducer.routeTestResponse)(res.data));
+            }).catch(console.error);
+        };
+    }
+};
+
+/*---------------- REDUCER ---------------- */
+
+var requestReducer = exports.requestReducer = function requestReducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var action = arguments[1];
+
+    switch (action.type) {
+        case RECEIVE_TEST_REQUEST:
+            return;
+    }
+    return state;
+};
+
+/***/ }),
+/* 321 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*---------------CONSTANTS-----------------*/
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
+
+/*---------------ACTION CREATORS-----------------*/
+
+var routeTestResponse = exports.routeTestResponse = function routeTestResponse(result) {
+    return {
+        type: RECEIVE_TEST_RESULT,
+        result: result
+    };
+};
+
+/*---------------- REDUCER ---------------- */
+
+var responseReducer = exports.responseReducer = function responseReducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var action = arguments[1];
+
+    switch (action.type) {
+        case RECEIVE_TEST_RESULT:
+            //TODO: what do we want the response to look like?
+            return 'TODO';
+    }
+    return state;
+};
 
 /***/ })
 /******/ ]);

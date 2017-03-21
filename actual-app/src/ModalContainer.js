@@ -3,7 +3,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {testRoute, hideModal} from './store';
+import {testRoute, hideModal} from './reducers/requestReducer';
 
 // import { hideModal } from './reducers/modalReducer';
 import { routeTestAsync } from './reducers/selectedReducer';

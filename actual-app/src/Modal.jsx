@@ -28,6 +28,7 @@ export default class Modal extends React.Component {
 	}
 
 	handleClick(route, verb, testingInfo) {
+		console.log('handleingClick')
 		this.props.testThisRoute(route, verb, testingInfo);
 	}
 	closeButton () {
