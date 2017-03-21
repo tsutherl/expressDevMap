@@ -82,7 +82,6 @@ export const makeRequest = (requestInfo) => ({
 
 
 export const testRoute = (route, verb, info) => {
-    console.log('testing routes', route, verb, info)
     let routeResponse;
     route = route.slice(1);
     if (verb === 'post' || verb === 'put') {
@@ -127,7 +126,6 @@ export const testRoute = (route, verb, info) => {
 /*---------------REDUCER-----------------*/
 
 const reducer = (state={showModal: false, activeTestNode: null, testRoute: null}, action) => {
-    console.log("ACTION", action)
     const newState = Object.assign({}, state)
     switch(action.type) {
         case RECEIVE_ROUTES:

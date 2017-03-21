@@ -5850,7 +5850,6 @@ var makeRequest = exports.makeRequest = function makeRequest(requestInfo) {
 
 
 var testRoute = exports.testRoute = function testRoute(route, verb, info) {
-    console.log('testing routes', route, verb, info);
     var routeResponse = void 0;
     route = route.slice(1);
     if (verb === 'post' || verb === 'put') {
@@ -5893,7 +5892,6 @@ var reducer = function reducer() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { showModal: false, activeTestNode: null, testRoute: null };
     var action = arguments[1];
 
-    console.log("ACTION", action);
     var newState = Object.assign({}, state);
     switch (action.type) {
         case RECEIVE_ROUTES:
@@ -15159,7 +15157,6 @@ var Modal = function (_React$Component) {
 			var method = this.props.selected.selectedRouteVerb;
 			var testingInfo = this.state.testingInfo;
 
-			console.log('verb????', this.props.selected);
 			return _react2.default.createElement(
 				'div',
 				{ className: this.state.fadingOut ? 'modal fadeOut' : 'modal' },
@@ -15256,7 +15253,6 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 			dispatch((0, _store.testRoute)(route, verb, testingInfo));
 		},
 		hideModal: function hideModal() {
-			console.log('in the function');
 			dispatch((0, _store.hideModal)());
 		}
 	};
@@ -15372,11 +15368,8 @@ var Tree = function (_React$Component) {
       var _this2 = this;
 
       var endRouteHandleClick = function endRouteHandleClick(node) {
-        //console.log("node", typeof node)
         var testRoute = getRoute(node);
         var verb = getVerb(node);
-        //console.log("got verb", verb)
-        //console.log("testroute", testRoute)
         _this2.props.setRouteVerb(verb);
         _this2.props.setTestRoute(testRoute);
         _this2.props.setTestNode(node);
@@ -48664,7 +48657,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var getRoutes = function getRoutes() {
     (0, _axios2.default)('/backend-tree/routes').then(function (routes) {
-        console.log('OBJ', routes.data);
         _store2.default.dispatch((0, _routeReducer.loadRoutes)(routes.data));
     });
 };

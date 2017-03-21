@@ -26,7 +26,6 @@ import { loadRoutes}  from './reducers/routeReducer';
 const getRoutes = () => {
     axios('/backend-tree/routes')
     .then((routes) => {
-        console.log('OBJ', routes.data)
         store.dispatch(loadRoutes(routes.data))
     })
 }

@@ -19,7 +19,6 @@ const mapDispatchToProps = (dispatch) => ({
 		dispatch(testRoute(route, verb, testingInfo));
 	},
 	hideModal : () => {
-		console.log('in the function')
 		dispatch(hideModal());
 	}
 })

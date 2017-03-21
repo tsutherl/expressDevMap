@@ -13,11 +13,8 @@ export default class Tree extends React.Component {
   componentDidMount(){
 
     const endRouteHandleClick = (node) => {
-      //console.log("node", typeof node)
       let testRoute = getRoute(node);
       let verb = getVerb(node);
-      //console.log("got verb", verb)
-      //console.log("testroute", testRoute)
       this.props.setRouteVerb(verb);
       this.props.setTestRoute(testRoute);
       this.props.setTestNode(node);

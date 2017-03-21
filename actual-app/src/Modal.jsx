@@ -57,7 +57,6 @@ export default class Modal extends React.Component {
 		const route = this.props.selected.testRoute;
 		const method = this.props.selected.selectedRouteVerb;
 		const {testingInfo} = this.state
-		console.log('verb????', this.props.selected)
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
