@@ -2,7 +2,6 @@ import React from 'react'
 import * as d3 from "d3"
 
 import ModalContainer from './ModalContainer';
-import store, { setTestRoute, showModal, setTestNode, setRouteVerb } from './store';
 
 
 export default class Tree extends React.Component {
