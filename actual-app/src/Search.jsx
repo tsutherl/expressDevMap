@@ -1,9 +1,14 @@
 import React from 'react';
+import {Typeahead} from 'react-typeahead';
 
-export default () => {
+export default (props) => {
+  console.log(props)
   return (
     <div id='search-bar'>
-      Search bar will go here.
+      <Typeahead 
+        options={props.routeList}
+        maxVisible={10}
+      />
     </div>
   )
 }
