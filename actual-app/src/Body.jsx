@@ -1,5 +1,5 @@
 import React from 'react'
-import Headers from './Headers.jsx'
+import Urlencoded from './Urlencoded.jsx'
 import Json from './Json.jsx'
 
 class Body extends React.Component {
@@ -35,7 +35,7 @@ class Body extends React.Component {
                     </label>
                 </div>
                 </form>
-                {this.state.typeSelected === 'urlencoded'? <Headers/> : <Json/>}
+                {this.state.typeSelected === 'urlencoded'? <Urlencoded onChange={this.props.onChange}/> : <Json/>}
             </div>
         )
     }

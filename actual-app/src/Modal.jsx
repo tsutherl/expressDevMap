@@ -48,8 +48,15 @@ export default class Modal extends React.Component {
 				this.setState({testingInfo: {headers: {[e.target.value]: null}, body: {}}});
 				break;
 			case "value":
-				let key = document.getElementById("reqBodyKey").value;
+				let key = document.getElementsByName("value")[0].value
 				this.setState({testingInfo: {headers: {[key]: e.target.value}, body: {}}});
+				break;
+			case "url-key":
+				this.setState({testingInfo: {headers: {}, body: {urlencoded: {[e.target.value]: null}}}});
+				break;
+			case "url-value":
+				key = document.getElementsByName("url-value")[0].value
+				this.setState({testingInfo: {headers: {}, body: {urlencoded: {[key]: e.target.value}}}});
 				break;
 		}
 	}
@@ -74,7 +81,7 @@ export default class Modal extends React.Component {
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
 						<button className={`headers ${option === 'body'? 'selected' : ''}`}value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
-					{option === 'headers' ? <Headers onChange={this.onChange}/> : <Body/> }
+					{option === 'headers' ? <Headers verb={method} onChange={this.onChange}/> : <Body onChange={this.onChange}/> }
 						
 				</div>
 			</div>

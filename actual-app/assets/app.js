@@ -15112,9 +15112,9 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Headers = __webpack_require__(85);
+var _Urlencoded = __webpack_require__(319);
 
-var _Headers2 = _interopRequireDefault(_Headers);
+var _Urlencoded2 = _interopRequireDefault(_Urlencoded);
 
 var _Json = __webpack_require__(161);
 
@@ -15180,7 +15180,7 @@ var Body = function (_React$Component) {
                         )
                     )
                 ),
-                this.state.typeSelected === 'urlencoded' ? _react2.default.createElement(_Headers2.default, null) : _react2.default.createElement(_Json2.default, null)
+                this.state.typeSelected === 'urlencoded' ? _react2.default.createElement(_Urlencoded2.default, { onChange: this.props.onChange }) : _react2.default.createElement(_Json2.default, null)
             );
         }
     }]);
@@ -15331,8 +15331,15 @@ var Modal = function (_React$Component) {
 					this.setState({ testingInfo: { headers: _defineProperty({}, e.target.value, null), body: {} } });
 					break;
 				case "value":
-					var key = document.getElementById("reqBodyKey").value;
+					var key = document.getElementsByName("value")[0].value;
 					this.setState({ testingInfo: { headers: _defineProperty({}, key, e.target.value), body: {} } });
+					break;
+				case "url-key":
+					this.setState({ testingInfo: { headers: {}, body: { urlencoded: _defineProperty({}, e.target.value, null) } } });
+					break;
+				case "url-value":
+					key = document.getElementsByName("url-value")[0].value;
+					this.setState({ testingInfo: { headers: {}, body: { urlencoded: _defineProperty({}, key, e.target.value) } } });
 					break;
 			}
 		}
@@ -15392,7 +15399,7 @@ var Modal = function (_React$Component) {
 							'Body'
 						)
 					),
-					option === 'headers' ? _react2.default.createElement(_Headers2.default, { onChange: this.onChange }) : _react2.default.createElement(_Body2.default, null)
+					option === 'headers' ? _react2.default.createElement(_Headers2.default, { verb: method, onChange: this.onChange }) : _react2.default.createElement(_Body2.default, { onChange: this.onChange })
 				)
 			);
 		}
@@ -48812,6 +48819,100 @@ var getRoutes = function getRoutes() {
         _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default, onEnter: getRoutes })
     )
 ), document.getElementById('app'));
+
+/***/ }),
+/* 319 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Urlencoded = function (_React$Component) {
+    _inherits(Urlencoded, _React$Component);
+
+    function Urlencoded(props) {
+        _classCallCheck(this, Urlencoded);
+
+        var _this = _possibleConstructorReturn(this, (Urlencoded.__proto__ || Object.getPrototypeOf(Urlencoded)).call(this, props));
+
+        _this.state = {
+            keyValuePairs: [0]
+        };
+        _this.addInput = _this.addInput.bind(_this);
+        _this.removeInput = _this.removeInput.bind(_this);
+        return _this;
+    }
+
+    _createClass(Urlencoded, [{
+        key: 'removeInput',
+        value: function removeInput(idx) {
+            var newState = this.state.keyValuePairs;
+            if (newState.indexOf(idx) > -1 && idx > 0) {
+                newState.splice(idx, 1);
+                this.setState({ keyValuePairs: newState });
+            }
+        }
+    }, {
+        key: 'addInput',
+        value: function addInput(idx) {
+            var keyValuePairs = this.state.keyValuePairs;
+
+            if (idx === keyValuePairs.length - 1) {
+                var newState = keyValuePairs.concat(keyValuePairs.length);
+                this.setState({ keyValuePairs: newState });
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'form',
+                { className: 'form' },
+                this.state.keyValuePairs.map(function (num) {
+                    return _react2.default.createElement(
+                        'div',
+                        { key: num, className: 'form-input' },
+                        _react2.default.createElement('input', { name: 'url-key', className: 'headersKey', onChange: _this2.props.onChange, onClick: _this2.addInput.bind(_this2, num), placeholder: 'key' }),
+                        _react2.default.createElement('input', { name: 'url-value', className: 'headersValue', onChange: _this2.props.onChange, onClick: _this2.addInput.bind(_this2, num), placeholder: 'value' }),
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: _this2.removeInput.bind(_this2, num) },
+                            'x'
+                        )
+                    );
+                })
+            );
+        }
+    }]);
+
+    return Urlencoded;
+}(_react2.default.Component);
+
+exports.default = Urlencoded;
+
+//if clicked and it is the last thing in the array 
+//  add another key and value with a key value set to its index in the array
+//else do nothing
 
 /***/ })
 /******/ ]);
