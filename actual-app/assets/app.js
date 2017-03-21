@@ -9330,6 +9330,8 @@ var _reactRedux = __webpack_require__(36);
 
 var _requestReducer = __webpack_require__(88);
 
+var _modalReducer = __webpack_require__(87);
+
 var _selectedReducer = __webpack_require__(46);
 
 var _Modal = __webpack_require__(162);
@@ -9338,7 +9340,6 @@ var _Modal2 = _interopRequireDefault(_Modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import { hideModal } from './reducers/modalReducer';
 var mapStateToProps = function mapStateToProps(_ref) {
 	var selected = _ref.selected;
 	return { selected: selected };
@@ -9351,7 +9352,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 			dispatch((0, _requestReducer.testRoute)(route, verb, testingInfo));
 		},
 		hideModal: function hideModal() {
-			dispatch((0, _requestReducer.hideModal)());
+			dispatch((0, _modalReducer.hideModal)());
 		}
 	};
 };
