@@ -15235,14 +15235,12 @@ var Json = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            console.log('our last json', this.props.bodyJson);
-
             return _react2.default.createElement(
                 'textarea',
                 { onChange: function onChange(e) {
                         _this2.props.setJson();_this2.props.onChangeJson(e);
                     }, rows: '4', cols: '50' },
-                _lodash2.default.isEmpty({}) ? null : this.props.bodyJson
+                _lodash2.default.isEmpty(this.props.bodyJson) ? null : this.props.bodyJson
             );
         }
     }]);
