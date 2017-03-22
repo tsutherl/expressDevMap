@@ -100,21 +100,17 @@ export default class Tree extends React.Component {
     // maps the node data to the tree layout
     nodes = treemap(nodes);
 
-    // function zoomed() {
-    //   console.log('trying to zoom ?????::::')
-    //    let transform = d3.event.transform;
-    //    console.log(d3.event);
-    //      svg.attr("transform", transform);
-    // } 
-
     function zoomed() {
       console.log('trying to zoom ?????::::')
-      g.attr("transform", d3.event.transform);//The zoom and panning is affecting my G element which is a child of SVG
+      g.attr("transform", d3.event.transform);
+      //The zoom and panning is affecting my G element which is a child of SVG
     }
 
+    
+
     var zoom = d3.zoom()
-    .scaleExtent([0.3,2])
-    .on("zoom", zoomed);
+      .scaleExtent([0.3,2])
+      .on("zoom", zoomed);
 
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
@@ -127,6 +123,7 @@ export default class Tree extends React.Component {
         g = svg.append("g")
           .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
+
 
     // adds the links between the nodes
     var link = g.selectAll(".link")
