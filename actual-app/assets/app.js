@@ -48506,22 +48506,11 @@ var treeToRoutes = function treeToRoutes(array, prefix, node) {
 
 //handles the tricky bit of simulating clicks on a d3 element
 function simulateClick(circle) {
-  var event = document.createEvent("MouseEvents");
-  event.initMouseEvent("click", /* type */
-  true, /* canBubble */
-  true, /* cancelable */
-  window, /* view */
-  0, /* detail */
-  0, /* screenX */
-  0, /* screenY */
-  0, /* clientX */
-  0, /* clientY */
-  false, /* ctrlKey */
-  false, /* altKey */
-  false, /* shiftKey */
-  false, /* metaKey */
-  0, /* button */
-  null); /* relatedTarget */
+  var event = new MouseEvent('click', {
+    view: window,
+    bubbles: true,
+    cancelable: true
+  });
   circle.dispatchEvent(event);
 }
 
