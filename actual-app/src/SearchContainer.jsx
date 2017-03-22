@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import * as d3 from "d3"
 
 import Search from './Search.jsx';
+
+//trying to get D3 tree
+import {nodes} from './Tree.jsx'
 
 const treeToRoutes = (array, prefix, node) => {
   const currString = `${prefix}${node.name}`
@@ -42,9 +46,27 @@ class SearchContainer extends Component {
     //parse the route
     const colonPlace = this.state.inputState.indexOf(':');
     const pathOnly = this.state.inputState.slice(colonPlace+2);
-    const verbOnly = this.state.inputState.slice(colonPlace).toLowerCase();
+    const verbOnly = this.state.inputState.slice(0, colonPlace).toLowerCase();
+    const pathParts = pathOnly.split('/').slice(1)
     //try finding node from tree top
+    let currNode = nodes
+    while (pathParts.length > 0) {
+      const currChildren = currNode.children;
+      currNode = currChildren.filter(child => {return child.data.name === `/${pathParts[0]}`})
+      if(currNode.length > 1) {
+        //console.log('in if', currNode, verbOnly)
+        currNode = currNode.filter(node => {return node.data.verb === verbOnly})
+      }
+      currNode = currNode[0]
+      pathParts.shift();
+    }
     //simulate the click
+    console.log(currNode);
+    const leaves = document.querySelectorAll('#tree g.node--leaf');
+    console.log(leaves)
+    const rightNode = Array.prototype.filter.call(leaves, leaf => {return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y})[0];
+    console.log(rightNode.firstChild)
+    const theClick = rightNode.firstChild.__on[0].listener.call(rightNode.firstChild);
   }
 
   render () {

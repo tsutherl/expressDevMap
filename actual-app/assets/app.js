@@ -15109,6 +15109,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.nodes = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -15129,6 +15130,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var nodes = exports.nodes = void 0;
 
 var Tree = function (_React$Component) {
   _inherits(Tree, _React$Component);
@@ -15217,12 +15220,12 @@ var Tree = function (_React$Component) {
       var treemap = d3.tree().size([height, width]);
 
       //  assigns the data to a hierarchy using parent-child relationships
-      var nodes = d3.hierarchy(this.props.routes, function (d) {
+      exports.nodes = nodes = d3.hierarchy(this.props.routes, function (d) {
         return d.children;
       });
 
       // maps the node data to the tree layout
-      nodes = treemap(nodes);
+      exports.nodes = nodes = treemap(nodes);
 
       // append the svg object to the body of the page
       // appends a 'group' element to 'svg'
@@ -15252,14 +15255,15 @@ var Tree = function (_React$Component) {
       .attr('class', function (d) {
         return d.data.verb ? d.data.verb : 'router';
       }).on("click", function (e) {
+        console.log('what is the e?', e);
         resetTree();
-        if (e.children) {
-          routerHandleClick(e);
-        } else {
-          endRouteHandleClick(e); // modal functionality
-        }
+        // if (e.children) {
+        //   routerHandleClick(e);
+        // } else {
+        //   endRouteHandleClick(e); // modal functionality
+        // }
         alterNode(this);
-        alterPath(e);
+        //alterPath(e);
       });
 
       // adds the text to the node
@@ -48463,9 +48467,17 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(35);
 
+var _d = __webpack_require__(161);
+
+var d3 = _interopRequireWildcard(_d);
+
 var _Search = __webpack_require__(315);
 
 var _Search2 = _interopRequireDefault(_Search);
+
+var _Tree = __webpack_require__(158);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48474,6 +48486,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+//trying to get D3 tree
+
 
 var treeToRoutes = function treeToRoutes(array, prefix, node) {
   var currString = '' + prefix + node.name;
@@ -48524,9 +48539,33 @@ var SearchContainer = function (_Component) {
       //parse the route
       var colonPlace = this.state.inputState.indexOf(':');
       var pathOnly = this.state.inputState.slice(colonPlace + 2);
-      var verbOnly = this.state.inputState.slice(colonPlace).toLowerCase();
+      var verbOnly = this.state.inputState.slice(0, colonPlace).toLowerCase();
+      var pathParts = pathOnly.split('/').slice(1);
       //try finding node from tree top
+      var currNode = _Tree.nodes;
+      while (pathParts.length > 0) {
+        var currChildren = currNode.children;
+        currNode = currChildren.filter(function (child) {
+          return child.data.name === '/' + pathParts[0];
+        });
+        if (currNode.length > 1) {
+          //console.log('in if', currNode, verbOnly)
+          currNode = currNode.filter(function (node) {
+            return node.data.verb === verbOnly;
+          });
+        }
+        currNode = currNode[0];
+        pathParts.shift();
+      }
       //simulate the click
+      console.log(currNode);
+      var leaves = document.querySelectorAll('#tree g.node--leaf');
+      console.log(leaves);
+      var rightNode = Array.prototype.filter.call(leaves, function (leaf) {
+        return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y;
+      })[0];
+      console.log(rightNode.firstChild);
+      var theClick = rightNode.firstChild.__on[0].listener.call(rightNode.firstChild);
     }
   }, {
     key: 'render',
