@@ -44,6 +44,7 @@ h1 {
     overflow: hidden;
     animation: 1s ease-in-out slidein;
     background-color: white;
+    box-shadow: 0 0 .75em 0 rgba(85,85,85,1);
 }
 
 .modal.fadeOut {

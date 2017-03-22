@@ -165,7 +165,6 @@ export default class Tree extends React.Component {
   
     return(
       <div ref="routeMap">
-        {this.props.showModal ? <ModalContainer/> : null}
       </div>
     )
   }

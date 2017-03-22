@@ -15027,11 +15027,7 @@ var Tree = function (_React$Component) {
     key: "render",
     value: function render() {
 
-      return _react2.default.createElement(
-        "div",
-        { ref: "routeMap" },
-        this.props.showModal ? _react2.default.createElement(ModalContainer, null) : null
-      );
+      return _react2.default.createElement("div", { ref: "routeMap" });
     }
   }]);
 
