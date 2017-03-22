@@ -35,6 +35,7 @@ h1 {
     margin: auto;
 }
 
+/*************MODAL****************/
 .modal {
     height: 100%;
     top: 0;
@@ -140,6 +141,8 @@ h1 {
 
 .modal .nav button {
     background-color: #666666;
+    font-size: 1em;
+    padding: .5em 1em;
 }
 
 
@@ -162,10 +165,6 @@ h1 {
     border-bottom: 2px solid #94584f;    
 }
 
-
-
-
-
 .modal .radio-buttons {
     display: flex;
 }
@@ -175,24 +174,17 @@ h1 {
     padding: .8em .7em 1em;
 }
 
-.form-input input {
+.modal .form-input input {
     border: 0;
     outline: 0;
     background: transparent;
     border-bottom: 1px solid #999999;
     margin: 0 .6em;
+    font-size: .875em;
 }
 
-.form-input input:focus {
+.modal .form-input input:focus {
     border-bottom: 2px solid #94584f;
-}
-
-* {
-    font-family: "Helvetica Neue", Helvetica;
-}
-
-svg text {
-    font-size: 12px;
 }
 
 .modal .form .form-input {
@@ -204,10 +196,7 @@ svg text {
     margin: 1.3em;
 }
 
-/*#tree circle {
-    box-shadow: inset 0px 0px 5px 0px rgba(51,51,3,1);
-}*/
-
+/*************TREE****************/
 #tree circle.router {
     fill: #555;
 }
