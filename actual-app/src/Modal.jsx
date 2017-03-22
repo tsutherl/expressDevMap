@@ -5,6 +5,7 @@ import Closex from './xImage'
 import Headers from './Headers.jsx'
 import Body from './Body.jsx'
 import RequestBody from './RequestBody.jsx'
+import Response from './Response.jsx'
 
 
 export default class Modal extends React.Component {
@@ -171,7 +172,7 @@ export default class Modal extends React.Component {
 					</div>
 					<div className='headers-body'>
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
-						<button className={`headers ${option === 'body'? 'selected' : ''}`}value={1} onClick={this.toggleOptions}>Body</button>
+						<button className={`headers ${option === 'body'? 'selected' : ''}`}  disabled={method === 'post' || method === 'put'? '' : 'disabled'} value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
 					{option === 'headers' ? <Headers verb={method} onChange={this.onChange} addInput={this.addInput} removeInput={this.removeInput} keyValuePairs={this.state.keyValuePairs} /> : 
 					<Body 
@@ -187,9 +188,16 @@ export default class Modal extends React.Component {
 					bodyJson={this.state.bodyJson}/> }
 						
 				</div>
+				<div>
+					<Response/>
+				</div>
 			</div>
 		)
 	}
 }
+
+
+
+// ${method === 'post' || method === 'put'? '' : disabled}
 
 
