@@ -1,8 +1,9 @@
 import React from 'react';
 import {Typeahead} from 'react-typeahead';
 
+
+
 export default (props) => {
-  console.log(props)
   return (
     <div id='search-bar'>
       <div className='search-inner'>
@@ -10,8 +11,9 @@ export default (props) => {
           options={props.routeList}
           maxVisible={10}
           placeholder={'Filter Routes'}
+          onOptionSelected={props.optionSelect}
         />
-        <button>
+        <button onClick={props.buttonClick}>
           Select Path
         </button>
       </div>

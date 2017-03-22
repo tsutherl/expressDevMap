@@ -5,7 +5,9 @@ import Search from './Search.jsx';
 
 const treeToRoutes = (array, prefix, node) => {
   const currString = `${prefix}${node.name}`
-  array.push(`${node.verb ? node.verb.toUpperCase() : 'ROUTER'}: ${currString}`);
+  if (node.verb) {
+    array.push(`${node.verb.toUpperCase()}: ${currString}`);
+  }
   if (node.children){
     node.children.forEach(child => {
       treeToRoutes(array, currString , child)
@@ -18,7 +20,10 @@ class SearchContainer extends Component {
     super();
     this.state = {
       routeList: [],
+      inputState: '',
     }
+    this.onOptionSelect = this.onOptionSelect.bind(this);
+    this.onButtonClick = this.onButtonClick.bind(this);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -29,10 +34,24 @@ class SearchContainer extends Component {
     this.setState({routeList: list})
   }
 
+  onOptionSelect (e) {
+    this.setState({inputState: e})
+  }
+
+  onButtonClick () {
+    console.log('button clicked', this.state.inputState)
+    //parse the route
+    //find the node
+    //simulate the click
+  }
+
   render () {
-    console.log('in search container', this.props.routes);
     return (
-      <Search routeList={this.state.routeList}/>
+      <Search 
+        routeList={this.state.routeList} 
+        optionSelect={this.onOptionSelect} 
+        buttonClick={this.onButtonClick}
+      />
     )
   }
 }

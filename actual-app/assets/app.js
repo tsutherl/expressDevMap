@@ -48477,7 +48477,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var treeToRoutes = function treeToRoutes(array, prefix, node) {
   var currString = '' + prefix + node.name;
-  array.push((node.verb ? node.verb.toUpperCase() : 'ROUTER') + ': ' + currString);
+  if (node.verb) {
+    array.push(node.verb.toUpperCase() + ': ' + currString);
+  }
   if (node.children) {
     node.children.forEach(function (child) {
       treeToRoutes(array, currString, child);
@@ -48494,8 +48496,11 @@ var SearchContainer = function (_Component) {
     var _this = _possibleConstructorReturn(this, (SearchContainer.__proto__ || Object.getPrototypeOf(SearchContainer)).call(this));
 
     _this.state = {
-      routeList: []
+      routeList: [],
+      inputState: ''
     };
+    _this.onOptionSelect = _this.onOptionSelect.bind(_this);
+    _this.onButtonClick = _this.onButtonClick.bind(_this);
     return _this;
   }
 
@@ -48509,10 +48514,26 @@ var SearchContainer = function (_Component) {
       this.setState({ routeList: list });
     }
   }, {
+    key: 'onOptionSelect',
+    value: function onOptionSelect(e) {
+      this.setState({ inputState: e });
+    }
+  }, {
+    key: 'onButtonClick',
+    value: function onButtonClick() {
+      console.log('button clicked', this.state.inputState);
+      //parse the route
+      //find the node
+      //simulate the click
+    }
+  }, {
     key: 'render',
     value: function render() {
-      console.log('in search container', this.props.routes);
-      return _react2.default.createElement(_Search2.default, { routeList: this.state.routeList });
+      return _react2.default.createElement(_Search2.default, {
+        routeList: this.state.routeList,
+        optionSelect: this.onOptionSelect,
+        buttonClick: this.onButtonClick
+      });
     }
   }]);
 
@@ -48548,7 +48569,6 @@ var _reactTypeahead = __webpack_require__(321);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (props) {
-  console.log(props);
   return _react2.default.createElement(
     'div',
     { id: 'search-bar' },
@@ -48558,11 +48578,12 @@ exports.default = function (props) {
       _react2.default.createElement(_reactTypeahead.Typeahead, {
         options: props.routeList,
         maxVisible: 10,
-        placeholder: 'Filter Routes'
+        placeholder: 'Filter Routes',
+        onOptionSelected: props.optionSelect
       }),
       _react2.default.createElement(
         'button',
-        null,
+        { onClick: props.buttonClick },
         'Select Path'
       )
     )

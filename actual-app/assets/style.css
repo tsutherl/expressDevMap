@@ -37,6 +37,7 @@ h1 {
 
 .modal {
     height: 100%;
+    top: 0;
     width: 30%;
     background: #143E81;
     right: 70%;
@@ -188,6 +189,7 @@ h1 {
     border-top-right-radius: .5em;
     border-bottom-right-radius: .5em;
     border-left: none;
+    cursor: pointer;
 }
 
 #search-bar ul.typeahead-selector {
