@@ -12,7 +12,6 @@ const RECEIVE_TEST_REQUEST = 'RECEIVE_TEST_REQUEST'
 
 
 export const makeRequest = (requestInfo) => {
-    console.log('making a request')
     return {
     type: RECEIVE_TEST_REQUEST,
     requestInfo
