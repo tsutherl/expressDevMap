@@ -36,7 +36,7 @@ class Body extends React.Component {
                 </div>
                 </form>
                 {this.state.typeSelected === 'urlencoded'? <Urlencoded onChange={this.props.onChange}
-                addInput={this.props.addInput} removeInput={this.props.removeInput} bodyKVPairs={this.props.bodyKVPairs}/> : <Json/>}
+                addInput={this.props.addInput} removeInput={this.props.removeInput} bodyKVPairs={this.props.bodyKVPairs} setUrlEn={this.props.setUrlEn}/> : <Json setJson={this.props.setJson} onChangeJson={this.props.onChangeJson}/>}
             </div>
         )
     }

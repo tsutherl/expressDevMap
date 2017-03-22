@@ -20,6 +20,7 @@ export default class Modal extends React.Component {
 			bodyKeys: {},
 			bodyVals: {},
 			bodyJson: {},
+			JORU: null,
 			fadingOut: false,
 			currentOption: 'headers',
 			options: ['headers', 'body'],
@@ -34,6 +35,9 @@ export default class Modal extends React.Component {
 		this.onChange = this.onChange.bind(this)
 		this.removeInputB = this.removeInputB.bind(this);
 		this.addInputB = this.addInputB.bind(this);
+		this.setUrlEn = this.setUrlEn.bind(this);
+		this.setJson = this.setJson.bind(this);
+		this.onChangeJson = this.onChangeJson.bind(this);
 	}
 
 	removeInput(idx) {
@@ -68,6 +72,14 @@ export default class Modal extends React.Component {
         }
     }
 
+    setUrlEn () {
+    	this.setState({JORU: 'U'});
+    }
+
+    setJson () {
+    	this.setState({JORU: 'J'});
+    }
+
     onChange(idx, e) {
 
         switch(e.target.name){
@@ -92,6 +104,10 @@ export default class Modal extends React.Component {
 
 	}
 
+	onChangeJson(e) {
+		this.setState({bodyJson: e.target.value});
+	}
+
 	closeButton () {
 		this.setState({fadingOut: true})
 		setTimeout(this.props.hideModal, 1000)
@@ -107,20 +123,27 @@ export default class Modal extends React.Component {
 		const headerVals = this.state.headerVals;
 		const bodyKeys = this.state.bodyKeys;
 		const bodyVals = this.state.bodyVals;
-		console.log("in handle click, here's headerKeys ", headerKeys)
 		const testingInfo = {}
-		let body = {}
-		let headers = {}
+		
+		
+		let headers = {};
 		for(let i=0; i<Object.keys(headerKeys).length; i++){
-			console.log("in for loop for headers, i ", i)
 			headers[headerKeys[i]] = headerVals[i];
 		}
-		for(let i=0; i<Object.keys(bodyKeys).length; i++){
-			body[bodyKeys[i]] = bodyVals[i]
-		}
 		testingInfo.headers = headers;
+
+		let body = {};
+		if (this.state.JORU === 'U') {
+			for(let i=0; i<Object.keys(bodyKeys).length; i++){
+				body[bodyKeys[i]] = bodyVals[i]
+			}
+		}
+		else if (this.state.JORU === 'J'){ // make testingInfo.body from JSON
+			body = JSON.stringify(this.state.bodyJson);
+		}
 		testingInfo.body = body;
-		console.log('testing info is ', testingInfo);
+		
+		console.log('in handleClick, testing info is ', testingInfo);
 		this.props.testThisRoute(route, verb, testingInfo);
 	}
 
@@ -145,7 +168,7 @@ export default class Modal extends React.Component {
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
 						<button className={`headers ${option === 'body'? 'selected' : ''}`}value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
-					{option === 'headers' ? <Headers verb={method} onChange={this.onChange} addInput={this.addInput} removeInput={this.removeInput} keyValuePairs={this.state.keyValuePairs} /> : <Body onChange={this.onChange} addInput={this.addInputB} removeInput={this.removeInputB} bodyKVPairs={this.state.bodyKVPairs}/> }
+					{option === 'headers' ? <Headers verb={method} onChange={this.onChange} addInput={this.addInput} removeInput={this.removeInput} keyValuePairs={this.state.keyValuePairs} /> : <Body onChange={this.onChange} addInput={this.addInputB} removeInput={this.removeInputB} bodyKVPairs={this.state.bodyKVPairs} setUrlEn={this.setUrlEn} setJson={this.setJson} onChangeJson={this.onChangeJson}/> }
 						
 				</div>
 			</div>

@@ -15062,6 +15062,7 @@ var Modal = function (_React$Component) {
 			bodyKeys: {},
 			bodyVals: {},
 			bodyJson: {},
+			JORU: null,
 			fadingOut: false,
 			currentOption: 'headers',
 			options: ['headers', 'body'],
@@ -15076,6 +15077,9 @@ var Modal = function (_React$Component) {
 		_this.onChange = _this.onChange.bind(_this);
 		_this.removeInputB = _this.removeInputB.bind(_this);
 		_this.addInputB = _this.addInputB.bind(_this);
+		_this.setUrlEn = _this.setUrlEn.bind(_this);
+		_this.setJson = _this.setJson.bind(_this);
+		_this.onChangeJson = _this.onChangeJson.bind(_this);
 		return _this;
 	}
 
@@ -15118,6 +15122,16 @@ var Modal = function (_React$Component) {
 			}
 		}
 	}, {
+		key: 'setUrlEn',
+		value: function setUrlEn() {
+			this.setState({ JORU: 'U' });
+		}
+	}, {
+		key: 'setJson',
+		value: function setJson() {
+			this.setState({ JORU: 'J' });
+		}
+	}, {
 		key: 'onChange',
 		value: function onChange(idx, e) {
 
@@ -15142,6 +15156,11 @@ var Modal = function (_React$Component) {
 			console.log("in onChange, now local state is", this.state);
 		}
 	}, {
+		key: 'onChangeJson',
+		value: function onChangeJson(e) {
+			this.setState({ bodyJson: e.target.value });
+		}
+	}, {
 		key: 'closeButton',
 		value: function closeButton() {
 			this.setState({ fadingOut: true });
@@ -15160,20 +15179,26 @@ var Modal = function (_React$Component) {
 			var headerVals = this.state.headerVals;
 			var bodyKeys = this.state.bodyKeys;
 			var bodyVals = this.state.bodyVals;
-			console.log("in handle click, here's headerKeys ", headerKeys);
 			var testingInfo = {};
-			var body = {};
+
 			var headers = {};
 			for (var i = 0; i < Object.keys(headerKeys).length; i++) {
-				console.log("in for loop for headers, i ", i);
 				headers[headerKeys[i]] = headerVals[i];
 			}
-			for (var _i = 0; _i < Object.keys(bodyKeys).length; _i++) {
-				body[bodyKeys[_i]] = bodyVals[_i];
-			}
 			testingInfo.headers = headers;
+
+			var body = {};
+			if (this.state.JORU === 'U') {
+				for (var _i = 0; _i < Object.keys(bodyKeys).length; _i++) {
+					body[bodyKeys[_i]] = bodyVals[_i];
+				}
+			} else if (this.state.JORU === 'J') {
+				// make testingInfo.body from JSON
+				body = JSON.stringify(this.state.bodyJson);
+			}
 			testingInfo.body = body;
-			console.log('testing info is ', testingInfo);
+
+			console.log('in handleClick, testing info is ', testingInfo);
 			this.props.testThisRoute(route, verb, testingInfo);
 		}
 	}, {
@@ -15231,7 +15256,7 @@ var Modal = function (_React$Component) {
 							'Body'
 						)
 					),
-					option === 'headers' ? _react2.default.createElement(_Headers2.default, { verb: method, onChange: this.onChange, addInput: this.addInput, removeInput: this.removeInput, keyValuePairs: this.state.keyValuePairs }) : _react2.default.createElement(_Body2.default, { onChange: this.onChange, addInput: this.addInputB, removeInput: this.removeInputB, bodyKVPairs: this.state.bodyKVPairs })
+					option === 'headers' ? _react2.default.createElement(_Headers2.default, { verb: method, onChange: this.onChange, addInput: this.addInput, removeInput: this.removeInput, keyValuePairs: this.state.keyValuePairs }) : _react2.default.createElement(_Body2.default, { onChange: this.onChange, addInput: this.addInputB, removeInput: this.removeInputB, bodyKVPairs: this.state.bodyKVPairs, setUrlEn: this.setUrlEn, setJson: this.setJson, onChangeJson: this.onChangeJson })
 				)
 			);
 		}
@@ -48655,7 +48680,7 @@ var Body = function (_React$Component) {
                     )
                 ),
                 this.state.typeSelected === 'urlencoded' ? _react2.default.createElement(_Urlencoded2.default, { onChange: this.props.onChange,
-                    addInput: this.props.addInput, removeInput: this.props.removeInput, bodyKVPairs: this.props.bodyKVPairs }) : _react2.default.createElement(_Json2.default, null)
+                    addInput: this.props.addInput, removeInput: this.props.removeInput, bodyKVPairs: this.props.bodyKVPairs, setUrlEn: this.props.setUrlEn }) : _react2.default.createElement(_Json2.default, { setJson: this.props.setJson, onChangeJson: this.props.onChangeJson })
             );
         }
     }]);
@@ -48780,7 +48805,11 @@ var Json = function (_React$Component) {
     _createClass(Json, [{
         key: "render",
         value: function render() {
-            return _react2.default.createElement("textarea", { rows: "4", cols: "50" });
+            var _this2 = this;
+
+            return _react2.default.createElement("textarea", { onChange: function onChange(e) {
+                    _this2.props.setJson();_this2.props.onChangeJson(e);
+                }, rows: "4", cols: "50" });
         }
     }]);
 
@@ -48892,7 +48921,7 @@ var Urlencoded = function (_React$Component) {
                         _react2.default.createElement('input', { name: 'url-key', className: 'headersKey', onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
                             }, onClick: function onClick(e) {
-                                return _this2.props.addInput(num, e);
+                                _this2.props.addInput(num, e);_this2.props.setUrlEn();
                             }, placeholder: 'key' }),
                         _react2.default.createElement('input', { name: 'url-value', className: 'headersValue', onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
