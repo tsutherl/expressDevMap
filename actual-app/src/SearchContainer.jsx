@@ -7,6 +7,10 @@ import Search from './Search.jsx';
 //trying to get D3 tree
 import {nodes} from './Tree.jsx'
 
+
+//helper functions
+
+//gets terminal nodes from the routes object
 const treeToRoutes = (array, prefix, node) => {
   const currString = `${prefix}${node.name}`
   if (node.verb) {
@@ -17,6 +21,28 @@ const treeToRoutes = (array, prefix, node) => {
       treeToRoutes(array, currString , child)
     })
   }
+}
+
+//handles the tricky bit of simulating clicks on a d3 element
+function simulateClick(circle) {
+    var event = document.createEvent("MouseEvents");
+    event.initMouseEvent(
+        "click", /* type */
+        true, /* canBubble */
+        true, /* cancelable */
+        window, /* view */
+        0, /* detail */
+        0, /* screenX */
+        0, /* screenY */
+        0, /* clientX */
+        0, /* clientY */
+        false, /* ctrlKey */
+        false, /* altKey */
+        false, /* shiftKey */
+        false, /* metaKey */
+        0, /* button */
+        null); /* relatedTarget */
+    circle.dispatchEvent(event);
 }
 
 class SearchContainer extends Component {
@@ -66,7 +92,7 @@ class SearchContainer extends Component {
     console.log(leaves)
     const rightNode = Array.prototype.filter.call(leaves, leaf => {return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y})[0];
     console.log(rightNode.firstChild)
-    const theClick = rightNode.firstChild.__on[0].listener.call(rightNode.firstChild);
+    simulateClick(rightNode.firstChild);
   }
 
   render () {

@@ -146,15 +146,14 @@ export default class Tree extends React.Component {
       .attr("r", 7.5)  // above line fills node blue if it has child nodes, otherwise gray
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
-        console.log('what is the e?', e)
         resetTree();
-        // if (e.children) {
-        //   routerHandleClick(e);
-        // } else {
-        //   endRouteHandleClick(e); // modal functionality
-        // }
+        if (e.children) {
+          routerHandleClick(e);
+        } else {
+          endRouteHandleClick(e); // modal functionality
+        }
         alterNode(this);
-        //alterPath(e);
+        alterPath(e);
       });
 
     // adds the text to the node

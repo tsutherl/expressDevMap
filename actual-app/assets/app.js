@@ -15255,15 +15255,14 @@ var Tree = function (_React$Component) {
       .attr('class', function (d) {
         return d.data.verb ? d.data.verb : 'router';
       }).on("click", function (e) {
-        console.log('what is the e?', e);
         resetTree();
-        // if (e.children) {
-        //   routerHandleClick(e);
-        // } else {
-        //   endRouteHandleClick(e); // modal functionality
-        // }
+        if (e.children) {
+          routerHandleClick(e);
+        } else {
+          endRouteHandleClick(e); // modal functionality
+        }
         alterNode(this);
-        //alterPath(e);
+        alterPath(e);
       });
 
       // adds the text to the node
@@ -48490,6 +48489,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 //trying to get D3 tree
 
 
+//helper functions
+
+//gets terminal nodes from the routes object
 var treeToRoutes = function treeToRoutes(array, prefix, node) {
   var currString = '' + prefix + node.name;
   if (node.verb) {
@@ -48501,6 +48503,27 @@ var treeToRoutes = function treeToRoutes(array, prefix, node) {
     });
   }
 };
+
+//handles the tricky bit of simulating clicks on a d3 element
+function simulateClick(circle) {
+  var event = document.createEvent("MouseEvents");
+  event.initMouseEvent("click", /* type */
+  true, /* canBubble */
+  true, /* cancelable */
+  window, /* view */
+  0, /* detail */
+  0, /* screenX */
+  0, /* screenY */
+  0, /* clientX */
+  0, /* clientY */
+  false, /* ctrlKey */
+  false, /* altKey */
+  false, /* shiftKey */
+  false, /* metaKey */
+  0, /* button */
+  null); /* relatedTarget */
+  circle.dispatchEvent(event);
+}
 
 var SearchContainer = function (_Component) {
   _inherits(SearchContainer, _Component);
@@ -48565,7 +48588,7 @@ var SearchContainer = function (_Component) {
         return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y;
       })[0];
       console.log(rightNode.firstChild);
-      var theClick = rightNode.firstChild.__on[0].listener.call(rightNode.firstChild);
+      simulateClick(rightNode.firstChild);
     }
   }, {
     key: 'render',
