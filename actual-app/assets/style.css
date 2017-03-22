@@ -55,7 +55,7 @@ if view width is less than 1000 we'll have media query that does sth different*/
     animation: 1s ease-in-out slidein;
     background-color: white;
     z-index: 500;
-    box-shadow: 0px -8px 16px rgba(0,0,0,.3)
+    box-shadow: 0px 0 16px rgba(0,0,0,.3)
 }
 
 .modal.fadeOut {
@@ -256,6 +256,15 @@ svg text {
     position: absolute;
     left: 30%;
     top: 5%;
+}
+
+.modal .response-header {
+    display: flex;
+}
+
+/*margin auto in flex box eats up anything averything vailabel to it*/
+.modal .response-header h4 {
+    margin-right: auto;
 }
 
 
