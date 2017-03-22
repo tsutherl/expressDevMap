@@ -14967,7 +14967,7 @@ var Tree = function (_React$Component) {
       var treemap = d3.tree().size([height, width]);
 
       //  assigns the data to a hierarchy using parent-child relationships
-      nodes = d3.hierarchy(this.props.routes, function (d) {
+      var nodes = d3.hierarchy(this.props.routes, function (d) {
         return d.children;
       });
 

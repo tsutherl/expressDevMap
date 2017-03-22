@@ -81,16 +81,16 @@ export default class Tree extends React.Component {
 
     
     // set the dimensions and margins of the diagram
-    var margin = {top: 20, right: 110, bottom: 30, left: 90},
+    let margin = {top: 20, right: 110, bottom: 30, left: 90},
         width = 660 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
     // declares a tree layout and assigns the size
-    var treemap = d3.tree()
+    let treemap = d3.tree()
         .size([height, width]);
 
     //  assigns the data to a hierarchy using parent-child relationships
-    nodes = d3.hierarchy(this.props.routes, function(d) {
+    let nodes = d3.hierarchy(this.props.routes, function(d) {
         return d.children;
       });
 
@@ -100,7 +100,7 @@ export default class Tree extends React.Component {
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
-    var svg = d3.select(this.refs.routeMap).append("svg")
+    let svg = d3.select(this.refs.routeMap).append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .attr('id', 'tree'),
@@ -109,7 +109,7 @@ export default class Tree extends React.Component {
                 "translate(" + margin.left + "," + margin.top + ")");
 
     // adds the links between the nodes
-    var link = g.selectAll(".link")
+    let link = g.selectAll(".link")
         .data( nodes.descendants().slice(1))
       .enter().append("path")
         .attr("class", "link")
@@ -125,7 +125,7 @@ export default class Tree extends React.Component {
           });
 
     // adds each node as a group
-    var node = g.selectAll(".node")
+    let node = g.selectAll(".node")
         .data(nodes.descendants())
       .enter().append("g")
         .attr("class", function(d) { 
