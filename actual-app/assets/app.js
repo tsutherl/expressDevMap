@@ -14817,7 +14817,7 @@ var Json = function (_React$Component) {
 
             return _react2.default.createElement(
                 'textarea',
-                { onChange: function onChange(e) {
+                { className: 'json', onChange: function onChange(e) {
                         _this2.props.setJson();_this2.props.onChangeJson(e);
                     }, rows: '4', cols: '50' },
                 _lodash2.default.isEmpty(this.props.bodyJson) ? null : this.props.bodyJson
@@ -15048,7 +15048,6 @@ var Modal = function (_React$Component) {
 			var option = this.state.options[this.state.idx];
 			var route = this.props.selected.testRoute;
 			var method = this.props.selected.selectedRouteVerb;
-
 			return _react2.default.createElement(
 				'div',
 				{ className: this.state.fadingOut ? 'modal fadeOut' : 'modal' },
@@ -15110,7 +15109,7 @@ var Modal = function (_React$Component) {
 				_react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(_Response2.default, null)
+					_react2.default.createElement(_Response2.default, { response: this.props.response })
 				)
 			);
 		}
@@ -15154,8 +15153,9 @@ var _Modal2 = _interopRequireDefault(_Modal);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(_ref) {
-	var selected = _ref.selected;
-	return { selected: selected };
+	var selected = _ref.selected,
+	    response = _ref.response;
+	return { selected: selected, response: response };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -66149,7 +66149,34 @@ var Response = function (_React$Component) {
     _createClass(Response, [{
         key: 'render',
         value: function render() {
-            return _react2.default.createElement('textarea', null);
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'div',
+                    { className: 'response-header' },
+                    _react2.default.createElement(
+                        'h4',
+                        null,
+                        'Response'
+                    ),
+                    _react2.default.createElement(
+                        'h5',
+                        null,
+                        'Status: '
+                    ),
+                    _react2.default.createElement(
+                        'h5',
+                        null,
+                        'Time: '
+                    )
+                ),
+                _react2.default.createElement(
+                    'textarea',
+                    null,
+                    this.props.response
+                )
+            );
         }
     }]);
 

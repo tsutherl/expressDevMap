@@ -43,6 +43,8 @@ svg g {
 /*TODO: fix positioning on small screen 
 media query probably needed 
 if view width is less than 1000 we'll have media query that does sth different*/
+
+/*TODO: fix box-shadow so it's only on the left side*/
 .modal {
     height: 100%;
     width: 40%;
@@ -53,6 +55,7 @@ if view width is less than 1000 we'll have media query that does sth different*/
     animation: 1s ease-in-out slidein;
     background-color: white;
     z-index: 500;
+    box-shadow: 0px -8px 16px rgba(0,0,0,.3)
 }
 
 .modal.fadeOut {
@@ -170,9 +173,9 @@ if view width is less than 1000 we'll have media query that does sth different*/
     border-bottom: 2px solid #94584f;    
 }
 
-
-
-
+.modal textarea {
+    resize: none;
+}
 
 .modal .radio-buttons {
     display: flex;
@@ -254,4 +257,7 @@ svg text {
     left: 30%;
     top: 5%;
 }
+
+
+
 

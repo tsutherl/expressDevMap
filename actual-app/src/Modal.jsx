@@ -158,7 +158,6 @@ export default class Modal extends React.Component {
 		const option = this.state.options[this.state.idx]
 		const route = this.props.selected.testRoute;
 		const method = this.props.selected.selectedRouteVerb;
-		
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
@@ -189,7 +188,7 @@ export default class Modal extends React.Component {
 						
 				</div>
 				<div>
-					<Response/>
+					<Response response={this.props.response}/>
 				</div>
 			</div>
 		)
