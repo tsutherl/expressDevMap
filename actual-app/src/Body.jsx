@@ -11,7 +11,6 @@ class Body extends React.Component {
 
     
     render() {
-        console.log('currentBody type::', this.props.bodyTypeSelected)
         return(
             <div className='body'>
                 <form className='radio-buttons'>
@@ -29,7 +28,10 @@ class Body extends React.Component {
                 </div>
                 </form>
                 {this.props.bodyTypeSelected === 'urlencoded'? <Urlencoded onChange={this.props.onChange}
-                addInput={this.props.addInput} removeInput={this.props.removeInput} bodyKVPairs={this.props.bodyKVPairs} setUrlEn={this.props.setUrlEn}/> : <Json setJson={this.props.setJson} onChangeJson={this.props.onChangeJson}/>}
+                addInput={this.props.addInput} removeInput={this.props.removeInput} bodyKVPairs={this.props.bodyKVPairs} setUrlEn={this.props.setUrlEn}/> : <Json 
+                setJson={this.props.setJson} 
+                onChangeJson={this.props.onChangeJson}
+                bodyJson={this.props.bodyJson}/>}
             </div>
         )
     }

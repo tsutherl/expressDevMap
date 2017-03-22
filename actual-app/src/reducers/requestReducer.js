@@ -12,7 +12,6 @@ const RECEIVE_TEST_REQUEST = 'RECEIVE_TEST_REQUEST'
 
 
 export const makeRequest = (requestInfo) => {
-    console.log('making a request')
     return {
     type: RECEIVE_TEST_REQUEST,
     requestInfo
@@ -27,7 +26,6 @@ export const makeRequest = (requestInfo) => {
 
 
 export const testRoute = (route, verb, info) => {
-    console.log('are current body type!!1::::', info.body)
     let routeResponse;
     route = route.slice(1);
     if (verb === 'post' || verb === 'put') {

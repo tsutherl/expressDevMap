@@ -102,12 +102,9 @@ export default class Modal extends React.Component {
             	this.setState({bodyVals: newBodyVals});
             	break;
     	}
-    	        console.log("in onChange, now local state is", this.state);
-
 	}
 
 	onChangeJson(e) {
-		console.log('wwe are setting jsonnnn:::')
 		this.setState({bodyJson: e.target.value});
 	}
 
@@ -146,7 +143,6 @@ export default class Modal extends React.Component {
 		}
 		testingInfo.body = body;
 		
-		console.log('in handleClick, testing info is ', testingInfo);
 		this.props.testThisRoute(route, verb, testingInfo);
 	}
 
@@ -187,7 +183,8 @@ export default class Modal extends React.Component {
 					bodyKVPairs={this.state.bodyKVPairs} 
 					setUrlEn={this.setUrlEn} 
 					setJson={this.setJson} 
-					onChangeJson={this.onChangeJson}/> }
+					onChangeJson={this.onChangeJson}
+					bodyJson={this.state.bodyJson}/> }
 						
 				</div>
 			</div>
