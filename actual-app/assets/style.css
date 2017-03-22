@@ -48,6 +48,7 @@ svg g {
     overflow: hidden;
     animation: 1s ease-in-out slidein;
     background-color: white;
+    z-index: 500;
 }
 
 .modal.fadeOut {
