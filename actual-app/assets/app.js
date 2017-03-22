@@ -48466,17 +48466,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(35);
 
-var _d = __webpack_require__(161);
-
-var d3 = _interopRequireWildcard(_d);
-
 var _Search = __webpack_require__(315);
 
 var _Search2 = _interopRequireDefault(_Search);
-
-var _Tree = __webpack_require__(158);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48485,9 +48477,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-//trying to get D3 tree
-
 
 //helper functions
 
@@ -48573,13 +48562,12 @@ var SearchContainer = function (_Component) {
       for (var i = 0; i < pathParts.length; i++) {
         _loop(i);
       }
+      console.log(currNode);
       // //simulate the click
       var leaves = document.querySelectorAll('#tree g.node--leaf');
-      console.log(leaves);
       var rightNode = Array.prototype.filter.call(leaves, function (leaf) {
         return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y;
       })[0];
-      console.log(rightNode.firstChild);
 
       simulateClick(rightNode.firstChild);
     }

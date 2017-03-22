@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import * as d3 from "d3"
 
 import Search from './Search.jsx';
-
-//trying to get D3 tree
-import {nodes} from './Tree.jsx'
 
 
 //helper functions
@@ -74,11 +70,10 @@ class SearchContainer extends Component {
       }
       currNode = currNode[0]
     }
+    console.log(currNode)
     // //simulate the click
     const leaves = document.querySelectorAll('#tree g.node--leaf');
-    console.log(leaves)
     const rightNode = Array.prototype.filter.call(leaves, leaf => {return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y})[0];
-    console.log(rightNode.firstChild)
     
     simulateClick(rightNode.firstChild);
   }
