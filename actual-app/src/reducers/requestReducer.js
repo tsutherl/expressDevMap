@@ -61,7 +61,7 @@ export const testRoute = (route, verb, info) => {
 
 /*---------------- REDUCER ---------------- */
 
-export const requestReducer = (state={}, action) => {
+export const requestReducer = (state=null, action) => {
 	switch(action.type) {
 	 	case RECEIVE_TEST_REQUEST:
          return action.requestInfo 

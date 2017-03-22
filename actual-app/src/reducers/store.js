@@ -16,7 +16,7 @@ import { requestReducer } from './requestReducer'
 import { responseReducer } from './responseReducer'
 
 // combine reducers into a rootReducer
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     routes: routeReducer,
     showModal: modalReducer,
     selected: selectedReducer,
@@ -33,6 +33,7 @@ const store = createStore(
         createLogger({collapsed: true})
     )
 )
+
 
 export default store;
 

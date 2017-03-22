@@ -63,12 +63,15 @@ export const selectedReducer = (state={activeTestNode: null, testRoute: null}, a
 	switch(action.type) {
      
         case RECEIVE_TEST_ROUTE:
+            console.log('TEST ROUTE', action.testRoute)
             newState.testRoute = action.testRoute;
             break;
         case SET_TEST_NODE:
+            console.log('SET NODE', action.node)
             newState.activeTestNode = action.node;
             break;
         case SET_ROUTE_VERB: 
+            console.log('ROUTE VERB', action.verb)
             newState.selectedRouteVerb = action.verb;
             break;
         default:
