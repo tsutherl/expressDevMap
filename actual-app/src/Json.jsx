@@ -7,7 +7,7 @@ class Json extends React.Component {
 
     render() {
         return(
-            <textarea rows="4" cols="50"/>
+            <textarea onChange={(e)=>{this.props.setJson(); this.props.onChangeJson(e)}}rows="4" cols="50"/>
         )
     }
 }
