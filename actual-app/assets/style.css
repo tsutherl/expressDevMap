@@ -3,13 +3,13 @@
     right: 100%;
   }
   to {
-    right: 70%
+    right: 60%
   }
 }
 
 @keyframes slideout {
   from {
-    right: 70%;
+    right: 60%;
   }
   to {
     right: 100%
@@ -20,8 +20,10 @@
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
+html, body {
+    margin:0; 
+    padding:0; 
+    overflow:hidden;
     background: #eee;
     font-family: 'Roboto', sans-serif;
 }
@@ -33,19 +35,39 @@ h1 {
 #app > div > div > svg {
     display: block;
     margin: auto;
+    position:fixed; 
+    height:100%; 
+    width:100%;
 }
+
+svg g {
+   padding: 20em;
+}
+
+
+/*TODO: fix positioning on small screen 
+media query probably needed 
+if view width is less than 1000 we'll have media query that does sth different*/
+
+/*TODO: fix box-shadow so it's only on the left side*/
 
 /*************MODAL****************/
 .modal {
-    height: 100%;
-    top: 0;
+    /*height: 100%;
     width: 30%;
-    right: 70%;
+    right: 70%;*/
+    top: 0;
+    height: 100%;
+    width: 40%;
+    min-width: 300px;
+    right: 60%;
     position: absolute;
     overflow: hidden;
     animation: 1s ease-in-out slidein;
     background-color: white;
-    box-shadow: 0 0 .75em 0 rgba(85,85,85,1);
+    z-index: 500;
+    box-shadow: 0px 0 16px rgba(0,0,0,.3)
+
 }
 
 .modal.fadeOut {
@@ -157,13 +179,19 @@ h1 {
     padding: 1em 3em ;
     text-decoration: none;
     border: none;
-    background-color: white; 
+    background-color: transparent; 
     font-size: 14px;   
 }
 
 .modal .headers-body .selected {
     border-bottom: 2px solid #94584f;    
 }
+
+
+.modal textarea {
+    resize: none;
+}
+
 
 .modal .radio-buttons {
     display: flex;
@@ -236,6 +264,19 @@ h1 {
     top: 5%;
 }
 
+
+.modal .response-header {
+    display: flex;
+}
+
+/*margin auto in flex box eats up anything averything vailabel to it*/
+.modal .response-header h4 {
+    margin-right: auto;
+}
+
+
+
+
 /*************SEARCH BAR****************/
 #search-bar {
     display: flex;
@@ -296,4 +337,5 @@ h1 {
     color: #333;
     text-decoration: none;
 }
+
 

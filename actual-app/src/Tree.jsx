@@ -97,16 +97,32 @@ export default class Tree extends React.Component {
     // maps the node data to the tree layout
     nodes = treemap(nodes);
 
+    //on zoom event our zooming function is called
+    //zoom and panning target our g element which is a child of our svg element
+    const zooming = () => {
+      g.attr("transform", d3.event.transform);
+    }
+
+    //scaleExtent take an array which holds the min scale factor at idx 0 and max scale factor at idx 1
+    //event listener will be ignored if the graph is for whatever reason outside of the set scaleExtent
+    const zoom = d3.zoom()
+      .scaleExtent([1 / 2, 4])
+      .on("zoom", zooming);
+
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
     let svg = d3.select(this.refs.routeMap).append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
-          .attr('id', 'tree'),
+          .attr('id', 'tree')
+          .call(zoom),
     g = svg.append("g")
-          .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");
+
+          //this is causing the tree to jump at the start of panning - removing for now
+          // .attr("transform",
+          //       "translate(" + margin.left + "," + margin.top + ")");
+
 
     // adds the links between the nodes
     let link = g.selectAll(".link")

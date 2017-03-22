@@ -7,10 +7,9 @@ class Json extends React.Component {
     }
 
     render() {
-        console.log('our last json', this.props.bodyJson )
 
         return(
-            <textarea onChange={(e)=>{this.props.setJson(); this.props.onChangeJson(e)}}rows="4" cols="50">{_.isEmpty({})? null : this.props.bodyJson}</textarea>
+            <textarea className='json' onChange={(e)=>{this.props.setJson(); this.props.onChangeJson(e)}}rows="4" cols="50">{_.isEmpty(this.props.bodyJson)? null : this.props.bodyJson}</textarea>
         )
     }
 }
