@@ -13,7 +13,7 @@ class Response extends React.Component {
                     <h5>Status: </h5>
                     <h5>Time: </h5>
                 </div>
-                <textarea>{this.props.response}</textarea>
+                <textarea value={this.props.response? this.props.response : 'response will load here'}></textarea>
             </div>
         )
     }
