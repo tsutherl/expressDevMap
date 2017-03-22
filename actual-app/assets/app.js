@@ -48521,9 +48521,11 @@ var SearchContainer = function (_Component) {
   }, {
     key: 'onButtonClick',
     value: function onButtonClick() {
-      console.log('button clicked', this.state.inputState);
       //parse the route
-      //find the node
+      var colonPlace = this.state.inputState.indexOf(':');
+      var pathOnly = this.state.inputState.slice(colonPlace + 2);
+      var verbOnly = this.state.inputState.slice(colonPlace).toLowerCase();
+      //try finding node from tree top
       //simulate the click
     }
   }, {

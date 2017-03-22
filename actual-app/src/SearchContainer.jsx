@@ -39,9 +39,11 @@ class SearchContainer extends Component {
   }
 
   onButtonClick () {
-    console.log('button clicked', this.state.inputState)
     //parse the route
-    //find the node
+    const colonPlace = this.state.inputState.indexOf(':');
+    const pathOnly = this.state.inputState.slice(colonPlace+2);
+    const verbOnly = this.state.inputState.slice(colonPlace).toLowerCase();
+    //try finding node from tree top
     //simulate the click
   }
 
