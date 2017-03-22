@@ -63,23 +63,23 @@ class SearchContainer extends Component {
     const verbOnly = this.state.inputState.slice(0, colonPlace).toLowerCase();
     const pathParts = pathOnly.split('/').slice(1)
     //try finding node from tree top
-    let currNode = nodes
-    while (pathParts.length > 0) {
-      const currChildren = currNode.children;
-      currNode = currChildren.filter(child => {return child.data.name === `/${pathParts[0]}`})
+    //find the node from the DOM
+    let currNode = document.querySelector('#tree g g');
+
+    for (let i = 0; i < pathParts.length; i++){
+      const currChildren = currNode.__data__ ? currNode.__data__.children : currNode.children;
+      currNode = currChildren.filter(child => {return child.data.name === `/${pathParts[i]}`});
       if(currNode.length > 1) {
-        //console.log('in if', currNode, verbOnly)
         currNode = currNode.filter(node => {return node.data.verb === verbOnly})
       }
       currNode = currNode[0]
-      pathParts.shift();
     }
-    //simulate the click
-    console.log(currNode);
+    // //simulate the click
     const leaves = document.querySelectorAll('#tree g.node--leaf');
     console.log(leaves)
     const rightNode = Array.prototype.filter.call(leaves, leaf => {return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y})[0];
     console.log(rightNode.firstChild)
+    
     simulateClick(rightNode.firstChild);
   }
 

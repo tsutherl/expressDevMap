@@ -48554,29 +48554,33 @@ var SearchContainer = function (_Component) {
       var verbOnly = this.state.inputState.slice(0, colonPlace).toLowerCase();
       var pathParts = pathOnly.split('/').slice(1);
       //try finding node from tree top
-      var currNode = _Tree.nodes;
-      while (pathParts.length > 0) {
-        var currChildren = currNode.children;
+      //find the node from the DOM
+      var currNode = document.querySelector('#tree g g');
+
+      var _loop = function _loop(i) {
+        var currChildren = currNode.__data__ ? currNode.__data__.children : currNode.children;
         currNode = currChildren.filter(function (child) {
-          return child.data.name === '/' + pathParts[0];
+          return child.data.name === '/' + pathParts[i];
         });
         if (currNode.length > 1) {
-          //console.log('in if', currNode, verbOnly)
           currNode = currNode.filter(function (node) {
             return node.data.verb === verbOnly;
           });
         }
         currNode = currNode[0];
-        pathParts.shift();
+      };
+
+      for (var i = 0; i < pathParts.length; i++) {
+        _loop(i);
       }
-      //simulate the click
-      console.log(currNode);
+      // //simulate the click
       var leaves = document.querySelectorAll('#tree g.node--leaf');
       console.log(leaves);
       var rightNode = Array.prototype.filter.call(leaves, function (leaf) {
         return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y;
       })[0];
       console.log(rightNode.firstChild);
+
       simulateClick(rightNode.firstChild);
     }
   }, {
