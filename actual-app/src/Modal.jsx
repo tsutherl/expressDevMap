@@ -19,6 +19,7 @@ export default class Modal extends React.Component {
 			bodyKVPairs: [0],
 			bodyKeys: {},
 			bodyVals: {},
+			bodyJson: {},
 			fadingOut: false,
 			currentOption: 'headers',
 			options: ['headers', 'body'],
