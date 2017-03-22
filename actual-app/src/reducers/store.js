@@ -12,12 +12,16 @@ import thunkMiddleware from 'redux-thunk';
 import { modalReducer } from './modalReducer';
 import { routeReducer } from './routeReducer';
 import { selectedReducer } from './selectedReducer';
+import { requestReducer } from './requestReducer'
+import { responseReducer } from './responseReducer'
 
 // combine reducers into a rootReducer
 const rootReducer = combineReducers({
     routes: routeReducer,
     showModal: modalReducer,
-    selected: selectedReducer
+    selected: selectedReducer,
+    request: requestReducer,
+    response: responseReducer
 });
 
 
