@@ -3,13 +3,13 @@
     right: 100%;
   }
   to {
-    right: 70%
+    right: 60%
   }
 }
 
 @keyframes slideout {
   from {
-    right: 70%;
+    right: 60%;
   }
   to {
     right: 100%
@@ -45,9 +45,9 @@ media query probably needed
 if view width is less than 1000 we'll have media query that does sth different*/
 .modal {
     height: 100%;
-    width: 30%;
+    width: 40%;
     min-width: 300px;
-    right: 70%;
+    right: 60%;
     position: absolute;
     overflow: hidden;
     animation: 1s ease-in-out slidein;
