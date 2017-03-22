@@ -33,8 +33,11 @@ html, body {
     margin: auto;
     position:fixed; 
     height:100%; 
-    width:100%
+    width:100%;
+}
 
+svg g {
+   padding: 20em;
 }
 
 .modal {
