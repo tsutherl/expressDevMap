@@ -24,7 +24,8 @@ export default class Modal extends React.Component {
 			fadingOut: false,
 			currentOption: 'headers',
 			options: ['headers', 'body'],
-			idx: 0
+			idx: 0,
+			bodyTypeSelected: 'urlencoded'
 		}
 		this.handleClick = this.handleClick.bind(this);
 		this.onChange = this.onChange.bind(this);
@@ -38,6 +39,7 @@ export default class Modal extends React.Component {
 		this.setUrlEn = this.setUrlEn.bind(this);
 		this.setJson = this.setJson.bind(this);
 		this.onChangeJson = this.onChangeJson.bind(this);
+		this.toggleBodyType = this.toggleBodyType.bind(this)
 	}
 
 	removeInput(idx) {
@@ -105,6 +107,7 @@ export default class Modal extends React.Component {
 	}
 
 	onChangeJson(e) {
+		console.log('wwe are setting jsonnnn:::')
 		this.setState({bodyJson: e.target.value});
 	}
 
@@ -133,18 +136,24 @@ export default class Modal extends React.Component {
 		testingInfo.headers = headers;
 
 		let body = {};
-		if (this.state.JORU === 'U') {
+		if (this.state.bodyTypeSelected === 'urlencoded') {
 			for(let i=0; i<Object.keys(bodyKeys).length; i++){
 				body[bodyKeys[i]] = bodyVals[i]
 			}
 		}
-		else if (this.state.JORU === 'J'){ // make testingInfo.body from JSON
+		else if (this.state.bodyTypeSelected === 'json'){ // make testingInfo.body from JSON
 			body = JSON.stringify(this.state.bodyJson);
 		}
 		testingInfo.body = body;
 		
 		console.log('in handleClick, testing info is ', testingInfo);
 		this.props.testThisRoute(route, verb, testingInfo);
+	}
+
+	toggleBodyType (evt) {
+					this.setState({bodyTypeSelected: evt.target.value})
+					// const idx = +evt.target.value;
+					// this.setState({ idx });
 	}
 
 
@@ -168,7 +177,17 @@ export default class Modal extends React.Component {
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
 						<button className={`headers ${option === 'body'? 'selected' : ''}`}value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
-					{option === 'headers' ? <Headers verb={method} onChange={this.onChange} addInput={this.addInput} removeInput={this.removeInput} keyValuePairs={this.state.keyValuePairs} /> : <Body onChange={this.onChange} addInput={this.addInputB} removeInput={this.removeInputB} bodyKVPairs={this.state.bodyKVPairs} setUrlEn={this.setUrlEn} setJson={this.setJson} onChangeJson={this.onChangeJson}/> }
+					{option === 'headers' ? <Headers verb={method} onChange={this.onChange} addInput={this.addInput} removeInput={this.removeInput} keyValuePairs={this.state.keyValuePairs} /> : 
+					<Body 
+					bodyTypeSelected={this.state.bodyTypeSelected} 
+					toggleBodyType={this.toggleBodyType} 
+					onChange={this.onChange} 
+					addInput={this.addInputB} 
+					removeInput={this.removeInputB} 
+					bodyKVPairs={this.state.bodyKVPairs} 
+					setUrlEn={this.setUrlEn} 
+					setJson={this.setJson} 
+					onChangeJson={this.onChangeJson}/> }
 						
 				</div>
 			</div>
