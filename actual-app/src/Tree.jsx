@@ -122,18 +122,24 @@ export default class Tree extends React.Component {
     // maps the node data to the tree layout
    
 
-    //on zoom event our zooming function is called
-    //zoom and panning target our g element which is a child of our svg element
-    const zooming = () => {
-      g.attr("transform", d3.event.transform);
-    }
-
     //scaleExtent take an array which holds the min scale factor at idx 0 and max scale factor at idx 1
     //event listener will be ignored if the graph is for whatever reason outside of the set scaleExtent
+
+    //zoom ~=zoomListener
     const zoom = d3.zoom()
       .scaleExtent([1 / 2, 4])
-      .on("zoom", zooming);
+      .on("zoom", () => {
+        console.log('ZOOMING')
+        // var transform = ransform(this);
+        // d3.select("#tree").attr("transform", "translate(" + transform.x + "," + transform.y + ")scale(" + transform.k + ")");
+        // d3.select('g')
+        //   .attr('transform', 'translate(' + d3.event.transform.x + ',' + d3.event.transform.y + ') scale(' + d3.event.transform.k + ')');
 
+        
+        d3.select("#tree").attr("transform", d3.event.transform);
+    });
+
+      // console.log("zoom scale", zoom.scale)
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
@@ -141,13 +147,56 @@ export default class Tree extends React.Component {
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .attr('id', 'tree')
-          .call(zoom),
-    g = svg.append("g")
-        // .attr("transform",
-        //         "translate(" + margin.left + "," + margin.top + ")");
+
+    var zoomer = svg.append("rect")
+          .attr("width", width)
+          .attr("height", height)
+          .style("fill", "none")
+          .style("pointer-events", "all")
+          .call(zoom)
+
+    var g = svg.append("g")
+
+    zoomer.call(zoom.transform, d3.zoomIdentity.translate(150, 0))
+    //g~= svgGroup
+    //svg ~= baseSvg
+
+
+    //on zoom event our zooming function is called
+    //zoom and panning target our g element which is a child of our svg element
+    
+  //zooming ~= zoom
+    const zooming = () => {
+      console.log('ZOOMING')
+      var transform = d3zoomTransform(this);
+      d3.select("#tree").attr("transform", "translate(" + transform.x + "," + transform.y + ")scale(" + transform.k + ")");
+      // d3.select(this.refs.routeMap).select('svg').select('g')
+      //   .attr('transform', 'translate(' + d3.event.transform.x + ',' + d3.event.transform.y + ') scale(' + d3.event.transform.k + ')');
+
+      
+      // g.attr("transform", d3.event.transform);
+    }
+
+
+      // Function to center node when clicked/dropped so node doesn't get lost when collapsing/moving with large amount of children.
+
+    // function centerNode(source) {
+    //     var scale = zoom.scale();
+    //     var x = -source.y0;
+    //     var y = -source.x0;
+    //     x = x * scale + viewerWidth / 2;
+    //     y = y * scale + viewerHeight / 2;
+    //     d3.select('g').transition()
+    //         .duration(500)
+    //         .attr("transform", "translate(" + x + "," + y + ")scale(" + scale + ")");
+    //     zoom.scale(scale);
+    //     zoom.translate([x, y]);
+    // }
 
 
     //this is causing the tree to jump at the start of panning - removing for now
+        // .attr("transform",
+        //         "translate(" + margin.left + "," + margin.top + ")");
   
 
  
@@ -171,9 +220,9 @@ var i = 0;
         })
 
     var nodeEnter = node.enter().append("g")
-        // .attr("class", function(d) { 
-        //   return "node" + 
-        //     (d.children ? " node--internal" : " node--leaf"); })
+        .attr("class", function(d) { 
+          return "node" + 
+            (d.children ? " node--internal" : " node--leaf"); })
         .attr('class', 'node')
         .attr("transform", function(d) { 
           return "translate(" + source.y0 + "," + source.x0 + ")"; })
@@ -305,14 +354,16 @@ var i = 0;
 
 
   update(root);
+  // centerNode(root);
+
+  console.log('SVG', svg)
 
 
 }                                              
 
   render() {
-  
     return(
-      <div ref="routeMap">
+      <div id="routeMap" ref="routeMap">
         {this.props.showModal ? <ModalContainer/> : null}
       </div>
     )
