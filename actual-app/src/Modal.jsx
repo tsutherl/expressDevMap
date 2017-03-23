@@ -53,18 +53,23 @@ export default class Modal extends React.Component {
 // that IF earlier pairs have been deleted.
 
 // generation of new keys / the value that gets put in keyValuePairs is flawed -- repeats occur
+// I think I fixed this (line 55)
 
+
+// headers / body kv pairs need to prepopulate from local state
+
+// and do we want the form to clear out after submission? or? 
 
 	removeInput(val) {
-		console.log("in remove, here's the val to remove ", val)
-		console.log("in remove input, heres bodyKVPairs ", this.state.bodyKVPairs);
+		console.log("in remove input, heres keyValuePairs ", this.state.bodyKVPairs);
         const newState = this.state.keyValuePairs;
         if (newState.indexOf(val) > -1 ) {
             newState.splice(val, 1);
             this.setState({keyValuePairs: newState})
         }
-        console.log("here's updated bodyKVPairs ", this.state.bodyKVPairs);
+        setTimeout(()=>console.log("here's updated keyValuePairs ", this.state.keyValuePairs), 500);
     }
+
 
     addInput (val) {
     	console.log("in add input, here's keyValuePairs ", this.state.keyValuePairs);
@@ -76,20 +81,22 @@ export default class Modal extends React.Component {
         setTimeout(()=>console.log("here's updated keyValuePairs ", this.state.keyValuePairs), 500);
     }
 
-    removeInputB(idx) {
+    removeInputB(val) {
         const newState = this.state.bodyKVPairs;
-        if (newState.indexOf(idx) > -1 ) {
-            newState.splice(idx, 1);
+        if (newState.indexOf(val) > -1 ) {
+            newState.splice(val, 1);
             this.setState({bodyKVPairs: newState})
         }
+        setTimeout(()=>console.log("here's updated bodyKVPairs ", this.state.bodyKVPairs), 500);
     }
 
-    addInputB (idx) {
+    addInputB (val) {
         const {bodyKVPairs} = this.state
-        if (idx === bodyKVPairs.length - 1) {
-            let newState = bodyKVPairs.concat(bodyKVPairs.length)
-            this.setState({bodyKVPairs: newState})
+         if (bodyKVPairs.indexOf(val) === bodyKVPairs.length-1) {
+            let newState = bodyKVPairs.concat( Math.max(...bodyKVPairs) + 1);
+            this.setState({bodyKVPairs: newState});
         }
+         setTimeout(()=>console.log("here's updated bodyKVPairs ", this.state.bodyKVPairs), 500);
     }
 
     setUrlEn () {
