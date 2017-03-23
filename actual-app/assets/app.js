@@ -15311,7 +15311,7 @@ var Modal = function (_React$Component) {
 		key: 'removeInput',
 		value: function removeInput(idx) {
 			var newState = this.state.keyValuePairs;
-			if (newState.indexOf(idx) > -1 && idx > 0) {
+			if (newState.indexOf(idx) > -1) {
 				newState.splice(idx, 1);
 				this.setState({ keyValuePairs: newState });
 			}
@@ -15330,7 +15330,7 @@ var Modal = function (_React$Component) {
 		key: 'removeInputB',
 		value: function removeInputB(idx) {
 			var newState = this.state.bodyKVPairs;
-			if (newState.indexOf(idx) > -1 && idx > 0) {
+			if (newState.indexOf(idx) > -1) {
 				newState.splice(idx, 1);
 				this.setState({ bodyKVPairs: newState });
 			}

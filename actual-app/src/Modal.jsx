@@ -42,7 +42,7 @@ export default class Modal extends React.Component {
 
 	removeInput(idx) {
         const newState = this.state.keyValuePairs;
-        if (newState.indexOf(idx) > -1 && idx > 0) {
+        if (newState.indexOf(idx) > -1 ) {
             newState.splice(idx, 1);
             this.setState({keyValuePairs: newState})
         }
@@ -58,7 +58,7 @@ export default class Modal extends React.Component {
 
     removeInputB(idx) {
         const newState = this.state.bodyKVPairs;
-        if (newState.indexOf(idx) > -1 && idx > 0) {
+        if (newState.indexOf(idx) > -1 ) {
             newState.splice(idx, 1);
             this.setState({bodyKVPairs: newState})
         }
