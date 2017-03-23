@@ -14,7 +14,8 @@ export default class Modal extends React.Component {
 
 		this.state = {
 			
-			keyValuePairs: [0],   
+			keyValuePairs: [0], 
+			lastAddedVal: null,  
 			headerKeys: {},
 			headerVals: {},
 			bodyKVPairs: [0],
@@ -46,48 +47,38 @@ export default class Modal extends React.Component {
 
 // remove is a total problem now, cutting off everything!!!  
 
-// also add input is glitchy -- if you type in a field which was a deleted one earlier(?), 
-// it won't add the input field
-
-// in addinput -> checking for keyValuePairs.length-1 won't work! bc index can be higher than
-// that IF earlier pairs have been deleted.
-
-// generation of new keys / the value that gets put in keyValuePairs is flawed -- repeats occur
-// I think I fixed this (line 55)
-
+//  remove bug -- trying to remove something at the visual level (or below) that has been removed
+// before crashes -- check how values are getting assigned.
 
 // headers / body kv pairs need to prepopulate from local state
 
 // and do we want the form to clear out after submission? or? 
 
 	removeInput(val) {
-		console.log("in remove input, heres keyValuePairs ", this.state.bodyKVPairs);
         const newState = this.state.keyValuePairs;
-        if (newState.indexOf(val) > -1 ) {
-            newState.splice(val, 1);
+        const idxVal = newState.indexOf(val);
+        if (idxVal > -1 ) {
+            newState.splice(idxVal, 1);
             this.setState({keyValuePairs: newState})
         }
-        setTimeout(()=>console.log("here's updated keyValuePairs ", this.state.keyValuePairs), 500);
     }
 
 
     addInput (val) {
-    	console.log("in add input, here's keyValuePairs ", this.state.keyValuePairs);
         const {keyValuePairs} = this.state
         if (keyValuePairs.indexOf(val) === keyValuePairs.length-1) {
             let newState = keyValuePairs.concat( Math.max(...keyValuePairs) + 1);
             this.setState({keyValuePairs: newState});
         }
-        setTimeout(()=>console.log("here's updated keyValuePairs ", this.state.keyValuePairs), 500);
     }
 
     removeInputB(val) {
         const newState = this.state.bodyKVPairs;
-        if (newState.indexOf(val) > -1 ) {
-            newState.splice(val, 1);
+        let idxVal = newState.indexOf(val);
+        if (idxVal > -1 ) {
+            newState.splice(idxVal, 1);
             this.setState({bodyKVPairs: newState})
         }
-        setTimeout(()=>console.log("here's updated bodyKVPairs ", this.state.bodyKVPairs), 500);
     }
 
     addInputB (val) {
@@ -96,7 +87,6 @@ export default class Modal extends React.Component {
             let newState = bodyKVPairs.concat( Math.max(...bodyKVPairs) + 1);
             this.setState({bodyKVPairs: newState});
         }
-         setTimeout(()=>console.log("here's updated bodyKVPairs ", this.state.bodyKVPairs), 500);
     }
 
     setUrlEn () {
@@ -205,7 +195,11 @@ export default class Modal extends React.Component {
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
 						<button className={`headers ${option === 'body'? 'selected' : ''}`}  disabled={method === 'post' || method === 'put'? '' : 'disabled'} value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
-					{option === 'headers' ? <Headers verb={method} onChange={this.onChange} addInput={this.addInput} removeInput={this.removeInput} keyValuePairs={this.state.keyValuePairs} /> : 
+					{option === 'headers' ? <Headers 
+					verb={method} onChange={this.onChange} 
+					addInput={this.addInput} 
+					removeInput={this.removeInput} 
+					keyValuePairs={this.state.keyValuePairs} /> : 
 					<Body 
 					bodyTypeSelected={this.state.bodyTypeSelected} 
 					toggleBodyType={this.toggleBodyType} 

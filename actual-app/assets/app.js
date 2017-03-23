@@ -15625,17 +15625,20 @@ var Headers = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
+            console.log("in render of headers, props are ", this.props);
             return _react2.default.createElement(
                 "form",
                 { className: "form" },
                 this.props.keyValuePairs.map(function (num) {
-                    console.log("in keyValuePairs map, num -- which should be value -- is ", num);
+
                     return _react2.default.createElement(
                         "div",
                         { key: num, className: "form-input" },
                         _react2.default.createElement("input", { name: "header-key", className: "headersKey", onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
-                            }, onClick: function onClick(e) {
+                            },
+
+                            onClick: function onClick(e) {
                                 console.log("in onClick, here is num (should be idx) ", num);
                                 _this2.props.addInput(num, e);
                             },
@@ -15788,6 +15791,7 @@ var Modal = function (_React$Component) {
 		_this.state = {
 
 			keyValuePairs: [0],
+			lastAddedVal: null,
 			headerKeys: {},
 			headerVals: {},
 			bodyKVPairs: [0],
@@ -15819,15 +15823,8 @@ var Modal = function (_React$Component) {
 
 	// remove is a total problem now, cutting off everything!!!  
 
-	// also add input is glitchy -- if you type in a field which was a deleted one earlier(?), 
-	// it won't add the input field
-
-	// in addinput -> checking for keyValuePairs.length-1 won't work! bc index can be higher than
-	// that IF earlier pairs have been deleted.
-
-	// generation of new keys / the value that gets put in keyValuePairs is flawed -- repeats occur
-	// I think I fixed this (line 55)
-
+	//  remove bug -- trying to remove something at the visual level (or below) that has been removed
+	// before crashes -- check how values are getting assigned.
 
 	// headers / body kv pairs need to prepopulate from local state
 
@@ -15836,62 +15833,42 @@ var Modal = function (_React$Component) {
 	_createClass(Modal, [{
 		key: 'removeInput',
 		value: function removeInput(val) {
-			var _this2 = this;
-
-			console.log("in remove input, heres keyValuePairs ", this.state.bodyKVPairs);
 			var newState = this.state.keyValuePairs;
-			if (newState.indexOf(val) > -1) {
-				newState.splice(val, 1);
+			var idxVal = newState.indexOf(val);
+			if (idxVal > -1) {
+				newState.splice(idxVal, 1);
 				this.setState({ keyValuePairs: newState });
 			}
-			setTimeout(function () {
-				return console.log("here's updated keyValuePairs ", _this2.state.keyValuePairs);
-			}, 500);
 		}
 	}, {
 		key: 'addInput',
 		value: function addInput(val) {
-			var _this3 = this;
-
-			console.log("in add input, here's keyValuePairs ", this.state.keyValuePairs);
 			var keyValuePairs = this.state.keyValuePairs;
 
 			if (keyValuePairs.indexOf(val) === keyValuePairs.length - 1) {
 				var newState = keyValuePairs.concat(Math.max.apply(Math, _toConsumableArray(keyValuePairs)) + 1);
 				this.setState({ keyValuePairs: newState });
 			}
-			setTimeout(function () {
-				return console.log("here's updated keyValuePairs ", _this3.state.keyValuePairs);
-			}, 500);
 		}
 	}, {
 		key: 'removeInputB',
 		value: function removeInputB(val) {
-			var _this4 = this;
-
 			var newState = this.state.bodyKVPairs;
-			if (newState.indexOf(val) > -1) {
-				newState.splice(val, 1);
+			var idxVal = newState.indexOf(val);
+			if (idxVal > -1) {
+				newState.splice(idxVal, 1);
 				this.setState({ bodyKVPairs: newState });
 			}
-			setTimeout(function () {
-				return console.log("here's updated bodyKVPairs ", _this4.state.bodyKVPairs);
-			}, 500);
 		}
 	}, {
 		key: 'addInputB',
 		value: function addInputB(val) {
-			var _this5 = this;
-
 			var bodyKVPairs = this.state.bodyKVPairs;
 
 			if (bodyKVPairs.indexOf(val) === bodyKVPairs.length - 1) {
 				var newState = bodyKVPairs.concat(Math.max.apply(Math, _toConsumableArray(bodyKVPairs)) + 1);
 				this.setState({ bodyKVPairs: newState });
 			}
-			setTimeout(function () {
-				return console.log("here's updated bodyKVPairs ", _this5.state.bodyKVPairs);
-			}, 500);
 		}
 	}, {
 		key: 'setUrlEn',
@@ -15946,7 +15923,7 @@ var Modal = function (_React$Component) {
 	}, {
 		key: 'handleClick',
 		value: function handleClick(route, verb) {
-			var _this6 = this;
+			var _this2 = this;
 
 			var headerKeys = this.state.headerKeys;
 			var headerVals = this.state.headerVals;
@@ -15958,7 +15935,7 @@ var Modal = function (_React$Component) {
 			var headers = {};
 
 			this.state.keyValuePairs.forEach(function (val, idx) {
-				if (idx !== _this6.state.keyValuePairs.length - 1) {
+				if (idx !== _this2.state.keyValuePairs.length - 1) {
 					headers[headerKeys[val]] = headerVals[val];
 				}
 			});
@@ -15969,7 +15946,7 @@ var Modal = function (_React$Component) {
 
 			if (this.state.bodyTypeSelected === 'urlencoded') {
 				this.state.bodyKVPairs.forEach(function (val, idx) {
-					if (idx !== _this6.state.bodyKVPairs.length - 1) {
+					if (idx !== _this2.state.bodyKVPairs.length - 1) {
 						body[bodyKeys[val]] = bodyVals[val];
 					}
 				});
@@ -15990,7 +15967,7 @@ var Modal = function (_React$Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-			var _this7 = this;
+			var _this3 = this;
 
 			var option = this.state.options[this.state.idx];
 			var route = this.props.selected.testRoute;
@@ -16007,7 +15984,7 @@ var Modal = function (_React$Component) {
 						_react2.default.createElement(
 							'button',
 							{ className: 'nav-children', onClick: function onClick() {
-									return _this7.handleClick(route, method);
+									return _this3.handleClick(route, method);
 								} },
 							'Test'
 						),
@@ -16041,7 +16018,11 @@ var Modal = function (_React$Component) {
 							'Body'
 						)
 					),
-					option === 'headers' ? _react2.default.createElement(_Headers2.default, { verb: method, onChange: this.onChange, addInput: this.addInput, removeInput: this.removeInput, keyValuePairs: this.state.keyValuePairs }) : _react2.default.createElement(_Body2.default, {
+					option === 'headers' ? _react2.default.createElement(_Headers2.default, {
+						verb: method, onChange: this.onChange,
+						addInput: this.addInput,
+						removeInput: this.removeInput,
+						keyValuePairs: this.state.keyValuePairs }) : _react2.default.createElement(_Body2.default, {
 						bodyTypeSelected: this.state.bodyTypeSelected,
 						toggleBodyType: this.toggleBodyType,
 						onChange: this.onChange,
@@ -16735,8 +16716,10 @@ var Urlencoded = function (_React$Component) {
                         _react2.default.createElement('input', { name: 'url-key', className: 'headersKey', onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
                             }, onClick: function onClick(e) {
+                                console.log("in onCLick, here is num ", num);
                                 _this2.props.addInput(num, e);_this2.props.setUrlEn();
                             }, onFocus: function onFocus(e) {
+                                console.log("in onFocus, here's num ", num);
                                 _this2.props.addInput(num, e);_this2.props.setUrlEn();
                             }, placeholder: 'key' }),
                         _react2.default.createElement('input', { name: 'url-value', className: 'headersValue', onChange: function onChange(e) {
