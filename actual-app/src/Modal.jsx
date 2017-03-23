@@ -5,6 +5,7 @@ import Closex from './xImage'
 import Headers from './Headers.jsx'
 import Body from './Body.jsx'
 import RequestBody from './RequestBody.jsx'
+import Response from './Response.jsx'
 
 
 export default class Modal extends React.Component {
@@ -24,7 +25,8 @@ export default class Modal extends React.Component {
 			fadingOut: false,
 			currentOption: 'headers',
 			options: ['headers', 'body'],
-			idx: 0
+			idx: 0,
+			bodyTypeSelected: 'urlencoded'
 		}
 		this.handleClick = this.handleClick.bind(this);
 		this.onChange = this.onChange.bind(this);
@@ -38,22 +40,40 @@ export default class Modal extends React.Component {
 		this.setUrlEn = this.setUrlEn.bind(this);
 		this.setJson = this.setJson.bind(this);
 		this.onChangeJson = this.onChangeJson.bind(this);
+		this.toggleBodyType = this.toggleBodyType.bind(this)
 	}
 
-	removeInput(idx) {
+
+// remove is a total problem now, cutting off everything!!!  
+
+// also add input is glitchy -- if you type in a field which was a deleted one earlier(?), 
+// it won't add the input field
+
+// in addinput -> checking for keyValuePairs.length-1 won't work! bc index can be higher than
+// that IF earlier pairs have been deleted.
+
+// generation of new keys / the value that gets put in keyValuePairs is flawed -- repeats occur
+
+
+	removeInput(val) {
+		console.log("in remove, here's the val to remove ", val)
+		console.log("in remove input, heres bodyKVPairs ", this.state.bodyKVPairs);
         const newState = this.state.keyValuePairs;
-        if (newState.indexOf(idx) > -1 ) {
-            newState.splice(idx, 1);
+        if (newState.indexOf(val) > -1 ) {
+            newState.splice(val, 1);
             this.setState({keyValuePairs: newState})
         }
+        console.log("here's updated bodyKVPairs ", this.state.bodyKVPairs);
     }
 
-    addInput (idx) {
+    addInput (val) {
+    	console.log("in add input, here's keyValuePairs ", this.state.keyValuePairs);
         const {keyValuePairs} = this.state
-        if (idx === keyValuePairs.length - 1) {
-            let newState = keyValuePairs.concat(keyValuePairs.length)
-            this.setState({keyValuePairs: newState})
+        if (keyValuePairs.indexOf(val) === keyValuePairs.length-1) {
+            let newState = keyValuePairs.concat( Math.max(...keyValuePairs) + 1);
+            this.setState({keyValuePairs: newState});
         }
+        setTimeout(()=>console.log("here's updated keyValuePairs ", this.state.keyValuePairs), 500);
     }
 
     removeInputB(idx) {
@@ -100,8 +120,8 @@ export default class Modal extends React.Component {
             	this.setState({bodyVals: newBodyVals});
             	break;
     	}
+    }
 
-	}
 
 	onChangeJson(e) {
 		this.setState({bodyJson: e.target.value});
@@ -137,14 +157,14 @@ export default class Modal extends React.Component {
 
 		let body = {};
 
-		if (this.state.JORU === 'U') {
+		if (this.state.bodyTypeSelected === 'urlencoded') {
 			this.state.bodyKVPairs.forEach((val,idx) => {
 				if (idx !== this.state.bodyKVPairs.length-1) {
 					body[bodyKeys[val]] = bodyVals[val];
 				}
 			});
 		}
-		else if (this.state.JORU === 'J'){ 
+		else if (this.state.bodyTypeSelected === 'json'){ 
 			body = JSON.stringify(this.state.bodyJson);
 		}
 		testingInfo.body = body;
@@ -152,12 +172,17 @@ export default class Modal extends React.Component {
 		this.props.testThisRoute(route, verb, testingInfo);
 	}
 
+	toggleBodyType (evt) {
+					this.setState({bodyTypeSelected: evt.target.value})
+					// const idx = +evt.target.value;
+					// this.setState({ idx });
+	}
+
 
 	render() {
 		const option = this.state.options[this.state.idx]
 		const route = this.props.selected.testRoute;
 		const method = this.props.selected.selectedRouteVerb;
-		
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
@@ -171,14 +196,32 @@ export default class Modal extends React.Component {
 					</div>
 					<div className='headers-body'>
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
-						<button className={`headers ${option === 'body'? 'selected' : ''}`}value={1} onClick={this.toggleOptions}>Body</button>
+						<button className={`headers ${option === 'body'? 'selected' : ''}`}  disabled={method === 'post' || method === 'put'? '' : 'disabled'} value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
-					{option === 'headers' ? <Headers verb={method} onChange={this.onChange} addInput={this.addInput} removeInput={this.removeInput} keyValuePairs={this.state.keyValuePairs} /> : <Body onChange={this.onChange} addInput={this.addInputB} removeInput={this.removeInputB} bodyKVPairs={this.state.bodyKVPairs} setUrlEn={this.setUrlEn} setJson={this.setJson} onChangeJson={this.onChangeJson}/> }
+					{option === 'headers' ? <Headers verb={method} onChange={this.onChange} addInput={this.addInput} removeInput={this.removeInput} keyValuePairs={this.state.keyValuePairs} /> : 
+					<Body 
+					bodyTypeSelected={this.state.bodyTypeSelected} 
+					toggleBodyType={this.toggleBodyType} 
+					onChange={this.onChange} 
+					addInput={this.addInputB} 
+					removeInput={this.removeInputB} 
+					bodyKVPairs={this.state.bodyKVPairs} 
+					setUrlEn={this.setUrlEn} 
+					setJson={this.setJson} 
+					onChangeJson={this.onChangeJson}
+					bodyJson={this.state.bodyJson}/> }
 						
+				</div>
+				<div>
+					<Response response={this.props.response}/>
 				</div>
 			</div>
 		)
 	}
 }
+
+
+
+// ${method === 'post' || method === 'put'? '' : disabled}
 
 
