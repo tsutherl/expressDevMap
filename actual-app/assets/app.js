@@ -15148,6 +15148,8 @@ var Headers = function (_React$Component) {
                                 return _this2.props.onChange(num, e);
                             }, onClick: function onClick(e) {
                                 return _this2.props.addInput(num, e);
+                            }, onFocus: function onFocus(e) {
+                                return _this2.props.addInput(num, e);
                             }, placeholder: 'key' }),
                         _react2.default.createElement('input', { id: 'header-value', name: 'header-value', className: 'headersValue', onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
@@ -15851,6 +15853,8 @@ var Urlencoded = function (_React$Component) {
                         _react2.default.createElement('input', { name: 'url-key', className: 'headersKey', onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
                             }, onClick: function onClick(e) {
+                                _this2.props.addInput(num, e);_this2.props.setUrlEn();
+                            }, onFocus: function onFocus(e) {
                                 _this2.props.addInput(num, e);_this2.props.setUrlEn();
                             }, placeholder: 'key' }),
                         _react2.default.createElement('input', { name: 'url-value', className: 'headersValue', onChange: function onChange(e) {

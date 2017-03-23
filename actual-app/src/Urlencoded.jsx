@@ -12,7 +12,7 @@ class Urlencoded extends React.Component {
                     this.props.bodyKVPairs.map((num) => {
                         return(
                             <div key={num} className='form-input'>
-                                <input name='url-key' className="headersKey" onChange={(e)=>this.props.onChange(num, e)} onClick={(e) => {this.props.addInput(num, e); this.props.setUrlEn()}} placeholder='key'></input>
+                                <input name='url-key' className="headersKey" onChange={(e)=>this.props.onChange(num, e)} onClick={(e) => {this.props.addInput(num, e); this.props.setUrlEn()}} onFocus={(e) => {this.props.addInput(num, e); this.props.setUrlEn()}} placeholder='key'></input>
                                 <input name='url-value' className="headersValue" onChange={(e)=>this.props.onChange(num, e)} onClick={(e)=>this.props.addInput(num, e)} placeholder='value'></input>
                                 <button onClick={(e)=>this.props.removeInput(num, e)} >x</button> 
                             </div>

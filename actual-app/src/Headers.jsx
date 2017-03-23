@@ -12,7 +12,7 @@ class Headers extends React.Component {
                     this.props.keyValuePairs.map((num) => {
                         return(
                             <div key={num} className='form-input'>
-                                <input name='header-key' className="headersKey" onChange={(e)=>this.props.onChange(num, e)} onClick={(e)=>this.props.addInput(num, e)} placeholder='key'></input>
+                                <input name='header-key' className="headersKey" onChange={(e)=>this.props.onChange(num, e)} onClick={(e)=>this.props.addInput(num, e)} onFocus={(e)=>this.props.addInput(num, e)} placeholder='key'></input>
                                 <input id='header-value' name='header-value' className="headersValue" onChange={(e)=>this.props.onChange(num, e)} onClick={(e)=>this.props.addInput(num, e)} placeholder='value'></input>
                                 <button onClick={(e)=>this.props.removeInput(num, e)} >x</button> 
                              
