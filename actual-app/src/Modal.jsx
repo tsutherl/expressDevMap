@@ -100,7 +100,6 @@ export default class Modal extends React.Component {
             	this.setState({bodyVals: newBodyVals});
             	break;
     	}
-    	        console.log("in onChange, now local state is", this.state);
 
 	}
 
@@ -124,26 +123,32 @@ export default class Modal extends React.Component {
 		const bodyKeys = this.state.bodyKeys;
 		const bodyVals = this.state.bodyVals;
 		const testingInfo = {}
-		
+		console.log("keyValuePairs ", this.state.keyValuePairs, "bodyKVPairs", this.state.bodyKVPairs);
 		
 		let headers = {};
-		for(let i=0; i<Object.keys(headerKeys).length; i++){
-			headers[headerKeys[i]] = headerVals[i];
-		}
+
+		this.state.keyValuePairs.forEach((val,idx) => {
+			if (idx !== this.state.keyValuePairs.length-1){
+				headers[headerKeys[val]] = headerVals[val];
+			}
+		});
+
 		testingInfo.headers = headers;
 
 		let body = {};
+
 		if (this.state.JORU === 'U') {
-			for(let i=0; i<Object.keys(bodyKeys).length; i++){
-				body[bodyKeys[i]] = bodyVals[i]
-			}
+			this.state.bodyKVPairs.forEach((val,idx) => {
+				if (idx !== this.state.bodyKVPairs.length-1) {
+					body[bodyKeys[val]] = bodyVals[val];
+				}
+			});
 		}
-		else if (this.state.JORU === 'J'){ // make testingInfo.body from JSON
+		else if (this.state.JORU === 'J'){ 
 			body = JSON.stringify(this.state.bodyJson);
 		}
 		testingInfo.body = body;
 		
-		console.log('in handleClick, testing info is ', testingInfo);
 		this.props.testThisRoute(route, verb, testingInfo);
 	}
 
