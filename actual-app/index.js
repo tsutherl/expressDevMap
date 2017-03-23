@@ -23,18 +23,22 @@ module.exports = app => {
     const router = express.Router();
 
     router.get('/', (req, res) => {
+        console.log('pinring slash')
         res.sendFile(__dirname + '/views/index.html');
     });
 
     router.get('/BACKEND_TREE.js', (req, res) => {
+        console.log('pinging')
         res.sendFile(__dirname + '/assets/app.js');
     });
 
     router.get('/BACKEND_TREE.css', (req, res) => {
+        console.log('pinging css')
         res.sendFile(__dirname + '/assets/style.css');
     });
 
     router.get('/routes', (req, res) => {
+        console.log('pinging routes')
         res.send(parseRoutes(app._router.stack));
     });
 
