@@ -15625,7 +15625,8 @@ var Tree = function (_React$Component) {
         d3.selectAll('circle').attr('r', 7.5) //reset circle size
         .style('stroke-width', 1).style("stroke-opacity", 0.4);
         d3.selectAll('text').attr("x", function (d) {
-          return d.children ? -10 : 10;
+          console.log(d);
+          return d.height > 0 ? -10 : 10;
         }); //reset text position
         d3.selectAll('path').attr('class', 'link').style("stroke-opacity", 0.4).style("stroke-width", 1.5);
       };
@@ -15633,7 +15634,7 @@ var Tree = function (_React$Component) {
       var alterNode = function alterNode(node) {
         d3.select(node).attr('r', 15).style('stroke-width', 1.5).style('stroke-opacity', 0.8);
         d3.select(node.nextSibling).attr('x', function (d) {
-          return d.children ? -17.5 : 17.5;
+          return d.height > 0 ? -17.5 : 17.5;
         });
       };
 

@@ -44,7 +44,9 @@ export default class Tree extends React.Component {
         .style('stroke-width', 1)
         .style("stroke-opacity", 0.4)
       d3.selectAll('text')
-        .attr("x", function(d) { return d.children ?  -10 : 10});//reset text position
+        .attr("x", function(d) { 
+          console.log(d)
+          return d.height > 0 ?  -10 : 10});//reset text position
       d3.selectAll('path')
         .attr('class', 'link')
         .style("stroke-opacity", 0.4)
@@ -57,7 +59,7 @@ export default class Tree extends React.Component {
         .style('stroke-width', 1.5)
         .style('stroke-opacity', 0.8)
       d3.select(node.nextSibling)
-        .attr('x', function(d) { return d.children ?  -17.5 : 17.5})
+        .attr('x', function(d) { return d.height > 0 ?  -17.5 : 17.5})
     }
 
     //want to refactor this to take better advantage of d3
