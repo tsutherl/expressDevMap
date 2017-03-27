@@ -68,6 +68,7 @@ export default class Tree extends React.Component {
         pathEnds.push(`${e.y},${e.x}`)
         e = e.parent
       }
+      console.log('pathends',pathEnds)
       paths.forEach(path => {
         const info = path.getAttribute('d')
         const cPlace = info.indexOf('C');
@@ -75,9 +76,9 @@ export default class Tree extends React.Component {
           path.setAttribute('class', 'link selected')
         }
       })
-      g.selectAll('.link.selected')
-        .style('stroke-opacity', 0.8)
-        .style('stroke-width', 3)
+      console.log('the paths',g.selectAll('.link.selected'));
+        // .style('stroke-opacity', 0.8)
+        // .style('stroke-width', 3)
     }
 
 
