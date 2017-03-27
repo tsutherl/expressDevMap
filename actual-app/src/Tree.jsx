@@ -39,13 +39,13 @@ export default class Tree extends React.Component {
     }
 
     const resetTree = () => {
-      g.selectAll('circle')
+      d3.selectAll('circle')
         .attr('r', 7.5)//reset circle size
         .style('stroke-width', 1)
         .style("stroke-opacity", 0.4)
-      g.selectAll('text')
+      d3.selectAll('text')
         .attr("x", function(d) { return d.children ?  -10 : 10});//reset text position
-      g.selectAll('path')
+      d3.selectAll('path')
         .attr('class', 'link')
         .style("stroke-opacity", 0.4)
         .style("stroke-width", 1.5);
@@ -71,7 +71,6 @@ export default class Tree extends React.Component {
       paths.forEach(path => {
         const info = path.getAttribute('d').split(' ');
         const startString = `${info[1]},${info[2]}`;
-        console.log(startString)
         if (pathEnds.indexOf(startString.slice(0, -1)) > -1){
           path.setAttribute('class', 'link selected')
         }

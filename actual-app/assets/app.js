@@ -15622,12 +15622,12 @@ var Tree = function (_React$Component) {
       };
 
       var resetTree = function resetTree() {
-        g.selectAll('circle').attr('r', 7.5) //reset circle size
+        d3.selectAll('circle').attr('r', 7.5) //reset circle size
         .style('stroke-width', 1).style("stroke-opacity", 0.4);
-        g.selectAll('text').attr("x", function (d) {
+        d3.selectAll('text').attr("x", function (d) {
           return d.children ? -10 : 10;
         }); //reset text position
-        g.selectAll('path').attr('class', 'link').style("stroke-opacity", 0.4).style("stroke-width", 1.5);
+        d3.selectAll('path').attr('class', 'link').style("stroke-opacity", 0.4).style("stroke-width", 1.5);
       };
 
       var alterNode = function alterNode(node) {
@@ -15648,7 +15648,6 @@ var Tree = function (_React$Component) {
         paths.forEach(function (path) {
           var info = path.getAttribute('d').split(' ');
           var startString = info[1] + ',' + info[2];
-          console.log(startString);
           if (pathEnds.indexOf(startString.slice(0, -1)) > -1) {
             path.setAttribute('class', 'link selected');
           }
