@@ -224,7 +224,7 @@ var i = 0;
     var nodeEnter = node.enter().append("g")
         .attr("class", function(d) { 
           return "node" + 
-            (d.children ? " node--internal" : " node--leaf"); })
+            (d.height > 0 ? " node--internal" : " node--leaf"); })
         .attr('class', 'node')
         .attr("transform", function(d) { 
           return "translate(" + source.y0 + "," + source.x0 + ")"; })
@@ -239,7 +239,7 @@ var i = 0;
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
         resetTree();
-        if (e.children || e._children) {
+        if (e.height > 0) {
           routerHandleClick(e);
         } else {
           endRouteHandleClick(e); // modal functionality
@@ -251,11 +251,11 @@ var i = 0;
     // adds the text to the node
     nodeEnter.append("text")
       .attr("dy", 5) // move 3 px down for text location (I think)
-      .attr("x", function(d) { return d.children || d._children ? 
+      .attr("x", function(d) { return d.height > 0 ? 
         -13 : 13}) // place text label on left if node has children, otherwise on right
       .style("text-anchor", function(d) { 
-        return d.children || d._children ? "end" : "start"; }) 
-      .text(function(d) { return d.children || d._children ? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object       
+        return d.height > 0 ? "end" : "start"; }) 
+      .text(function(d) { return d.height > 0 ? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object       
 
 
     var nodeUpdate = nodeEnter.merge(node);
