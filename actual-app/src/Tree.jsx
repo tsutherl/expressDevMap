@@ -63,16 +63,16 @@ export default class Tree extends React.Component {
     //want to refactor this to take better advantage of d3
     const alterPath = (e) => {
       let pathEnds = [];
-      const paths = g.selectAll('.link')._groups[0]
+      const paths = d3.selectAll('.link')._groups[0]
       while (e.parent) {
         pathEnds.push(`${e.y},${e.x}`)
         e = e.parent
       }
-      console.log('pathends',pathEnds)
       paths.forEach(path => {
-        const info = path.getAttribute('d')
-        const cPlace = info.indexOf('C');
-        if (pathEnds.indexOf(info.slice(1,cPlace)) > -1){
+        const info = path.getAttribute('d').split(' ');
+        const startString = `${info[1]},${info[2]}`;
+        console.log(startString)
+        if (pathEnds.indexOf(startString.slice(0, -1)) > -1){
           path.setAttribute('class', 'link selected')
         }
       })

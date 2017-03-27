@@ -15640,16 +15640,16 @@ var Tree = function (_React$Component) {
       //want to refactor this to take better advantage of d3
       var alterPath = function alterPath(e) {
         var pathEnds = [];
-        var paths = g.selectAll('.link')._groups[0];
+        var paths = d3.selectAll('.link')._groups[0];
         while (e.parent) {
           pathEnds.push(e.y + ',' + e.x);
           e = e.parent;
         }
-        console.log('pathends', pathEnds);
         paths.forEach(function (path) {
-          var info = path.getAttribute('d');
-          var cPlace = info.indexOf('C');
-          if (pathEnds.indexOf(info.slice(1, cPlace)) > -1) {
+          var info = path.getAttribute('d').split(' ');
+          var startString = info[1] + ',' + info[2];
+          console.log(startString);
+          if (pathEnds.indexOf(startString.slice(0, -1)) > -1) {
             path.setAttribute('class', 'link selected');
           }
         });
