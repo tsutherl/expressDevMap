@@ -15653,9 +15653,7 @@ var Tree = function (_React$Component) {
             path.setAttribute('class', 'link selected');
           }
         });
-        console.log('the paths', g.selectAll('.link.selected'));
-        // .style('stroke-opacity', 0.8)
-        // .style('stroke-width', 3)
+        d3.selectAll('.link.selected').style('stroke-opacity', 0.8).style('stroke-width', 3);
       };
 
       // set the dimensions and margins of the diagram

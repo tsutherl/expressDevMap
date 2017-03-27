@@ -76,9 +76,9 @@ export default class Tree extends React.Component {
           path.setAttribute('class', 'link selected')
         }
       })
-      console.log('the paths',g.selectAll('.link.selected'));
-        // .style('stroke-opacity', 0.8)
-        // .style('stroke-width', 3)
+      d3.selectAll('.link.selected')
+        .style('stroke-opacity', 0.8)
+        .style('stroke-width', 3)
     }
 
 
