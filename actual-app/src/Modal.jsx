@@ -14,7 +14,8 @@ export default class Modal extends React.Component {
 
 		this.state = {
 			
-			keyValuePairs: [0],   
+			keyValuePairs: [0], 
+			lastAddedVal: null,  
 			headerKeys: {},
 			headerVals: {},
 			bodyKVPairs: [0],
@@ -43,35 +44,48 @@ export default class Modal extends React.Component {
 		this.toggleBodyType = this.toggleBodyType.bind(this)
 	}
 
-	removeInput(idx) {
+
+// remove is a total problem now, cutting off everything!!!  
+
+//  remove bug -- trying to remove something at the visual level (or below) that has been removed
+// before crashes -- check how values are getting assigned.
+
+// headers / body kv pairs need to prepopulate from local state
+
+// and do we want the form to clear out after submission? or? 
+
+	removeInput(val) {
         const newState = this.state.keyValuePairs;
-        if (newState.indexOf(idx) > -1 && idx > 0) {
-            newState.splice(idx, 1);
+        const idxVal = newState.indexOf(val);
+        if (idxVal > -1 ) {
+            newState.splice(idxVal, 1);
             this.setState({keyValuePairs: newState})
         }
     }
 
-    addInput (idx) {
+
+    addInput (val) {
         const {keyValuePairs} = this.state
-        if (idx === keyValuePairs.length - 1) {
-            let newState = keyValuePairs.concat(keyValuePairs.length)
-            this.setState({keyValuePairs: newState})
+        if (keyValuePairs.indexOf(val) === keyValuePairs.length-1) {
+            let newState = keyValuePairs.concat( Math.max(...keyValuePairs) + 1);
+            this.setState({keyValuePairs: newState});
         }
     }
 
-    removeInputB(idx) {
+    removeInputB(val) {
         const newState = this.state.bodyKVPairs;
-        if (newState.indexOf(idx) > -1 && idx > 0) {
-            newState.splice(idx, 1);
+        let idxVal = newState.indexOf(val);
+        if (idxVal > -1 ) {
+            newState.splice(idxVal, 1);
             this.setState({bodyKVPairs: newState})
         }
     }
 
-    addInputB (idx) {
+    addInputB (val) {
         const {bodyKVPairs} = this.state
-        if (idx === bodyKVPairs.length - 1) {
-            let newState = bodyKVPairs.concat(bodyKVPairs.length)
-            this.setState({bodyKVPairs: newState})
+         if (bodyKVPairs.indexOf(val) === bodyKVPairs.length-1) {
+            let newState = bodyKVPairs.concat( Math.max(...bodyKVPairs) + 1);
+            this.setState({bodyKVPairs: newState});
         }
     }
 
@@ -103,7 +117,8 @@ export default class Modal extends React.Component {
             	this.setState({bodyVals: newBodyVals});
             	break;
     	}
-	}
+    }
+
 
 	onChangeJson(e) {
 		this.setState({bodyJson: e.target.value});
@@ -125,21 +140,28 @@ export default class Modal extends React.Component {
 		const bodyKeys = this.state.bodyKeys;
 		const bodyVals = this.state.bodyVals;
 		const testingInfo = {}
-		
+		console.log("keyValuePairs ", this.state.keyValuePairs, "bodyKVPairs", this.state.bodyKVPairs);
 		
 		let headers = {};
-		for(let i=0; i<Object.keys(headerKeys).length; i++){
-			headers[headerKeys[i]] = headerVals[i];
-		}
+
+		this.state.keyValuePairs.forEach((val,idx) => {
+			if (idx !== this.state.keyValuePairs.length-1){
+				headers[headerKeys[val]] = headerVals[val];
+			}
+		});
+
 		testingInfo.headers = headers;
 
 		let body = {};
+
 		if (this.state.bodyTypeSelected === 'urlencoded') {
-			for(let i=0; i<Object.keys(bodyKeys).length; i++){
-				body[bodyKeys[i]] = bodyVals[i]
-			}
+			this.state.bodyKVPairs.forEach((val,idx) => {
+				if (idx !== this.state.bodyKVPairs.length-1) {
+					body[bodyKeys[val]] = bodyVals[val];
+				}
+			});
 		}
-		else if (this.state.bodyTypeSelected === 'json'){ // make testingInfo.body from JSON
+		else if (this.state.bodyTypeSelected === 'json'){ 
 			body = JSON.stringify(this.state.bodyJson);
 		}
 		testingInfo.body = body;
@@ -173,7 +195,11 @@ export default class Modal extends React.Component {
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
 						<button className={`headers ${option === 'body'? 'selected' : ''}`}  disabled={method === 'post' || method === 'put'? '' : 'disabled'} value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
-					{option === 'headers' ? <Headers verb={method} onChange={this.onChange} addInput={this.addInput} removeInput={this.removeInput} keyValuePairs={this.state.keyValuePairs} /> : 
+					{option === 'headers' ? <Headers 
+					verb={method} onChange={this.onChange} 
+					addInput={this.addInput} 
+					removeInput={this.removeInput} 
+					keyValuePairs={this.state.keyValuePairs} /> : 
 					<Body 
 					bodyTypeSelected={this.state.bodyTypeSelected} 
 					toggleBodyType={this.toggleBodyType} 
