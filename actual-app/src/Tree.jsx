@@ -45,7 +45,6 @@ export default class Tree extends React.Component {
         .style("stroke-opacity", 0.4)
       d3.selectAll('text')
         .attr("x", function(d) { 
-          console.log(d)
           return d.height > 0 ?  -10 : 10});//reset text position
       d3.selectAll('path')
         .attr('class', 'link')
@@ -341,7 +340,6 @@ var i = 0;
     }
 
     function click(d) {
-      console.log('in on click')
       if (d.children) {
           d._children = d.children;
           d.children = null;
@@ -357,8 +355,6 @@ var i = 0;
 
   update(root);
   // centerNode(root);
-
-  console.log('SVG', svg)
 
 
 }                                              
