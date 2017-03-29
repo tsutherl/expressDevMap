@@ -15656,7 +15656,7 @@ var Tree = function (_React$Component) {
       };
 
       // set the dimensions and margins of the diagram
-      var margin = { top: 20, right: 110, bottom: 30, left: 90 },
+      var margin = { top: 20, right: 110, bottom: 30, left: 200 },
           width = 1000 - margin.left - margin.right,
           height = 600 - margin.top - margin.bottom;
 
@@ -15724,6 +15724,7 @@ var Tree = function (_React$Component) {
       // moves the 'group' element to the top left margin
 
 
+      //zoom transformations only work on elements that are nested within svgs. Zoom transformations of svgs didn't work when we tried to wrap our svg in a g and transform the g, OR when we tried to directly transform our svg. We had to change our svg to a g and wrap that g in an svg and then apply the zoom transformations to the g. 
       var svg = d3.select(this.refs.routeMap).append("svg").call(zoom).attr("class", "outer").append("g").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).attr('id', 'tree').attr('class', 'grab');
 
       // var zoomer = svg.append("rect")
