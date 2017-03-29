@@ -250,4 +250,6 @@ svg text {
     top: 5%;
 }
 
-
+#routeMap {
+    margin-left: 100px;
+}
