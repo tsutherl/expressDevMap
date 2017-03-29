@@ -2,9 +2,6 @@ import React from 'react'
 import * as d3 from "d3"
 import d3Force from 'd3-force';
 
-import ModalContainer from './ModalContainer';
-
-
 export default class Tree extends React.Component {
   constructor(props){
     super(props);
@@ -90,7 +87,7 @@ export default class Tree extends React.Component {
         height = 600 - margin.top - margin.bottom;
 
     // declares a tree layout and assigns the size
-    var treemap = d3.tree()
+    let treemap = d3.tree()
         .size([height, width]);
   
 
@@ -161,7 +158,6 @@ export default class Tree extends React.Component {
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
-    
 
 //zoom transformations only work on elements that are nested within svgs. Zoom transformations of svgs didn't work when we tried to wrap our svg in a g and transform the g, OR when we tried to directly transform our svg. We had to change our svg to a g and wrap that g in an svg and then apply the zoom transformations to the g. 
     var svg = d3.select(this.refs.routeMap).append("svg").call(zoom).attr("class", "outer").append("g")
@@ -183,6 +179,7 @@ export default class Tree extends React.Component {
 
     var g = svg.append("g")
 
+<<<<<<< HEAD
     // zoomer.call(zoom.transform, d3.zoomIdentity.translate(150, 0))
     //g~= svgGroup
     //svg ~= baseSvg
@@ -224,6 +221,23 @@ export default class Tree extends React.Component {
         // .attr("transform",
         //         "translate(" + margin.left + "," + margin.top + ")");
   
+=======
+    // adds the links between the nodes
+    let link = g.selectAll(".link")
+        .data( nodes.descendants().slice(1))
+      .enter().append("path")
+        .attr("class", "link")
+        .style("stroke", "black")     // question: can these style things be combined?
+        .style("fill", "none")         // they are style attributes for the drawn links
+        .style("stroke-opacity", 0.4)   // got rid of the fill and color along the link curve
+        .style("stroke-width", 1.5)  
+        .attr("d", function(d) {
+          return "M" + d.y + "," + d.x
+            + "C" + (d.y + d.parent.y) / 2 + "," + d.x
+            + " " + (d.y + d.parent.y) / 2 + "," + d.parent.x
+            + " " + d.parent.y + "," + d.parent.x;
+          });
+>>>>>>> master
 
  
 
@@ -404,8 +418,7 @@ var i = 0;
 
   render() {
     return(
-      <div id="routeMap" ref="routeMap">
-        {this.props.showModal ? <ModalContainer/> : null}
+      <div ref="routeMap">
       </div>
     )
   }
