@@ -85,8 +85,8 @@ export default class Tree extends React.Component {
     
     // set the dimensions and margins of the diagram
     var margin = {top: 20, right: 110, bottom: 30, left: 90},
-        width = 660 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+        width = 1000 - margin.left - margin.right,
+        height = 600 - margin.top - margin.bottom;
 
     // declares a tree layout and assigns the size
     var treemap = d3.tree()
@@ -127,37 +127,59 @@ export default class Tree extends React.Component {
 
     //zoom ~=zoomListener
     const zoom = d3.zoom()
-      .scaleExtent([1 / 2, 4])
+      // .scaleExtent([1 / 2, 4])
       .on("zoom", () => {
         console.log('ZOOMING')
+        // console.log(d3.select(".outer"))
+        // console.log("g-----", g)
+        // console.log('d3.event---', d3.event.transform);
+        //  svg.selectAll('g').attr("transform", d3.event.transform);
+        //  svg.selectAll('path.link').attr("transform", d3.event.transform);
+        // d3.event.transform.k = 1
+        // svg.select("g").attr("transform", d3.event.transform)
+        d3.select(".grab").attr("transform", d3.event.transform)
+        // svg.selectAll("path").attr("transform", d3.event.transform)
+
+        //d3.select('#tree')
+        //d3.select('svg')
+        //d3.select('#routeMap')
+
+
+
         // var transform = ransform(this);
         // d3.select("#tree").attr("transform", "translate(" + transform.x + "," + transform.y + ")scale(" + transform.k + ")");
         // d3.select('g')
         //   .attr('transform', 'translate(' + d3.event.transform.x + ',' + d3.event.transform.y + ') scale(' + d3.event.transform.k + ')');
 
         
-        d3.select("#tree").attr("transform", d3.event.transform);
+       
     });
 
       // console.log("zoom scale", zoom.scale)
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
-    var svg = d3.select(this.refs.routeMap).append("svg")
+    
+
+    var svg = d3.select(this.refs.routeMap).append("svg").call(zoom).attr("class", "outer").append("g")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .attr('id', 'tree')
+          .attr('class', 'grab')
+          
+    
+         
 
-    var zoomer = svg.append("rect")
-          .attr("width", width)
-          .attr("height", height)
-          .style("fill", "none")
-          .style("pointer-events", "all")
-          .call(zoom)
+    // var zoomer = svg.append("rect")
+    //       .attr("width", width)
+    //       .attr("height", height)
+    //       .style("fill", "none")
+    //       .style("pointer-events", "all")
+    //       .call(zoom)
 
     var g = svg.append("g")
 
-    zoomer.call(zoom.transform, d3.zoomIdentity.translate(150, 0))
+    // zoomer.call(zoom.transform, d3.zoomIdentity.translate(150, 0))
     //g~= svgGroup
     //svg ~= baseSvg
 
@@ -166,16 +188,16 @@ export default class Tree extends React.Component {
     //zoom and panning target our g element which is a child of our svg element
     
   //zooming ~= zoom
-    const zooming = () => {
-      console.log('ZOOMING')
-      var transform = d3zoomTransform(this);
-      d3.select("#tree").attr("transform", "translate(" + transform.x + "," + transform.y + ")scale(" + transform.k + ")");
-      // d3.select(this.refs.routeMap).select('svg').select('g')
-      //   .attr('transform', 'translate(' + d3.event.transform.x + ',' + d3.event.transform.y + ') scale(' + d3.event.transform.k + ')');
+    // const zooming = () => {
+    //   console.log('ZOOMING')
+    //   var transform = d3zoomTransform(this);
+    //   d3.select("#tree").attr("transform", "translate(" + transform.x + "," + transform.y + ")scale(" + transform.k + ")");
+    //   // d3.select(this.refs.routeMap).select('svg').select('g')
+    //   //   .attr('transform', 'translate(' + d3.event.transform.x + ',' + d3.event.transform.y + ') scale(' + d3.event.transform.k + ')');
 
       
-      // g.attr("transform", d3.event.transform);
-    }
+    //   // g.attr("transform", d3.event.transform);
+    // }
 
 
       // Function to center node when clicked/dropped so node doesn't get lost when collapsing/moving with large amount of children.
@@ -223,7 +245,7 @@ var i = 0;
         .attr("class", function(d) { 
           return "node" + 
             (d.children ? " node--internal" : " node--leaf"); })
-        .attr('class', 'node')
+        .attr('class', 'node zoom')
         .attr("transform", function(d) { 
           return "translate(" + source.y0 + "," + source.x0 + ")"; })
         .on('click', click);
@@ -287,7 +309,7 @@ var i = 0;
 
 //*********************links section */
 
-     var links = treeData.descendants().slice(1);
+    var links = treeData.descendants().slice(1);
 
     // adds the links between the nodes
     var link = svg.selectAll("path.link")
