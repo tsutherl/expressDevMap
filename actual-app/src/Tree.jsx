@@ -1,5 +1,6 @@
 import React from 'react'
 import * as d3 from "d3"
+import d3Force from 'd3-force';
 
 export default class Tree extends React.Component {
   constructor(props){
@@ -81,84 +82,194 @@ export default class Tree extends React.Component {
 
     
     // set the dimensions and margins of the diagram
-    let margin = {top: 20, right: 110, bottom: 30, left: 90},
-        width = 660 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+    var margin = {top: 100, right: 110, bottom: 30, left: 200},
+        width = 1000 - margin.left - margin.right,
+        height = 600 - margin.top - margin.bottom;
 
     // declares a tree layout and assigns the size
-    let treemap = d3.tree()
+    var treemap = d3.tree()
         .size([height, width]);
+  
+
+
+
+
 
     //  assigns the data to a hierarchy using parent-child relationships
-    let nodes = d3.hierarchy(this.props.routes, function(d) {
+    var root = d3.hierarchy(this.props.routes, function(d) {
         return d.children;
       });
+    root.x0 = height/2;
+    root.y0 = 0;
+
+    // // Collapse after the second level
+    // root.children.forEach(collapse);
+
+    // update(root);
+
+    // // Collapse the node and all it's children
+    // function collapse(d) {
+    //   if(d.children) {
+    //     d._children = d.children
+    //     d._children.forEach(collapse)
+    //     d.children = null
+    //   }
+    // }
+
+
 
     // maps the node data to the tree layout
-    nodes = treemap(nodes);
-
-    //on zoom event our zooming function is called
-    //zoom and panning target our g element which is a child of our svg element
-    const zooming = () => {
-      g.attr("transform", d3.event.transform);
-    }
+   
 
     //scaleExtent take an array which holds the min scale factor at idx 0 and max scale factor at idx 1
     //event listener will be ignored if the graph is for whatever reason outside of the set scaleExtent
-    const zoom = d3.zoom()
-      .scaleExtent([1 / 2, 4])
-      .on("zoom", zooming);
 
+    //zoom ~=zoomListener
+    const zoom = d3.zoom()
+      // .scaleExtent([1 / 2, 4])
+      .on("zoom", () => {
+        // console.log(d3.select(".outer"))
+        // console.log("g-----", g)
+        // console.log('d3.event---', d3.event.transform);
+        //  svg.selectAll('g').attr("transform", d3.event.transform);
+        //  svg.selectAll('path.link').attr("transform", d3.event.transform);
+        // d3.event.transform.k = 1
+        // svg.select("g").attr("transform", d3.event.transform)
+        d3.select(".grab").attr("transform", d3.event.transform)
+        // svg.selectAll("path").attr("transform", d3.event.transform)
+
+        //d3.select('#tree')
+        //d3.select('svg')
+        //d3.select('#routeMap')
+
+
+
+        // var transform = ransform(this);
+        // d3.select("#tree").attr("transform", "translate(" + transform.x + "," + transform.y + ")scale(" + transform.k + ")");
+        // d3.select('g')
+        //   .attr('transform', 'translate(' + d3.event.transform.x + ',' + d3.event.transform.y + ') scale(' + d3.event.transform.k + ')');
+
+        
+       
+    });
+
+      // console.log("zoom scale", zoom.scale)
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
-    let svg = d3.select(this.refs.routeMap).append("svg")
+    
+
+//zoom transformations only work on elements that are nested within svgs. Zoom transformations of svgs didn't work when we tried to wrap our svg in a g and transform the g, OR when we tried to directly transform our svg. We had to change our svg to a g and wrap that g in an svg and then apply the zoom transformations to the g. 
+    var svg = d3.select(this.refs.routeMap).append("svg").call(zoom).attr("class", "outer").append("g")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .attr('id', 'tree')
-          .call(zoom),
-    g = svg.append("g")
+          .attr('class', 'grab')
+          .attr('transform', "translate(" + 50 + "," + 0 + ")");
+          
+    
+         
 
-          //this is causing the tree to jump at the start of panning - removing for now
-          // .attr("transform",
-          //       "translate(" + margin.left + "," + margin.top + ")");
+    // var zoomer = svg.append("rect")
+    //       .attr("width", width)
+    //       .attr("height", height)
+    //       .style("fill", "none")
+    //       .style("pointer-events", "all")
+    //       .call(zoom)
+
+    var g = svg.append("g")
+
+    // zoomer.call(zoom.transform, d3.zoomIdentity.translate(150, 0))
+    //g~= svgGroup
+    //svg ~= baseSvg
 
 
-    // adds the links between the nodes
-    let link = g.selectAll(".link")
-        .data( nodes.descendants().slice(1))
-      .enter().append("path")
-        .attr("class", "link")
-        .style("stroke", "black")     // question: can these style things be combined?
-        .style("fill", "none")         // they are style attributes for the drawn links
-        .style("stroke-opacity", 0.4)   // got rid of the fill and color along the link curve
-        .style("stroke-width", 1.5)  
-        .attr("d", function(d) {
-          return "M" + d.y + "," + d.x
-            + "C" + (d.y + d.parent.y) / 2 + "," + d.x
-            + " " + (d.y + d.parent.y) / 2 + "," + d.parent.x
-            + " " + d.parent.y + "," + d.parent.x;
-          });
+    //on zoom event our zooming function is called
+    //zoom and panning target our g element which is a child of our svg element
+    
+  //zooming ~= zoom
+    // const zooming = () => {
+    //   console.log('ZOOMING')
+    //   var transform = d3zoomTransform(this);
+    //   d3.select("#tree").attr("transform", "translate(" + transform.x + "," + transform.y + ")scale(" + transform.k + ")");
+    //   // d3.select(this.refs.routeMap).select('svg').select('g')
+    //   //   .attr('transform', 'translate(' + d3.event.transform.x + ',' + d3.event.transform.y + ') scale(' + d3.event.transform.k + ')');
 
+      
+    //   // g.attr("transform", d3.event.transform);
+    // }
+
+
+      // Function to center node when clicked/dropped so node doesn't get lost when collapsing/moving with large amount of children.
+
+    // function centerNode(source) {
+    //     var scale = zoom.scale();
+    //     var x = -source.y0;
+    //     var y = -source.x0;
+    //     x = x * scale + viewerWidth / 2;
+    //     y = y * scale + viewerHeight / 2;
+    //     d3.select('g').transition()
+    //         .duration(500)
+    //         .attr("transform", "translate(" + x + "," + y + ")scale(" + scale + ")");
+    //     zoom.scale(scale);
+    //     zoom.translate([x, y]);
+    // }
+
+
+    //this is causing the tree to jump at the start of panning - removing for now
+        // .attr("transform",
+        //         "translate(" + margin.left + "," + margin.top + ")");
+  
+
+ 
+
+var i = 0;
+
+//working on collapsing nodes: -----------------------
+  function update(source) {
+     var treeData = treemap(root);
+
+
+     var nodes = treeData.descendants();
+
+    nodes.forEach(function(d){
+      return d.y = d.depth * 180;
+    })
+
+    // var simulation = d3.forceSimulation(nodes);
+    // simulation.on("tick", function() {
+    //   nodes[0].x = width / 2;
+    //   nodes[0].y = height / 2;
+    // })
+
+    // force.on("tick", function() {
+    // nodes[0].x = w / 2;
+    // nodes[0].y = h / 2;}
     // adds each node as a group
-    let node = g.selectAll(".node")
-        .data(nodes.descendants())
-      .enter().append("g")
+    var node = svg.selectAll("g.node")
+        .data(nodes, function(d){
+          return d.id || (d.id = i++);
+        })
+
+    var nodeEnter = node.enter().append("g")
         .attr("class", function(d) { 
           return "node" + 
             (d.children ? " node--internal" : " node--leaf"); })
+        .attr('class', 'node zoom')
         .attr("transform", function(d) { 
-          return "translate(" + d.y + "," + d.x + ")"; });
+          return "translate(" + source.y0 + "," + source.x0 + ")"; })
+        .on('click', click);
 
     // adds symbols as nodes
-    node.append("circle")  // made all nodes circles instead of random shapes
+    nodeEnter.append("circle")
+      .attr('class', 'node')  // made all nodes circles instead of random shapes
       .style("stroke", "black") // change node outline to black
       .style('stroke-opacity', .4)
       .attr("r", 7.5)  // above line fills node blue if it has child nodes, otherwise gray
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
         resetTree();
-        if (e.children) {
+        if (e.children || e._children) {
           routerHandleClick(e);
         } else {
           endRouteHandleClick(e); // modal functionality
@@ -168,41 +279,124 @@ export default class Tree extends React.Component {
       });
 
     // adds the text to the node
-    node.append("text")
+    nodeEnter.append("text")
       .attr("dy", 5) // move 3 px down for text location (I think)
-      .attr("x", function(d) { return d.children ? 
-        -10 : 10}) // place text label on left if node has children, otherwise on right
+      .attr("x", function(d) { return d.children || d._children ? 
+        -13 : 13}) // place text label on left if node has children, otherwise on right
       .style("text-anchor", function(d) { 
-        return d.children ? "end" : "start"; }) 
-      .text(function(d) { return d.children? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object
+        return d.children || d._children ? "end" : "start"; }) 
+      .text(function(d) { return d.children || d._children ? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object       
+
+
+    var nodeUpdate = nodeEnter.merge(node);
+
+    nodeUpdate.transition()
+      .duration(500)
+      .attr("transform", function(d) {
+        return "translate(" + d.y + "," + d.x + ")";
+      })
+
+       // Update the node attributes and style
+    // nodeUpdate.select('circle.node')
+    //   .attr('r', 10)
+    //   .style("fill", function(d) {
+    //       return d._children ? "lightsteelblue" : "#fff";
+    //   })
+    //   .attr('cursor', 'pointer');
+    
+    var nodeExit = node.exit().transition()
+      .duration(500)
+      .attr("transform", function(d){
+        return "translate(" + source.y + "," + source.x + ")"
+      })
+      .remove();
+    
+    nodeExit.select('circle')
+      .attr('r', 1e-6)
+    
+    nodeExit.select("text")
+      .style('fill-opacity', 1e-6);
+
+//*********************links section */
+
+    var links = treeData.descendants().slice(1);
+
+    // adds the links between the nodes
+    var link = svg.selectAll("path.link")
+        .data(links, function(d){
+          return d.id;
+        })
+    
+    var linkEnter = link.enter().insert("path", "g")
+        .attr("class", "link")
+        .style("stroke", "black")     // question: can these style things be combined?
+        .style("fill", "none")         // they are style attributes for the drawn links
+        .style("stroke-opacity", 0.4)   // got rid of the fill and color along the link curve
+        .style("stroke-width", 1.5)  
+        .attr("d", function(d) {
+          var o = {x: source.x0, y: source.y0};
+          return diagonal(o,o);  
+        });
+
+    //keeps track of what is being re-rendered to ensure nothing is duplicated
+    var linkUpdate = linkEnter.merge(link);
+
+    linkUpdate.transition()
+      .duration(500)
+      .attr('d', function(d){
+        return diagonal(d, d.parent);
+      })
+    
+    var linkExit = link.exit().transition()
+      .duration(500)
+      .attr('d', function(d){
+        var o = { x: source.x, y: source.y};
+        return diagonal(o,o);
+      })
+      .remove(); 
+
+//********** end links section */
+    
+     nodes.forEach(function(d){
+        d.x0 = d.x;
+        d.y0 = d.y;
+    });
+
+    function diagonal(s,d){
+      var path = `M ${s.y} ${s.x}
+              C ${(s.y + d.y) / 2} ${s.x},
+                ${(s.y + d.y) / 2} ${d.x},
+                ${d.y} ${d.x}`
+      return path;
+    }
+
+    function click(d) {
+      if (d.children) {
+          d._children = d.children;
+          d.children = null;
+        } else {
+          d.children = d._children;
+          d._children = null;
+        }
+      update(d);
+    }
+
+
+
+}
+
+
+  update(root);
+  // centerNode(root);
+
+
 }                                              
 
   render() {
-  
     return(
-      <div ref="routeMap">
+      <div id="routeMap" ref="routeMap">
       </div>
     )
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
