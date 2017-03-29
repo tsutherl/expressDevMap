@@ -1,5 +1,6 @@
 import React from 'react'
 import * as d3 from "d3"
+import d3Force from 'd3-force';
 
 import ModalContainer from './ModalContainer';
 
@@ -84,13 +85,14 @@ export default class Tree extends React.Component {
 
     
     // set the dimensions and margins of the diagram
-    var margin = {top: 20, right: 110, bottom: 30, left: 200},
+    var margin = {top: 100, right: 110, bottom: 30, left: 200},
         width = 1000 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom;
 
     // declares a tree layout and assigns the size
     var treemap = d3.tree()
         .size([height, width]);
+  
 
 
 
@@ -167,6 +169,7 @@ export default class Tree extends React.Component {
           .attr("height", height + margin.top + margin.bottom)
           .attr('id', 'tree')
           .attr('class', 'grab')
+          .attr('transform', "translate(" + 50 + "," + 0 + ")");
           
     
          
@@ -230,12 +233,25 @@ var i = 0;
   function update(source) {
      var treeData = treemap(root);
 
+
      var nodes = treeData.descendants();
 
     nodes.forEach(function(d){
       return d.y = d.depth * 180;
     })
 
+    console.log('force?', d3.forceSimulation)
+    console.log("treedata", treeData)
+
+    // var simulation = d3.forceSimulation(nodes);
+    // simulation.on("tick", function() {
+    //   nodes[0].x = width / 2;
+    //   nodes[0].y = height / 2;
+    // })
+
+    // force.on("tick", function() {
+    // nodes[0].x = w / 2;
+    // nodes[0].y = h / 2;}
     // adds each node as a group
     var node = svg.selectAll("g.node")
         .data(nodes, function(d){
@@ -372,6 +388,8 @@ var i = 0;
         }
       update(d);
     }
+
+
 
 }
 
