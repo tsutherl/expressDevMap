@@ -139,8 +139,7 @@ export default class Modal extends React.Component {
 		const headerVals = this.state.headerVals;
 		const bodyKeys = this.state.bodyKeys;
 		const bodyVals = this.state.bodyVals;
-		const testingInfo = {}
-		console.log("keyValuePairs ", this.state.keyValuePairs, "bodyKVPairs", this.state.bodyKVPairs);
+		const testingInfo = {};
 		
 		let headers = {};
 
@@ -162,7 +161,7 @@ export default class Modal extends React.Component {
 			});
 		}
 		else if (this.state.bodyTypeSelected === 'json'){ 
-			body = JSON.stringify(this.state.bodyJson);
+			body = JSON.parse(this.state.bodyJson);
 		}
 		testingInfo.body = body;
 		

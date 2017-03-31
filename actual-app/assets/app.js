@@ -16051,42 +16051,39 @@ var Headers = function (_React$Component) {
     }
 
     _createClass(Headers, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             var _this2 = this;
 
-            console.log("in render of headers, props are ", this.props);
             return _react2.default.createElement(
-                "form",
-                { className: "form" },
+                'form',
+                { className: 'form' },
                 this.props.keyValuePairs.map(function (num) {
 
                     return _react2.default.createElement(
-                        "div",
-                        { key: num, className: "form-input" },
-                        _react2.default.createElement("input", { name: "header-key", className: "headersKey", onChange: function onChange(e) {
+                        'div',
+                        { key: num, className: 'form-input' },
+                        _react2.default.createElement('input', { name: 'header-key', className: 'headersKey', onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
                             },
 
                             onClick: function onClick(e) {
-                                console.log("in onClick, here is num (should be idx) ", num);
                                 _this2.props.addInput(num, e);
                             },
                             onFocus: function onFocus() {
-                                console.log("in onFocus, here is num (should be idx) ", num);
                                 _this2.props.addInput(num);
-                            }, placeholder: "key" }),
-                        _react2.default.createElement("input", { id: "header-value", name: "header-value", className: "headersValue", onChange: function onChange(e) {
+                            }, placeholder: 'key' }),
+                        _react2.default.createElement('input', { id: 'header-value', name: 'header-value', className: 'headersValue', onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
                             }, onClick: function onClick(e) {
                                 return _this2.props.addInput(num, e);
-                            }, placeholder: "value" }),
+                            }, placeholder: 'value' }),
                         _react2.default.createElement(
-                            "button",
+                            'button',
                             { onClick: function onClick(e) {
                                     return _this2.props.removeInput(num, e);
                                 } },
-                            "x"
+                            'x'
                         )
                     );
                 })
@@ -16360,7 +16357,6 @@ var Modal = function (_React$Component) {
 			var bodyKeys = this.state.bodyKeys;
 			var bodyVals = this.state.bodyVals;
 			var testingInfo = {};
-			console.log("keyValuePairs ", this.state.keyValuePairs, "bodyKVPairs", this.state.bodyKVPairs);
 
 			var headers = {};
 
@@ -16381,7 +16377,7 @@ var Modal = function (_React$Component) {
 					}
 				});
 			} else if (this.state.bodyTypeSelected === 'json') {
-				body = JSON.stringify(this.state.bodyJson);
+				body = JSON.parse(this.state.bodyJson);
 			}
 			testingInfo.body = body;
 
