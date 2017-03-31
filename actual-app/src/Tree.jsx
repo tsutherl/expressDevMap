@@ -51,11 +51,13 @@ export default class Tree extends React.Component {
     }
 
     const alterNode = (node) => {
+      console.log('the node', node)
       d3.select(node)
         .attr('r', 15)
         .style('stroke-width', 1.5)
         .style('stroke-opacity', 0.8)
-      d3.select(node.nextSibling)
+        console.log(d3.select(node.parentElement.nextSibling))
+      d3.select(node.parentElement.nextSibling)
         .attr('x', function(d) { return d.height > 0 ?  -17.5 : 17.5})
     }
 
