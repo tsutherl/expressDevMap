@@ -224,6 +224,16 @@ if view width is less than 1000 we'll have media query that does sth different*/
     margin: 1.3em;
 }
 
+.modal .response-header {
+    display: flex;
+}
+
+/*margin auto in flex box eats up anything averything vailabel to it*/
+.modal .response-header h4 {
+    margin-right: auto;
+}
+
+
 /*************TREE****************/
 #tree circle.router {
     fill: #555;
@@ -268,19 +278,6 @@ if view width is less than 1000 we'll have media query that does sth different*/
     margin-left: 100px;
 }
 
-
-.modal .response-header {
-    display: flex;
-}
-
-/*margin auto in flex box eats up anything averything vailabel to it*/
-.modal .response-header h4 {
-    margin-right: auto;
-}
-
-
-
-
 /*************SEARCH BAR****************/
 #search-bar {
     display: flex;
@@ -319,6 +316,7 @@ if view width is less than 1000 we'll have media query that does sth different*/
     margin: 0;
     list-style: none;
     border-radius: .5em;
+    z-index: 499;
 }
 
 #search-bar ul li {
@@ -333,8 +331,8 @@ if view width is less than 1000 we'll have media query that does sth different*/
     padding-bottom: 1em;
 }
 
-#search-bar ul li:hover, #search-bar ul li:focus {
-    background: skyblue;
+#search-bar ul li:hover, #search-bar ul li.hover {
+    background: rgba(135, 206,235,0.7);
 }
 
 #search-bar ul li a {
