@@ -4,7 +4,6 @@ import React from 'react';
 import Closex from './xImage'
 import Headers from './Headers.jsx'
 import Body from './Body.jsx'
-import RequestBody from './RequestBody.jsx'
 import Response from './Response.jsx'
 
 
@@ -211,7 +210,7 @@ export default class Modal extends React.Component {
 				<div className='info'>
 					<div className='nav'>
 						<button className='nav-children' onClick={()=>this.handleClick(route, method)}>Test</button>
-						<button className='nav-children' onClick={}>History</button>
+						<button className='nav-children'>History</button>
 						<Closex onClick={this.closeButton}/>
 					</div>
 					<div className='testing'>
