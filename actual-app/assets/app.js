@@ -16333,6 +16333,7 @@ var SearchContainer = function (_Component) {
     };
     _this.onOptionSelect = _this.onOptionSelect.bind(_this);
     _this.onButtonClick = _this.onButtonClick.bind(_this);
+    // this.downOnInput = this.downOnInput.bind(this);
     return _this;
   }
 
@@ -16349,6 +16350,7 @@ var SearchContainer = function (_Component) {
     key: 'onOptionSelect',
     value: function onOptionSelect(e) {
       this.setState({ inputState: e });
+      this.onButtonClick();
     }
   }, {
     key: 'onButtonClick',
@@ -16360,7 +16362,8 @@ var SearchContainer = function (_Component) {
       var pathParts = pathOnly.split('/').slice(1);
       //try finding node from tree top
       //find the node from the DOM
-      var currNode = document.querySelector('#tree g g');
+      var currNode = document.querySelector('#tree g.node');
+      console.log('currNode', currNode);
 
       var _loop = function _loop(i) {
         var currChildren = currNode.__data__ ? currNode.__data__.children : currNode.children;
@@ -16378,9 +16381,9 @@ var SearchContainer = function (_Component) {
       for (var i = 0; i < pathParts.length; i++) {
         _loop(i);
       }
-      console.log(currNode);
       // //simulate the click
       var leaves = document.querySelectorAll('#tree g.node--leaf');
+      console.log('leaves', leaves);
       var rightNode = Array.prototype.filter.call(leaves, function (leaf) {
         return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y;
       })[0];
