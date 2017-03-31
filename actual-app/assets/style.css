@@ -335,7 +335,7 @@ if view width is less than 1000 we'll have media query that does sth different*/
 }
 
 #search-bar ul li:hover, #search-bar ul li:focus {
-    background: skyblue;
+    background: rgba(135, 206,235,0.7);
 }
 
 #search-bar ul li a {
