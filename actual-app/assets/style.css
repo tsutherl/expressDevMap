@@ -225,6 +225,10 @@ if view width is less than 1000 we'll have media query that does sth different*/
 }
 
 /*************TREE****************/
+#tree circle:hover {
+    cursor: pointer;
+}
+
 #tree circle.router {
     fill: #555;
 }
