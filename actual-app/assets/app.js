@@ -16784,7 +16784,6 @@ var SearchContainer = function (_Component) {
   }, {
     key: 'onButtonClick',
     value: function onButtonClick() {
-      console.log('input state', this.state.inputState);
       //parse the route
       var colonPlace = this.state.inputState.indexOf(':');
       var pathOnly = this.state.inputState.slice(colonPlace + 2);
@@ -16794,7 +16793,6 @@ var SearchContainer = function (_Component) {
       //try finding node from tree top
       //find the node from the DOM
       var currNode = document.querySelector('#tree g.node');
-      console.log('currNode', currNode.__data__);
 
       var _loop = function _loop(i) {
         var currChildren = currNode.__data__ ? currNode.__data__.children : currNode.children;
@@ -16813,10 +16811,8 @@ var SearchContainer = function (_Component) {
       for (var i = 0; i < pathParts.length; i++) {
         _loop(i);
       }
-      console.log('currNode', currNode);
       // //simulate the click
       var leaves = document.querySelectorAll('#tree g.node--leaf');
-      console.log('coords', currNode.x, currNode.y);
       var rightNode = Array.prototype.filter.call(leaves, function (leaf) {
         return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y;
       })[0];

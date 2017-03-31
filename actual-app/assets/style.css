@@ -319,7 +319,7 @@ if view width is less than 1000 we'll have media query that does sth different*/
     margin: 0;
     list-style: none;
     border-radius: .5em;
-    z-index: 700;
+    z-index: 499;
 }
 
 #search-bar ul li {
