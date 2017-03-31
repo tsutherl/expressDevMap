@@ -51,6 +51,7 @@ class SearchContainer extends Component {
 
   onOptionSelect (e) {
     this.setState({inputState: e})
+    this.onButtonClick();
   }
 
   onButtonClick () {
@@ -61,8 +62,8 @@ class SearchContainer extends Component {
     const pathParts = pathOnly.split('/').slice(1)
     //try finding node from tree top
     //find the node from the DOM
-    let currNode = document.querySelector('#tree g g');
-
+    let currNode = document.querySelector('#tree g.node');
+    console.log('currNode', currNode);
     for (let i = 0; i < pathParts.length; i++){
       const currChildren = currNode.__data__ ? currNode.__data__.children : currNode.children;
       currNode = currChildren.filter(child => {return child.data.name === `/${pathParts[i]}`});
@@ -73,23 +74,11 @@ class SearchContainer extends Component {
     }
     // //simulate the click
     const leaves = document.querySelectorAll('#tree g.node--leaf');
+    console.log('leaves', leaves);
     const rightNode = Array.prototype.filter.call(leaves, leaf => {return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y})[0];
     
     simulateClick(rightNode.firstChild);
   }
-
-  // downOnInput (e) {
-  //   console.log('in the function')
-  //   if(e.keyCode === 40) {//checking to see if down arrow pressed
-  //     console.log('down arrow pressed')
-  //     //check to see if ul.typeahead-selector exists
-  //     const selector = document.querySelector('ul typeahead-selector')
-  //     console.log(selector)
-  //     //if it does change focus to first list-item in it
-  //   }
-  // }
-
-  //still need to handle arrow keys within the selector
 
   render () {
     return (
