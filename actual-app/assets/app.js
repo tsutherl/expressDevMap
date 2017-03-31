@@ -16051,12 +16051,17 @@ var Headers = function (_React$Component) {
     }
 
     _createClass(Headers, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            if (this.props.keyValuePairs.length === 0) this.props.addInput(0);
+        }
+    }, {
         key: "componentWillReceiveProps",
         value: function componentWillReceiveProps(nextProps) {
             if (this.props.localStateChangeIndicator !== nextProps.localStateChangeIndicator) {
                 console.log("should clear the form!!!  ");
-                this.refs.headerKey.value = "";
-                this.refs.headerValue.value = "";
+                // this.refs.headerKey.value = "";
+                // this.refs.headerValue.value ="";
             }
         }
     }, {
@@ -16073,7 +16078,7 @@ var Headers = function (_React$Component) {
 
                     return _react2.default.createElement(
                         "div",
-                        { key: num, className: "form-input" },
+                        { key: _this2.props.localStateChangeIndicator ? num : num, className: "form-input" },
                         _react2.default.createElement("input", { name: "header-key", className: "headersKey", ref: "headerKey", onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
                             },
@@ -16228,7 +16233,7 @@ var Modal = function (_React$Component) {
 
 		_this.state = {
 
-			keyValuePairs: [0],
+			keyValuePairs: [],
 			lastAddedVal: null,
 			headerKeys: {},
 			headerVals: {},
@@ -16435,6 +16440,7 @@ var Modal = function (_React$Component) {
 			var route = this.props.selected.testRoute;
 			var method = this.props.selected.selectedRouteVerb;
 
+			console.log("in modal render, header keys ", this.state.headerKeys);
 			return _react2.default.createElement(
 				'div',
 				{ className: this.state.fadingOut ? 'modal fadeOut' : 'modal' },

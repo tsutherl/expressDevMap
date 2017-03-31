@@ -5,24 +5,28 @@ class Headers extends React.Component {
         super(props)
     }
 
+    componentDidMount(){
+        if (this.props.keyValuePairs.length === 0) this.props.addInput(0);
+    }
+
     componentWillReceiveProps(nextProps) {
         if (this.props.localStateChangeIndicator !== nextProps.localStateChangeIndicator) {
             console.log("should clear the form!!!  ");
-            this.refs.headerKey.value = "";
-            this.refs.headerValue.value ="";
+            // this.refs.headerKey.value = "";
+            // this.refs.headerValue.value ="";
         }
     }
 
     render() {
         console.log("in headers render, props", this.props);
-
+        
         return(
             <form className = "form">
                 {
                     this.props.keyValuePairs.map((num) => {
                        
                         return(
-                            <div key={num} className='form-input'>
+                            <div key={this.props.localStateChangeIndicator? num : num} className='form-input'>
                                 <input name='header-key' className="headersKey" ref='headerKey' onChange={(e)=>this.props.onChange(num, e)} 
 
                                 onClick={(e)=>{

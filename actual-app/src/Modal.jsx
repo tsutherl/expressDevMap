@@ -14,7 +14,7 @@ export default class Modal extends React.Component {
 
 		this.state = {
 			
-			keyValuePairs: [0], 
+			keyValuePairs: [], 
 			lastAddedVal: null,  
 			headerKeys: {},
 			headerVals: {},
@@ -206,6 +206,7 @@ export default class Modal extends React.Component {
 		const route = this.props.selected.testRoute;
 		const method = this.props.selected.selectedRouteVerb;
 
+		console.log("in modal render, header keys ", this.state.headerKeys);
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
