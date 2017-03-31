@@ -17020,6 +17020,8 @@ var Tree = function (_React$Component) {
 
       //zoom transformations only work on elements that are nested within svgs. Zoom transformations of svgs didn't work when we tried to wrap our svg in a g and transform the g, OR when we tried to directly transform our svg. We had to change our svg to a g and wrap that g in an svg and then apply the zoom transformations to the g. 
       var svg = d3.select(this.refs.routeMap).append("svg").call(zoom).attr("class", "outer").append("g").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).attr('id', 'tree').attr('class', 'grab').attr('transform', "translate(" + 50 + "," + 0 + ")");
+      // .attr('tabIndex','1');
+
 
       // var zoomer = svg.append("rect")
       //       .attr("width", width)
@@ -17102,7 +17104,7 @@ var Tree = function (_React$Component) {
           return "node zoom " + (d.height > 0 ? "node--internal" : "node--leaf");
         }).attr("transform", function (d) {
           return "translate(" + source.y0 + "," + source.x0 + ")";
-        }).attr('tabIndex', '0').on('click', click);
+        }).on('click', click);
 
         // adds symbols as nodes
         nodeEnter.append("circle").attr('class', 'node') // made all nodes circles instead of random shapes
@@ -17213,9 +17215,17 @@ var Tree = function (_React$Component) {
 
     }
   }, {
+    key: 'selectFirstNode',
+    value: function selectFirstNode() {
+      console.log('in select first node');
+      var firstNode = document.querySelector('#tree g').nextSibling;
+      console.log(firstNode);
+      firstNode.focus();
+    }
+  }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', { id: 'routeMap', ref: 'routeMap' });
+      return _react2.default.createElement('div', { id: 'routeMap', ref: 'routeMap', tabIndex: 0, onFocus: this.selectFirstNode });
     }
   }]);
 

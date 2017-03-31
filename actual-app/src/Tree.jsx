@@ -166,7 +166,8 @@ export default class Tree extends React.Component {
           .attr("height", height + margin.top + margin.bottom)
           .attr('id', 'tree')
           .attr('class', 'grab')
-          .attr('transform', "translate(" + 50 + "," + 0 + ")");
+          .attr('transform', "translate(" + 50 + "," + 0 + ")")
+          // .attr('tabIndex','1');
           
     
          
@@ -258,7 +259,6 @@ var i = 0;
             (d.height > 0 ? "node--internal" : "node--leaf"); })
         .attr("transform", function(d) { 
           return "translate(" + source.y0 + "," + source.x0 + ")"; })
-        .attr('tabIndex', '0')
         .on('click', click);
 
     // adds symbols as nodes
@@ -391,11 +391,19 @@ var i = 0;
   // centerNode(root);
 
 
-}                                              
+}         
+
+selectFirstNode () {
+  console.log('in select first node')
+  const firstNode = document.querySelector('#tree g').nextSibling;
+  console.log(firstNode)
+  firstNode.focus();
+}
+
 
   render() {
     return(
-      <div id="routeMap" ref="routeMap">
+      <div id="routeMap" ref="routeMap" tabIndex={0} onFocus={this.selectFirstNode}>
       </div>
     )
   }
