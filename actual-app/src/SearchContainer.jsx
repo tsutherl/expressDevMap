@@ -38,7 +38,7 @@ class SearchContainer extends Component {
     }
     this.onOptionSelect = this.onOptionSelect.bind(this);
     this.onButtonClick = this.onButtonClick.bind(this);
-    this.downOnInput = this.downOnInput.bind(this);
+    // this.downOnInput = this.downOnInput.bind(this);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -78,13 +78,16 @@ class SearchContainer extends Component {
     simulateClick(rightNode.firstChild);
   }
 
-  downOnInput (e) {
-    if(e.keyCode === 40) {//checking to see if down arrow pressed
-      console.log('down arrow pressed')
-      //check to see if ul.typeahead-selector exists
-      //if it does change focus to first list-item in it
-    }
-  }
+  // downOnInput (e) {
+  //   console.log('in the function')
+  //   if(e.keyCode === 40) {//checking to see if down arrow pressed
+  //     console.log('down arrow pressed')
+  //     //check to see if ul.typeahead-selector exists
+  //     const selector = document.querySelector('ul typeahead-selector')
+  //     console.log(selector)
+  //     //if it does change focus to first list-item in it
+  //   }
+  // }
 
   //still need to handle arrow keys within the selector
 
@@ -94,7 +97,6 @@ class SearchContainer extends Component {
         routeList={this.state.routeList} 
         optionSelect={this.onOptionSelect} 
         buttonClick={this.onButtonClick}
-        downOnInput={this.downOnInput}
       />
     )
   }
