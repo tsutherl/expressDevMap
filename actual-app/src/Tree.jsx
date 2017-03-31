@@ -258,6 +258,7 @@ var i = 0;
             (d.height > 0 ? "node--internal" : "node--leaf"); })
         .attr("transform", function(d) { 
           return "translate(" + source.y0 + "," + source.x0 + ")"; })
+        .attr('tabIndex', '0')
         .on('click', click);
 
     // adds symbols as nodes
