@@ -55,36 +55,46 @@ export default class Modal extends React.Component {
 // and do we want the form to clear out after submission? or? 
 
 	removeInput(val) {
+		const KVPairsLength = this.state.keyValuePairs.length;
         const newState = this.state.keyValuePairs;
         const idxVal = newState.indexOf(val);
         if (idxVal > -1 ) {
             newState.splice(idxVal, 1);
             this.setState({keyValuePairs: newState})
         }
+        if (KVPairsLength === 1){
+        	this.addInput(0);
+        }
     }
 
 
     addInput (val) {
-        const {keyValuePairs} = this.state
+        const {keyValuePairs} = this.state;
         if (keyValuePairs.indexOf(val) === keyValuePairs.length-1) {
-            let newState = keyValuePairs.concat( Math.max(...keyValuePairs) + 1);
+        	// the double Math.max operation is needed because keyValuePairs is empty,
+        	// the inner Math.max returns -Infinity which breaks things
+            let newState = keyValuePairs.concat( Math.max(Math.max(...keyValuePairs), 0) + 1);
             this.setState({keyValuePairs: newState});
         }
     }
 
     removeInputB(val) {
+    	const bkvpairslen = this.state.bodyKVPairs.length;
         const newState = this.state.bodyKVPairs;
         let idxVal = newState.indexOf(val);
         if (idxVal > -1 ) {
             newState.splice(idxVal, 1);
             this.setState({bodyKVPairs: newState})
         }
+        if (bkvpairslen === 1){
+        	this.addInputB(0);
+        }
     }
 
     addInputB (val) {
         const {bodyKVPairs} = this.state
          if (bodyKVPairs.indexOf(val) === bodyKVPairs.length-1) {
-            let newState = bodyKVPairs.concat( Math.max(...bodyKVPairs) + 1);
+            let newState = bodyKVPairs.concat( Math.max(Math.max(...bodyKVPairs), 0) + 1);
             this.setState({bodyKVPairs: newState});
         }
     }

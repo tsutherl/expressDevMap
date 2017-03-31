@@ -16070,8 +16070,8 @@ var Headers = function (_React$Component) {
                             onClick: function onClick(e) {
                                 _this2.props.addInput(num, e);
                             },
-                            onFocus: function onFocus() {
-                                _this2.props.addInput(num);
+                            onFocus: function onFocus(e) {
+                                _this2.props.addInput(num, e);
                             }, placeholder: 'key' }),
                         _react2.default.createElement('input', { id: 'header-value', name: 'header-value', className: 'headersValue', onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
@@ -16260,11 +16260,15 @@ var Modal = function (_React$Component) {
 	_createClass(Modal, [{
 		key: 'removeInput',
 		value: function removeInput(val) {
+			var KVPairsLength = this.state.keyValuePairs.length;
 			var newState = this.state.keyValuePairs;
 			var idxVal = newState.indexOf(val);
 			if (idxVal > -1) {
 				newState.splice(idxVal, 1);
 				this.setState({ keyValuePairs: newState });
+			}
+			if (KVPairsLength === 1) {
+				this.addInput(0);
 			}
 		}
 	}, {
@@ -16273,18 +16277,24 @@ var Modal = function (_React$Component) {
 			var keyValuePairs = this.state.keyValuePairs;
 
 			if (keyValuePairs.indexOf(val) === keyValuePairs.length - 1) {
-				var newState = keyValuePairs.concat(Math.max.apply(Math, _toConsumableArray(keyValuePairs)) + 1);
+				// the double Math.max operation is needed because keyValuePairs is empty,
+				// the inner Math.max returns -Infinity which breaks things
+				var newState = keyValuePairs.concat(Math.max(Math.max.apply(Math, _toConsumableArray(keyValuePairs)), 0) + 1);
 				this.setState({ keyValuePairs: newState });
 			}
 		}
 	}, {
 		key: 'removeInputB',
 		value: function removeInputB(val) {
+			var bkvpairslen = this.state.bodyKVPairs.length;
 			var newState = this.state.bodyKVPairs;
 			var idxVal = newState.indexOf(val);
 			if (idxVal > -1) {
 				newState.splice(idxVal, 1);
 				this.setState({ bodyKVPairs: newState });
+			}
+			if (bkvpairslen === 1) {
+				this.addInputB(0);
 			}
 		}
 	}, {
@@ -16293,7 +16303,7 @@ var Modal = function (_React$Component) {
 			var bodyKVPairs = this.state.bodyKVPairs;
 
 			if (bodyKVPairs.indexOf(val) === bodyKVPairs.length - 1) {
-				var newState = bodyKVPairs.concat(Math.max.apply(Math, _toConsumableArray(bodyKVPairs)) + 1);
+				var newState = bodyKVPairs.concat(Math.max(Math.max.apply(Math, _toConsumableArray(bodyKVPairs)), 0) + 1);
 				this.setState({ bodyKVPairs: newState });
 			}
 		}
@@ -16530,54 +16540,27 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// import React from 'react'
 
+// const RequestBody = ({onChange}) => {
+//     return(
+//         <form className = "form-inline">
+//             <h3>Request Body</h3>
+//             <div className='ro-row'>
+//                 <span>Key</span><span>Value</span>
+//             </div>
+//             <div className='ro-row form-group'>
+//                 <input name="reqBodyKey" id="reqBodyKey" onChange={onChange}></input>
+//                 <input name="reqBodyValue" onChange={onChange}></input>
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+//             <textarea></textarea>
 
-var _react = __webpack_require__(3);
+//             </div>
+//     </form>)
+// }
 
-var _react2 = _interopRequireDefault(_react);
+// export default RequestBody
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var RequestBody = function RequestBody(_ref) {
-    var onChange = _ref.onChange;
-
-    return _react2.default.createElement(
-        'form',
-        { className: 'form-inline' },
-        _react2.default.createElement(
-            'h3',
-            null,
-            'Request Body'
-        ),
-        _react2.default.createElement(
-            'div',
-            { className: 'ro-row' },
-            _react2.default.createElement(
-                'span',
-                null,
-                'Key'
-            ),
-            _react2.default.createElement(
-                'span',
-                null,
-                'Value'
-            )
-        ),
-        _react2.default.createElement(
-            'div',
-            { className: 'ro-row form-group' },
-            _react2.default.createElement('input', { name: 'reqBodyKey', id: 'reqBodyKey', onChange: onChange }),
-            _react2.default.createElement('input', { name: 'reqBodyValue', onChange: onChange }),
-            _react2.default.createElement('textarea', null)
-        )
-    );
-};
-
-exports.default = RequestBody;
 
 /***/ }),
 /* 177 */

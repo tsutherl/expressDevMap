@@ -7,7 +7,6 @@ class Headers extends React.Component {
 
     render() {
         
-        
         return(
             <form className = "form">
                 {
@@ -19,8 +18,8 @@ class Headers extends React.Component {
 
                                 onClick={(e)=>{
                                     this.props.addInput(num, e)}}
-                                onFocus={()=>{
-                                    this.props.addInput(num)}} placeholder='key'></input>
+                                onFocus={(e)=>{
+                                    this.props.addInput(num, e)}} placeholder='key'></input>
                                 <input id='header-value' name='header-value' className="headersValue" onChange={(e)=>this.props.onChange(num, e)} onClick={(e)=>this.props.addInput(num, e)} placeholder='value'></input>
                                 
                                 <button onClick={(e)=>this.props.removeInput(num, e)} >x</button> 
