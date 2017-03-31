@@ -17110,7 +17110,7 @@ var Tree = function (_React$Component) {
 
         // adds symbols as nodes
         nodeEnter.append('a') //add anchor tag for keyboard accessibility
-        .attr('xlink:href', '#0').append("circle").attr('class', 'node') // made all nodes circles instead of random shapes
+        .attr('xlink:href', '#').append("circle").attr('class', 'node') // made all nodes circles instead of random shapes
         .style("stroke", "black") // change node outline to black
         .style('stroke-opacity', .4).attr("r", 7.5) // above line fills node blue if it has child nodes, otherwise gray
         .attr('class', function (d) {
