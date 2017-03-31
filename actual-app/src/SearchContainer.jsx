@@ -50,7 +50,7 @@ class SearchContainer extends Component {
   }
 
   onOptionSelect (e) {
-    this.setState({inputState: e},this.onButtonClick)
+    this.setState({inputState: e}, this.onButtonClick)
   }
 
   onButtonClick () {
