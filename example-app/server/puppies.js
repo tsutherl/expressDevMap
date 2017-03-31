@@ -7,5 +7,6 @@ module.exports = require('express').Router()
     .get('/Nugget', (req, res) => res.send('Nugget'))
 
     .post('/', (req, res) => {
+    	console.log(req.body);
         res.send(req.body)
     })
