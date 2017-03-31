@@ -262,7 +262,8 @@ var i = 0;
         .on('click', click);
 
     // adds symbols as nodes
-    nodeEnter.append('a')
+    nodeEnter.append('a')//add anchor tag for keyboard accessibility
+      .attr('xlink:href','#0')
       .append("circle")
       .attr('class', 'node')  // made all nodes circles instead of random shapes
       .style("stroke", "black") // change node outline to black
@@ -394,17 +395,9 @@ var i = 0;
 
 }         
 
-selectFirstNode () {
-  console.log('in select first node')
-  const firstNode = document.querySelector('#tree g circle');
-  console.log(firstNode)
-  firstNode.focus();
-}
-
-
   render() {
     return(
-      <div id="routeMap" ref="routeMap" tabIndex={0} onFocus={this.selectFirstNode}>
+      <div id="routeMap" ref="routeMap">
       </div>
     )
   }

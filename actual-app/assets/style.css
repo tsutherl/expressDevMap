@@ -264,8 +264,12 @@ if view width is less than 1000 we'll have media query that does sth different*/
     background: #eeeeee;
 }
 
-#tree circle:focus {
-    r: 20;
+#tree a {
+    border-radius: 50%;
+}
+
+#tree a:focus circle{
+    fill: red;
 }
 
 #response {
