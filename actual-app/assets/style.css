@@ -278,6 +278,9 @@ if view width is less than 1000 we'll have media query that does sth different*/
     margin-right: auto;
 }
 
+.modal .response-header h5 {
+    margin-right: 8px;
+}
 
 
 

@@ -11,10 +11,6 @@ const RequestBody = ({onChange}) => {
                 <input name="reqBodyKey" id="reqBodyKey" onChange={onChange}></input>
                 <input name="reqBodyValue" onChange={onChange}></input>
 
-            {/* add option to have text field where user can enter JSON instead
-            of entering key-value pairs in form?  
-            in that case, we need to use json.stringify(?) or json.parse to 
-            grab user data and  put on local state */}
             <textarea></textarea>
 
             </div>
