@@ -18,7 +18,7 @@ export default class Modal extends React.Component {
 			lastAddedVal: null,  
 			headerKeys: {},
 			headerVals: {},
-			bodyKVPairs: [0],
+			bodyKVPairs: [],
 			bodyKeys: {},
 			bodyVals: {},
 			bodyJson: {},
@@ -223,7 +223,6 @@ export default class Modal extends React.Component {
 						<button className={`headers ${option === 'body'? 'selected' : ''}`}  disabled={method === 'post' || method === 'put'? '' : 'disabled'} value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
 					{option === 'headers' ? <Headers 
-					localStateChangeIndicator={this.state.changeMe}
 					verb={method} 
 					onChange={this.onChange} 
 					addInput={this.addInput} 

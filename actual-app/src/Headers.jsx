@@ -9,31 +9,23 @@ class Headers extends React.Component {
         if (this.props.keyValuePairs.length === 0) this.props.addInput(0);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.localStateChangeIndicator !== nextProps.localStateChangeIndicator) {
-            console.log("should clear the form!!!  ");
-            // this.refs.headerKey.value = "";
-            // this.refs.headerValue.value ="";
-        }
-    }
 
-    render() {
-        console.log("in headers render, props", this.props);
-        
+    render() {        
         return(
+
             <form className = "form">
                 {
                     this.props.keyValuePairs.map((num) => {
                        
                         return(
-                            <div key={this.props.localStateChangeIndicator? num : num} className='form-input'>
-                                <input name='header-key' className="headersKey" ref='headerKey' onChange={(e)=>this.props.onChange(num, e)} 
+                            <div key={num} className='form-input'>
+                                <input name='header-key' className="headersKey" onChange={(e)=>this.props.onChange(num, e)} 
 
                                 onClick={(e)=>{
                                     this.props.addInput(num, e)}}
                                 onFocus={(e)=>{
                                     this.props.addInput(num, e)}} placeholder='key'></input>
-                                <input id='header-value' ref='headerValue' name='header-value' className="headersValue" onChange={(e)=>this.props.onChange(num, e)} onClick={(e)=>this.props.addInput(num, e)} placeholder='value'></input>
+                                <input id='header-value' name='header-value' className="headersValue" onChange={(e)=>this.props.onChange(num, e)} onClick={(e)=>this.props.addInput(num, e)} placeholder='value'></input>
                                 
                                 <button onClick={(e)=>this.props.removeInput(num, e)} >x</button> 
                              

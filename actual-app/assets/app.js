@@ -15973,6 +15973,11 @@ var Body = function (_React$Component) {
     }
 
     _createClass(Body, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            if (this.props.bodyKVPairs.length === 0) this.props.addInput(0);
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -16051,35 +16056,24 @@ var Headers = function (_React$Component) {
     }
 
     _createClass(Headers, [{
-        key: "componentDidMount",
+        key: 'componentDidMount',
         value: function componentDidMount() {
             if (this.props.keyValuePairs.length === 0) this.props.addInput(0);
         }
     }, {
-        key: "componentWillReceiveProps",
-        value: function componentWillReceiveProps(nextProps) {
-            if (this.props.localStateChangeIndicator !== nextProps.localStateChangeIndicator) {
-                console.log("should clear the form!!!  ");
-                // this.refs.headerKey.value = "";
-                // this.refs.headerValue.value ="";
-            }
-        }
-    }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             var _this2 = this;
 
-            console.log("in headers render, props", this.props);
-
             return _react2.default.createElement(
-                "form",
-                { className: "form" },
+                'form',
+                { className: 'form' },
                 this.props.keyValuePairs.map(function (num) {
 
                     return _react2.default.createElement(
-                        "div",
-                        { key: _this2.props.localStateChangeIndicator ? num : num, className: "form-input" },
-                        _react2.default.createElement("input", { name: "header-key", className: "headersKey", ref: "headerKey", onChange: function onChange(e) {
+                        'div',
+                        { key: num, className: 'form-input' },
+                        _react2.default.createElement('input', { name: 'header-key', className: 'headersKey', onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
                             },
 
@@ -16088,18 +16082,18 @@ var Headers = function (_React$Component) {
                             },
                             onFocus: function onFocus(e) {
                                 _this2.props.addInput(num, e);
-                            }, placeholder: "key" }),
-                        _react2.default.createElement("input", { id: "header-value", ref: "headerValue", name: "header-value", className: "headersValue", onChange: function onChange(e) {
+                            }, placeholder: 'key' }),
+                        _react2.default.createElement('input', { id: 'header-value', name: 'header-value', className: 'headersValue', onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
                             }, onClick: function onClick(e) {
                                 return _this2.props.addInput(num, e);
-                            }, placeholder: "value" }),
+                            }, placeholder: 'value' }),
                         _react2.default.createElement(
-                            "button",
+                            'button',
                             { onClick: function onClick(e) {
                                     return _this2.props.removeInput(num, e);
                                 } },
-                            "x"
+                            'x'
                         )
                     );
                 })
@@ -16237,7 +16231,7 @@ var Modal = function (_React$Component) {
 			lastAddedVal: null,
 			headerKeys: {},
 			headerVals: {},
-			bodyKVPairs: [0],
+			bodyKVPairs: [],
 			bodyKeys: {},
 			bodyVals: {},
 			bodyJson: {},
@@ -16488,7 +16482,6 @@ var Modal = function (_React$Component) {
 						)
 					),
 					option === 'headers' ? _react2.default.createElement(_Headers2.default, {
-						localStateChangeIndicator: this.state.changeMe,
 						verb: method,
 						onChange: this.onChange,
 						addInput: this.addInput,
