@@ -206,12 +206,12 @@ export default class Modal extends React.Component {
 		const route = this.props.selected.testRoute;
 		const method = this.props.selected.selectedRouteVerb;
 
-		console.log("in modal render, header keys ", this.state.headerKeys);
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
 					<div className='nav'>
 						<button className='nav-children' onClick={()=>this.handleClick(route, method)}>Test</button>
+						<button className='nav-children' onClick={}>History</button>
 						<Closex onClick={this.closeButton}/>
 					</div>
 					<div className='testing'>
