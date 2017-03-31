@@ -32,6 +32,10 @@ h1 {
     text-align: center;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 #app > div > div > svg {
     display: block;
     margin: auto;
@@ -43,6 +47,7 @@ h1 {
 svg g {
    padding: 20em;
 }
+
 
 
 /*TODO: fix positioning on small screen 
