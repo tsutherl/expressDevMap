@@ -224,6 +224,16 @@ if view width is less than 1000 we'll have media query that does sth different*/
     margin: 1.3em;
 }
 
+.modal .response-header {
+    display: flex;
+}
+
+/*margin auto in flex box eats up anything averything vailabel to it*/
+.modal .response-header h4 {
+    margin-right: auto;
+}
+
+
 /*************TREE****************/
 #tree circle.router {
     fill: #555;
@@ -267,19 +277,6 @@ if view width is less than 1000 we'll have media query that does sth different*/
 #routeMap {
     margin-left: 100px;
 }
-
-
-.modal .response-header {
-    display: flex;
-}
-
-/*margin auto in flex box eats up anything averything vailabel to it*/
-.modal .response-header h4 {
-    margin-right: auto;
-}
-
-
-
 
 /*************SEARCH BAR****************/
 #search-bar {
