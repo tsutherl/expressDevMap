@@ -37,13 +37,14 @@ export default class Tree extends React.Component {
     }
 
     const resetTree = () => {
-      g.selectAll('circle')
+      d3.selectAll('circle')
         .attr('r', 7.5)//reset circle size
         .style('stroke-width', 1)
         .style("stroke-opacity", 0.4)
-      g.selectAll('text')
-        .attr("x", function(d) { return d.children ?  -10 : 10});//reset text position
-      g.selectAll('path')
+      d3.selectAll('text')
+        .attr("x", function(d) { 
+          return d.height > 0 ?  -10 : 10});//reset text position
+      d3.selectAll('path')
         .attr('class', 'link')
         .style("stroke-opacity", 0.4)
         .style("stroke-width", 1.5);
@@ -55,25 +56,25 @@ export default class Tree extends React.Component {
         .style('stroke-width', 1.5)
         .style('stroke-opacity', 0.8)
       d3.select(node.nextSibling)
-        .attr('x', function(d) { return d.children ?  -17.5 : 17.5})
+        .attr('x', function(d) { return d.height > 0 ?  -17.5 : 17.5})
     }
 
     //want to refactor this to take better advantage of d3
     const alterPath = (e) => {
       let pathEnds = [];
-      const paths = g.selectAll('.link')._groups[0]
+      const paths = d3.selectAll('.link')._groups[0]
       while (e.parent) {
         pathEnds.push(`${e.y},${e.x}`)
         e = e.parent
       }
       paths.forEach(path => {
-        const info = path.getAttribute('d')
-        const cPlace = info.indexOf('C');
-        if (pathEnds.indexOf(info.slice(1,cPlace)) > -1){
+        const info = path.getAttribute('d').split(' ');
+        const startString = `${info[1]},${info[2]}`;
+        if (pathEnds.indexOf(startString.slice(0, -1)) > -1){
           path.setAttribute('class', 'link selected')
         }
       })
-      g.selectAll('.link.selected')
+      d3.selectAll('.link.selected')
         .style('stroke-opacity', 0.8)
         .style('stroke-width', 3)
     }
@@ -253,9 +254,8 @@ var i = 0;
 
     var nodeEnter = node.enter().append("g")
         .attr("class", function(d) { 
-          return "node" + 
-            (d.children ? " node--internal" : " node--leaf"); })
-        .attr('class', 'node zoom')
+          return "node zoom " +
+            (d.height > 0 ? "node--internal" : "node--leaf"); })
         .attr("transform", function(d) { 
           return "translate(" + source.y0 + "," + source.x0 + ")"; })
         .on('click', click);
@@ -269,7 +269,7 @@ var i = 0;
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
         resetTree();
-        if (e.children || e._children) {
+        if (e.height > 0) {
           routerHandleClick(e);
         } else {
           endRouteHandleClick(e); // modal functionality
@@ -281,11 +281,11 @@ var i = 0;
     // adds the text to the node
     nodeEnter.append("text")
       .attr("dy", 5) // move 3 px down for text location (I think)
-      .attr("x", function(d) { return d.children || d._children ? 
+      .attr("x", function(d) { return d.height > 0 ? 
         -13 : 13}) // place text label on left if node has children, otherwise on right
       .style("text-anchor", function(d) { 
-        return d.children || d._children ? "end" : "start"; }) 
-      .text(function(d) { return d.children || d._children ? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object       
+        return d.height > 0 ? "end" : "start"; }) 
+      .text(function(d) { return d.height > 0 ? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object       
 
 
     var nodeUpdate = nodeEnter.merge(node);
