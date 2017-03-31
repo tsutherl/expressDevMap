@@ -16051,19 +16051,30 @@ var Headers = function (_React$Component) {
     }
 
     _createClass(Headers, [{
-        key: 'render',
+        key: "componentWillReceiveProps",
+        value: function componentWillReceiveProps(nextProps) {
+            if (this.props.localStateChangeIndicator !== nextProps.localStateChangeIndicator) {
+                console.log("should clear the form!!!  ");
+                this.refs.headerKey.value = "";
+                this.refs.headerValue.value = "";
+            }
+        }
+    }, {
+        key: "render",
         value: function render() {
             var _this2 = this;
 
+            console.log("in headers render, props", this.props);
+
             return _react2.default.createElement(
-                'form',
-                { className: 'form' },
+                "form",
+                { className: "form" },
                 this.props.keyValuePairs.map(function (num) {
 
                     return _react2.default.createElement(
-                        'div',
-                        { key: num, className: 'form-input' },
-                        _react2.default.createElement('input', { name: 'header-key', className: 'headersKey', onChange: function onChange(e) {
+                        "div",
+                        { key: num, className: "form-input" },
+                        _react2.default.createElement("input", { name: "header-key", className: "headersKey", ref: "headerKey", onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
                             },
 
@@ -16072,18 +16083,18 @@ var Headers = function (_React$Component) {
                             },
                             onFocus: function onFocus(e) {
                                 _this2.props.addInput(num, e);
-                            }, placeholder: 'key' }),
-                        _react2.default.createElement('input', { id: 'header-value', name: 'header-value', className: 'headersValue', onChange: function onChange(e) {
+                            }, placeholder: "key" }),
+                        _react2.default.createElement("input", { id: "header-value", ref: "headerValue", name: "header-value", className: "headersValue", onChange: function onChange(e) {
                                 return _this2.props.onChange(num, e);
                             }, onClick: function onClick(e) {
                                 return _this2.props.addInput(num, e);
-                            }, placeholder: 'value' }),
+                            }, placeholder: "value" }),
                         _react2.default.createElement(
-                            'button',
+                            "button",
                             { onClick: function onClick(e) {
                                     return _this2.props.removeInput(num, e);
                                 } },
-                            'x'
+                            "x"
                         )
                     );
                 })
@@ -16230,7 +16241,8 @@ var Modal = function (_React$Component) {
 			currentOption: 'headers',
 			options: ['headers', 'body'],
 			idx: 0,
-			bodyTypeSelected: 'urlencoded'
+			bodyTypeSelected: 'urlencoded',
+			changeMe: false
 		};
 		_this.handleClick = _this.handleClick.bind(_this);
 		_this.onChange = _this.onChange.bind(_this);
@@ -16247,15 +16259,6 @@ var Modal = function (_React$Component) {
 		_this.toggleBodyType = _this.toggleBodyType.bind(_this);
 		return _this;
 	}
-
-	// remove is a total problem now, cutting off everything!!!  
-
-	//  remove bug -- trying to remove something at the visual level (or below) that has been removed
-	// before crashes -- check how values are getting assigned.
-
-	// headers / body kv pairs need to prepopulate from local state
-
-	// and do we want the form to clear out after submission? or? 
 
 	_createClass(Modal, [{
 		key: 'removeInput',
@@ -16401,6 +16404,29 @@ var Modal = function (_React$Component) {
 			// this.setState({ idx });
 		}
 	}, {
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			if (this.props.selected.testRoute !== nextProps.selected.testRoute) {
+				this.setState({
+					keyValuePairs: [0],
+					lastAddedVal: null,
+					headerKeys: {},
+					headerVals: {},
+					bodyKVPairs: [0],
+					bodyKeys: {},
+					bodyVals: {},
+					bodyJson: {},
+					JORU: null,
+					fadingOut: false,
+					currentOption: 'headers',
+					options: ['headers', 'body'],
+					idx: 0,
+					bodyTypeSelected: 'urlencoded'
+				});
+				this.state.changeMe ? this.setState({ changeMe: false }) : this.setState({ changeMe: true });
+			}
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			var _this3 = this;
@@ -16408,6 +16434,7 @@ var Modal = function (_React$Component) {
 			var option = this.state.options[this.state.idx];
 			var route = this.props.selected.testRoute;
 			var method = this.props.selected.selectedRouteVerb;
+
 			return _react2.default.createElement(
 				'div',
 				{ className: this.state.fadingOut ? 'modal fadeOut' : 'modal' },
@@ -16455,7 +16482,9 @@ var Modal = function (_React$Component) {
 						)
 					),
 					option === 'headers' ? _react2.default.createElement(_Headers2.default, {
-						verb: method, onChange: this.onChange,
+						localStateChangeIndicator: this.state.changeMe,
+						verb: method,
+						onChange: this.onChange,
 						addInput: this.addInput,
 						removeInput: this.removeInput,
 						keyValuePairs: this.state.keyValuePairs }) : _react2.default.createElement(_Body2.default, {

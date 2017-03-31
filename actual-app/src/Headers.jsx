@@ -5,8 +5,17 @@ class Headers extends React.Component {
         super(props)
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.localStateChangeIndicator !== nextProps.localStateChangeIndicator) {
+            console.log("should clear the form!!!  ");
+            this.refs.headerKey.value = "";
+            this.refs.headerValue.value ="";
+        }
+    }
+
     render() {
-        
+        console.log("in headers render, props", this.props);
+
         return(
             <form className = "form">
                 {
@@ -14,13 +23,13 @@ class Headers extends React.Component {
                        
                         return(
                             <div key={num} className='form-input'>
-                                <input name='header-key' className="headersKey" onChange={(e)=>this.props.onChange(num, e)} 
+                                <input name='header-key' className="headersKey" ref='headerKey' onChange={(e)=>this.props.onChange(num, e)} 
 
                                 onClick={(e)=>{
                                     this.props.addInput(num, e)}}
                                 onFocus={(e)=>{
                                     this.props.addInput(num, e)}} placeholder='key'></input>
-                                <input id='header-value' name='header-value' className="headersValue" onChange={(e)=>this.props.onChange(num, e)} onClick={(e)=>this.props.addInput(num, e)} placeholder='value'></input>
+                                <input id='header-value' ref='headerValue' name='header-value' className="headersValue" onChange={(e)=>this.props.onChange(num, e)} onClick={(e)=>this.props.addInput(num, e)} placeholder='value'></input>
                                 
                                 <button onClick={(e)=>this.props.removeInput(num, e)} >x</button> 
                              

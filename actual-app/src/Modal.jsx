@@ -27,7 +27,8 @@ export default class Modal extends React.Component {
 			currentOption: 'headers',
 			options: ['headers', 'body'],
 			idx: 0,
-			bodyTypeSelected: 'urlencoded'
+			bodyTypeSelected: 'urlencoded',
+			changeMe: false
 		}
 		this.handleClick = this.handleClick.bind(this);
 		this.onChange = this.onChange.bind(this);
@@ -43,16 +44,6 @@ export default class Modal extends React.Component {
 		this.onChangeJson = this.onChangeJson.bind(this);
 		this.toggleBodyType = this.toggleBodyType.bind(this)
 	}
-
-
-// remove is a total problem now, cutting off everything!!!  
-
-//  remove bug -- trying to remove something at the visual level (or below) that has been removed
-// before crashes -- check how values are getting assigned.
-
-// headers / body kv pairs need to prepopulate from local state
-
-// and do we want the form to clear out after submission? or? 
 
 	removeInput(val) {
 		const KVPairsLength = this.state.keyValuePairs.length;
@@ -184,11 +175,37 @@ export default class Modal extends React.Component {
 					// this.setState({ idx });
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (this.props.selected.testRoute !== nextProps.selected.testRoute) {
+			this.setState ({	
+				keyValuePairs: [0], 
+				lastAddedVal: null,  
+				headerKeys: {},
+				headerVals: {},
+				bodyKVPairs: [0],
+				bodyKeys: {},
+				bodyVals: {},
+				bodyJson: {},
+				JORU: null,
+				fadingOut: false,
+				currentOption: 'headers',
+				options: ['headers', 'body'],
+				idx: 0,
+				bodyTypeSelected: 'urlencoded',
+			});
+			this.state.changeMe ? this.setState({changeMe: false}) : 
+				this.setState({changeMe: true});
+
+		}
+	}
+
+
 
 	render() {
 		const option = this.state.options[this.state.idx]
 		const route = this.props.selected.testRoute;
 		const method = this.props.selected.selectedRouteVerb;
+
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
@@ -205,7 +222,9 @@ export default class Modal extends React.Component {
 						<button className={`headers ${option === 'body'? 'selected' : ''}`}  disabled={method === 'post' || method === 'put'? '' : 'disabled'} value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
 					{option === 'headers' ? <Headers 
-					verb={method} onChange={this.onChange} 
+					localStateChangeIndicator={this.state.changeMe}
+					verb={method} 
+					onChange={this.onChange} 
 					addInput={this.addInput} 
 					removeInput={this.removeInput} 
 					keyValuePairs={this.state.keyValuePairs} /> : 
