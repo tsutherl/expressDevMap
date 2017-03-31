@@ -17107,7 +17107,7 @@ var Tree = function (_React$Component) {
         }).on('click', click);
 
         // adds symbols as nodes
-        nodeEnter.append("circle").attr('class', 'node') // made all nodes circles instead of random shapes
+        nodeEnter.append('a').append("circle").attr('class', 'node') // made all nodes circles instead of random shapes
         .style("stroke", "black") // change node outline to black
         .style('stroke-opacity', .4).attr("r", 7.5) // above line fills node blue if it has child nodes, otherwise gray
         .attr('class', function (d) {
@@ -17218,7 +17218,7 @@ var Tree = function (_React$Component) {
     key: 'selectFirstNode',
     value: function selectFirstNode() {
       console.log('in select first node');
-      var firstNode = document.querySelector('#tree g').nextSibling;
+      var firstNode = document.querySelector('#tree g circle');
       console.log(firstNode);
       firstNode.focus();
     }

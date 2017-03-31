@@ -262,7 +262,8 @@ var i = 0;
         .on('click', click);
 
     // adds symbols as nodes
-    nodeEnter.append("circle")
+    nodeEnter.append('a')
+      .append("circle")
       .attr('class', 'node')  // made all nodes circles instead of random shapes
       .style("stroke", "black") // change node outline to black
       .style('stroke-opacity', .4)
@@ -395,7 +396,7 @@ var i = 0;
 
 selectFirstNode () {
   console.log('in select first node')
-  const firstNode = document.querySelector('#tree g').nextSibling;
+  const firstNode = document.querySelector('#tree g circle');
   console.log(firstNode)
   firstNode.focus();
 }
