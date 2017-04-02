@@ -6,8 +6,18 @@ class Headers extends React.Component {
     }
 
     componentDidMount(){
-        if (this.props.keyValuePairs.length === 0) this.props.addInput(0);
+        if (this.props.keyValuePairs.length === 0) {
+            this.props.addInput(0);
+        }
     }
+
+    componentDidUpdate(){
+        if (this.props.keyValuePairs.length === 0) {
+            this.props.addInput(0);
+        }
+    }
+
+
 
 
     render() {        

@@ -134,6 +134,14 @@ export default class Modal extends React.Component {
 		this.setState({ idx });
 	} 
 
+	updateLocalStorage(testInfo) {
+		for (let i=10; i>1; i--){
+			let shift = localStorage.getItem(`recent${i-1}`) || "empty"; 
+			localStorage.setItem(`recent${i}`, shift);
+		}
+		localStorage.setItem("recent1", testInfo);
+	}
+
 	handleClick (route, verb) {
 		const headerKeys = this.state.headerKeys;
 		const headerVals = this.state.headerVals;
@@ -166,6 +174,7 @@ export default class Modal extends React.Component {
 		testingInfo.body = body;
 		
 		this.props.testThisRoute(route, verb, testingInfo);
+		this.updateLocalStorage(testingInfo);
 	}
 
 	toggleBodyType (evt) {
@@ -177,11 +186,11 @@ export default class Modal extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		if (this.props.selected.testRoute !== nextProps.selected.testRoute) {
 			this.setState ({	
-				keyValuePairs: [0], 
+				keyValuePairs: [], 
 				lastAddedVal: null,  
 				headerKeys: {},
 				headerVals: {},
-				bodyKVPairs: [0],
+				bodyKVPairs: [],
 				bodyKeys: {},
 				bodyVals: {},
 				bodyJson: {},
@@ -204,6 +213,8 @@ export default class Modal extends React.Component {
 		const option = this.state.options[this.state.idx]
 		const route = this.props.selected.testRoute;
 		const method = this.props.selected.selectedRouteVerb;
+
+		console.log("localStorage: recent1 ", localStorage.getItem("recent1"), "recent2 ", localStorage.getItem("recent2"), "recent5 ", localStorage.getItem("recent5"));
 
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>

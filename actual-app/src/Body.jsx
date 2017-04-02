@@ -9,6 +9,10 @@ class Body extends React.Component {
     componentDidMount(){
         if (this.props.bodyKVPairs.length === 0) this.props.addInput(0);
     }
+
+    componentDidUpdate(){
+        if (this.props.bodyKVPairs.length === 0) this.props.addInput(0);
+    }
     
     render() {
         return(
