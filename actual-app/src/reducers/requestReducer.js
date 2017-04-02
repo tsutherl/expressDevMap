@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import {routeTestResponse} from './responseReducer'
+import {setLocalStorage} from './localStorageReducer'
 
 /*---------------CONSTANTS-----------------*/
 
@@ -32,12 +33,14 @@ export const testRoute = (route, verb, info) => {
         return (dispatch) => {
             const headers = {headers: info.headers}
             const body = info.body
-            axios[verb](route, body, headers)  
+            axios[verb](route, body, headers)
                 .then(res => {
                     routeResponse = res.data;
                     dispatch(routeTestResponse(res.data));
                     dispatch(makeRequest(info))
-                    
+                    // add to local storage
+
+
                 })
                 .catch(console.error)
         }
@@ -49,6 +52,7 @@ export const testRoute = (route, verb, info) => {
                     routeResponse = res.data;
                     dispatch(routeTestResponse(res.data));
                     dispatch(makeRequest(info))
+                    setLocalStorage(info)
 
                 })
                 .catch(console.error)
@@ -56,14 +60,13 @@ export const testRoute = (route, verb, info) => {
     }
 }
 
-
-
 /*---------------- REDUCER ---------------- */
 
 export const requestReducer = (state={}, action) => {
 	switch(action.type) {
 	 	case RECEIVE_TEST_REQUEST:
-         return action.requestInfo 
+
+         return action.requestInfo
     }
     return state;
 }
