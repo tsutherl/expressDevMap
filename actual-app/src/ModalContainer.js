@@ -10,8 +10,8 @@ import { routeTestAsync } from './reducers/selectedReducer';
 
 import Modal from './Modal.jsx';
 
-const mapStateToProps = ({ selected, response }) =>
-	({ selected, response });
+const mapStateToProps = ({ selected }) =>
+	({ selected });
 
 const mapDispatchToProps = (dispatch) => ({
 	testThisRoute : (route, verb, testingInfo) => {

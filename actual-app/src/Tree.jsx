@@ -12,10 +12,12 @@ export default class Tree extends React.Component {
     const endRouteHandleClick = (node) => {
       let testRoute = getRoute(node);
       let verb = getVerb(node);
+      this.props.clearResponse();
       this.props.setRouteVerb(verb);
       this.props.setTestRoute(testRoute);
       this.props.setTestNode(node);
       if (!this.props.showModal) this.props.showModalNow();
+
     }
 
     const routerHandleClick = (node) => {
@@ -42,7 +44,7 @@ export default class Tree extends React.Component {
         .style('stroke-width', 1)
         .style("stroke-opacity", 0.4)
       d3.selectAll('text')
-        .attr("x", function(d) { 
+        .attr("x", function(d) {
           return d.height > 0 ?  -10 : 10});//reset text position
       d3.selectAll('path')
         .attr('class', 'link')
@@ -81,7 +83,7 @@ export default class Tree extends React.Component {
 
 
 
-    
+
     // set the dimensions and margins of the diagram
     var margin = {top: 100, right: 110, bottom: 30, left: 200},
         width = 1000 - margin.left - margin.right,
@@ -90,7 +92,7 @@ export default class Tree extends React.Component {
     // declares a tree layout and assigns the size
     var treemap = d3.tree()
         .size([height, width]);
-  
+
 
 
 
@@ -120,7 +122,7 @@ export default class Tree extends React.Component {
 
 
     // maps the node data to the tree layout
-   
+
 
     //scaleExtent take an array which holds the min scale factor at idx 0 and max scale factor at idx 1
     //event listener will be ignored if the graph is for whatever reason outside of the set scaleExtent
@@ -150,26 +152,26 @@ export default class Tree extends React.Component {
         // d3.select('g')
         //   .attr('transform', 'translate(' + d3.event.transform.x + ',' + d3.event.transform.y + ') scale(' + d3.event.transform.k + ')');
 
-        
-       
+
+
     });
 
       // console.log("zoom scale", zoom.scale)
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
-    
 
-//zoom transformations only work on elements that are nested within svgs. Zoom transformations of svgs didn't work when we tried to wrap our svg in a g and transform the g, OR when we tried to directly transform our svg. We had to change our svg to a g and wrap that g in an svg and then apply the zoom transformations to the g. 
+
+//zoom transformations only work on elements that are nested within svgs. Zoom transformations of svgs didn't work when we tried to wrap our svg in a g and transform the g, OR when we tried to directly transform our svg. We had to change our svg to a g and wrap that g in an svg and then apply the zoom transformations to the g.
     var svg = d3.select(this.refs.routeMap).append("svg").call(zoom).attr("class", "outer").append("g")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .attr('id', 'tree')
           .attr('class', 'grab')
           .attr('transform', "translate(" + 50 + "," + 0 + ")");
-          
-    
-         
+
+
+
 
     // var zoomer = svg.append("rect")
     //       .attr("width", width)
@@ -187,7 +189,7 @@ export default class Tree extends React.Component {
 
     //on zoom event our zooming function is called
     //zoom and panning target our g element which is a child of our svg element
-    
+
   //zooming ~= zoom
     // const zooming = () => {
     //   console.log('ZOOMING')
@@ -196,7 +198,7 @@ export default class Tree extends React.Component {
     //   // d3.select(this.refs.routeMap).select('svg').select('g')
     //   //   .attr('transform', 'translate(' + d3.event.transform.x + ',' + d3.event.transform.y + ') scale(' + d3.event.transform.k + ')');
 
-      
+
     //   // g.attr("transform", d3.event.transform);
     // }
 
@@ -220,9 +222,9 @@ export default class Tree extends React.Component {
     //this is causing the tree to jump at the start of panning - removing for now
         // .attr("transform",
         //         "translate(" + margin.left + "," + margin.top + ")");
-  
 
- 
+
+
 
 var i = 0;
 
@@ -253,10 +255,10 @@ var i = 0;
         })
 
     var nodeEnter = node.enter().append("g")
-        .attr("class", function(d) { 
+        .attr("class", function(d) {
           return "node zoom " +
             (d.height > 0 ? "node--internal" : "node--leaf"); })
-        .attr("transform", function(d) { 
+        .attr("transform", function(d) {
           return "translate(" + source.y0 + "," + source.x0 + ")"; })
         .on('click', click);
 
@@ -281,11 +283,11 @@ var i = 0;
     // adds the text to the node
     nodeEnter.append("text")
       .attr("dy", 5) // move 3 px down for text location (I think)
-      .attr("x", function(d) { return d.height > 0 ? 
+      .attr("x", function(d) { return d.height > 0 ?
         -13 : 13}) // place text label on left if node has children, otherwise on right
-      .style("text-anchor", function(d) { 
-        return d.height > 0 ? "end" : "start"; }) 
-      .text(function(d) { return d.height > 0 ? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object       
+      .style("text-anchor", function(d) {
+        return d.height > 0 ? "end" : "start"; })
+      .text(function(d) { return d.height > 0 ? `${d.data.name}` : `${d.data.name} [${d.data.verb}]`; });  // 'name' is key on routes object
 
 
     var nodeUpdate = nodeEnter.merge(node);
@@ -303,17 +305,17 @@ var i = 0;
     //       return d._children ? "lightsteelblue" : "#fff";
     //   })
     //   .attr('cursor', 'pointer');
-    
+
     var nodeExit = node.exit().transition()
       .duration(500)
       .attr("transform", function(d){
         return "translate(" + source.y + "," + source.x + ")"
       })
       .remove();
-    
+
     nodeExit.select('circle')
       .attr('r', 1e-6)
-    
+
     nodeExit.select("text")
       .style('fill-opacity', 1e-6);
 
@@ -326,16 +328,16 @@ var i = 0;
         .data(links, function(d){
           return d.id;
         })
-    
+
     var linkEnter = link.enter().insert("path", "g")
         .attr("class", "link")
         .style("stroke", "black")     // question: can these style things be combined?
         .style("fill", "none")         // they are style attributes for the drawn links
         .style("stroke-opacity", 0.4)   // got rid of the fill and color along the link curve
-        .style("stroke-width", 1.5)  
+        .style("stroke-width", 1.5)
         .attr("d", function(d) {
           var o = {x: source.x0, y: source.y0};
-          return diagonal(o,o);  
+          return diagonal(o,o);
         });
 
     //keeps track of what is being re-rendered to ensure nothing is duplicated
@@ -346,17 +348,17 @@ var i = 0;
       .attr('d', function(d){
         return diagonal(d, d.parent);
       })
-    
+
     var linkExit = link.exit().transition()
       .duration(500)
       .attr('d', function(d){
         var o = { x: source.x, y: source.y};
         return diagonal(o,o);
       })
-      .remove(); 
+      .remove();
 
 //********** end links section */
-    
+
      nodes.forEach(function(d){
         d.x0 = d.x;
         d.y0 = d.y;
@@ -390,7 +392,8 @@ var i = 0;
   // centerNode(root);
 
 
-}                                              
+}
+
 
   render() {
     return(

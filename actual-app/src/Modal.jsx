@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import axios from 'axios'
 import Closex from './xImage'
 import Headers from './Headers.jsx'
 import Body from './Body.jsx'
@@ -12,9 +13,9 @@ export default class Modal extends React.Component {
 		super(props);
 
 		this.state = {
-			
-			keyValuePairs: [], 
-			lastAddedVal: null,  
+
+			keyValuePairs: [],
+			lastAddedVal: null,
 			headerKeys: {},
 			headerVals: {},
 			bodyKVPairs: [],
@@ -42,6 +43,7 @@ export default class Modal extends React.Component {
 		this.setJson = this.setJson.bind(this);
 		this.onChangeJson = this.onChangeJson.bind(this);
 		this.toggleBodyType = this.toggleBodyType.bind(this)
+		this.testRoute = this.testRoute.bind(this)
 	}
 
 	removeInput(val) {
@@ -110,7 +112,7 @@ export default class Modal extends React.Component {
                 break;
             case "url-key":
 				let newBodyKeys = Object.assign({}, this.state.bodyKeys, {[idx]: e.target.value});
-				this.setState({bodyKeys: newBodyKeys});            
+				this.setState({bodyKeys: newBodyKeys});
             	break;
             case "url-value":
             	let newBodyVals = Object.assign({}, this.state.bodyVals, {[idx]: e.target.value});
@@ -132,11 +134,11 @@ export default class Modal extends React.Component {
 	toggleOptions(evt) {
 		const idx = +evt.target.value;
 		this.setState({ idx });
-	} 
+	}
 
 	updateLocalStorage(testInfo) {
 		for (let i=10; i>1; i--){
-			let shift = localStorage.getItem(`recent${i-1}`) || "empty"; 
+			let shift = localStorage.getItem(`recent${i-1}`) || "empty";
 			localStorage.setItem(`recent${i}`, shift);
 		}
 		localStorage.setItem("recent1", testInfo);
@@ -148,7 +150,7 @@ export default class Modal extends React.Component {
 		const bodyKeys = this.state.bodyKeys;
 		const bodyVals = this.state.bodyVals;
 		const testingInfo = {};
-		
+
 		let headers = {};
 
 		this.state.keyValuePairs.forEach((val,idx) => {
@@ -168,12 +170,12 @@ export default class Modal extends React.Component {
 				}
 			});
 		}
-		else if (this.state.bodyTypeSelected === 'json'){ 
+		else if (this.state.bodyTypeSelected === 'json'){
 			body = JSON.parse(this.state.bodyJson);
 		}
 		testingInfo.body = body;
-		
-		this.props.testThisRoute(route, verb, testingInfo);
+
+		this.testRoute(route, verb, testingInfo);
 		this.updateLocalStorage(testingInfo);
 	}
 
@@ -183,11 +185,40 @@ export default class Modal extends React.Component {
 					// this.setState({ idx });
 	}
 
+	testRoute (route, verb, info) {
+				let routeResponse;
+				route = route.slice(1);
+				if (verb === 'post' || verb === 'put') {
+												const headers = {headers: info.headers}
+												const body = info.body
+												axios[verb](route, body, headers)
+																.then(res => {
+																				routeResponse = res.data;
+																				// dispatch(routeTestResponse(res.data));
+																				// dispatch(makeRequest(info))
+																				this.props.setResponse(routeResponse)
+
+																})
+																.catch(console.error)
+				} else {
+												const headers = {headers: info.headers}
+												axios[verb](route, headers)
+																.then(res => {
+																				routeResponse = res.data;
+																				// dispatch(routeTestResponse(res.data));
+																				// dispatch(makeRequest(info))
+																				this.props.setResponse(routeResponse)
+
+																})
+																.catch(console.error)
+				}
+	}
+
 	componentWillReceiveProps(nextProps) {
 		if (this.props.selected.testRoute !== nextProps.selected.testRoute) {
-			this.setState ({	
-				keyValuePairs: [], 
-				lastAddedVal: null,  
+			this.setState ({
+				keyValuePairs: [],
+				lastAddedVal: null,
 				headerKeys: {},
 				headerVals: {},
 				bodyKVPairs: [],
@@ -201,7 +232,7 @@ export default class Modal extends React.Component {
 				idx: 0,
 				bodyTypeSelected: 'urlencoded',
 			});
-			this.state.changeMe ? this.setState({changeMe: false}) : 
+			this.state.changeMe ? this.setState({changeMe: false}) :
 				this.setState({changeMe: true});
 
 		}
@@ -232,24 +263,24 @@ export default class Modal extends React.Component {
 						<button className={`headers ${option === 'headers'? 'selected' : ''}`}  value={0} onClick={this.toggleOptions}>Headers</button>
 						<button className={`headers ${option === 'body'? 'selected' : ''}`}  disabled={method === 'post' || method === 'put'? '' : 'disabled'} value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
-					{option === 'headers' ? <Headers 
-					verb={method} 
-					onChange={this.onChange} 
-					addInput={this.addInput} 
-					removeInput={this.removeInput} 
-					keyValuePairs={this.state.keyValuePairs} /> : 
-					<Body 
-					bodyTypeSelected={this.state.bodyTypeSelected} 
-					toggleBodyType={this.toggleBodyType} 
-					onChange={this.onChange} 
-					addInput={this.addInputB} 
-					removeInput={this.removeInputB} 
-					bodyKVPairs={this.state.bodyKVPairs} 
-					setUrlEn={this.setUrlEn} 
-					setJson={this.setJson} 
+					{option === 'headers' ? <Headers
+					verb={method}
+					onChange={this.onChange}
+					addInput={this.addInput}
+					removeInput={this.removeInput}
+					keyValuePairs={this.state.keyValuePairs} /> :
+					<Body
+					bodyTypeSelected={this.state.bodyTypeSelected}
+					toggleBodyType={this.toggleBodyType}
+					onChange={this.onChange}
+					addInput={this.addInputB}
+					removeInput={this.removeInputB}
+					bodyKVPairs={this.state.bodyKVPairs}
+					setUrlEn={this.setUrlEn}
+					setJson={this.setJson}
 					onChangeJson={this.onChangeJson}
 					bodyJson={this.state.bodyJson}/> }
-						
+
 				</div>
 				<div>
 					<Response response={this.props.response}/>
