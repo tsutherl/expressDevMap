@@ -8,6 +8,8 @@ const SHOW_MODAL = 'SHOW_MODAL';
 const HIDE_MODAL = 'HIDE_MODAL';
 
 
+
+
 /*---------------ACTION CREATORS-----------------*/
 
 
@@ -18,6 +20,7 @@ export const showModal = () => ({
 export const hideModal = () => ({
     type: HIDE_MODAL
 })
+
 
 
 

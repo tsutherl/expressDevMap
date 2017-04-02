@@ -10,3 +10,7 @@ module.exports = require('express').Router()
     .get('/Midge', (req, res) => {
         res.send('Midge');
     })
+
+    .post('/', (req, res) => {
+    	res.send(req.body);
+    })

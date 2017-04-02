@@ -5,11 +5,24 @@ class Headers extends React.Component {
         super(props)
     }
 
-    render() {
-        
-        
-        console.log("in render of headers, props are ", this.props);
+    componentDidMount(){
+        if (this.props.keyValuePairs.length === 0) {
+            this.props.addInput(0);
+        }
+    }
+
+    componentDidUpdate(){
+        if (this.props.keyValuePairs.length === 0) {
+            this.props.addInput(0);
+        }
+    }
+
+
+
+
+    render() {        
         return(
+
             <form className = "form">
                 {
                     this.props.keyValuePairs.map((num) => {
@@ -19,11 +32,9 @@ class Headers extends React.Component {
                                 <input name='header-key' className="headersKey" onChange={(e)=>this.props.onChange(num, e)} 
 
                                 onClick={(e)=>{
-                                    console.log("in onClick, here is num (should be idx) ", num);
                                     this.props.addInput(num, e)}}
-                                onFocus={()=>{
-                                    console.log("in onFocus, here is num (should be idx) ", num);
-                                    this.props.addInput(num)}} placeholder='key'></input>
+                                onFocus={(e)=>{
+                                    this.props.addInput(num, e)}} placeholder='key'></input>
                                 <input id='header-value' name='header-value' className="headersValue" onChange={(e)=>this.props.onChange(num, e)} onClick={(e)=>this.props.addInput(num, e)} placeholder='value'></input>
                                 
                                 <button onClick={(e)=>this.props.removeInput(num, e)} >x</button> 
