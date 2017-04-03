@@ -174,9 +174,12 @@ export default class Modal extends React.Component {
 			body = JSON.parse(this.state.bodyJson);
 		}
 		testingInfo.body = body;
+		testingInfo.route = route;
+		testingInfo.verb = verb;
 
 		this.testRoute(route, verb, testingInfo);
-		this.updateLocalStorage(testingInfo);
+		const stringified = JSON.stringify(testingInfo)
+		this.updateLocalStorage(stringified);
 	}
 
 	toggleBodyType (evt) {
@@ -186,32 +189,30 @@ export default class Modal extends React.Component {
 	}
 
 	testRoute (route, verb, info) {
-				let routeResponse;
-				route = route.slice(1);
-				if (verb === 'post' || verb === 'put') {
-												const headers = {headers: info.headers}
-												const body = info.body
-												axios[verb](route, body, headers)
-																.then(res => {
-																				routeResponse = res.data;
-																				// dispatch(routeTestResponse(res.data));
-																				// dispatch(makeRequest(info))
-																				this.props.setResponse(routeResponse)
-
-																})
-																.catch(console.error)
-				} else {
-												const headers = {headers: info.headers}
-												axios[verb](route, headers)
-																.then(res => {
-																				routeResponse = res.data;
-																				// dispatch(routeTestResponse(res.data));
-																				// dispatch(makeRequest(info))
-																				this.props.setResponse(routeResponse)
-
-																})
-																.catch(console.error)
-				}
+		let routeResponse;
+		route = route.slice(1);
+		if (verb === 'post' || verb === 'put') {
+			const headers = {headers: info.headers}
+			const body = info.body
+			axios[verb](route, body, headers)
+			.then(res => {
+				routeResponse = res.data;
+				// dispatch(routeTestResponse(res.data));
+				// dispatch(makeRequest(info))
+				this.props.setResponse(routeResponse)
+			})
+			.catch(console.error)
+		} else {
+			const headers = {headers: info.headers}
+			axios[verb](route, headers)
+			.then(res => {
+				routeResponse = res.data;
+				// dispatch(routeTestResponse(res.data));
+				// dispatch(makeRequest(info))
+				this.props.setResponse(routeResponse)
+			})
+			.catch(console.error)
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -238,21 +239,31 @@ export default class Modal extends React.Component {
 		}
 	}
 
+	getLocalStorage() {
+		const pastRequests = []
+		let i = 0
+		while (++i <= 10) {
+			pastRequests.push(localStorage.getItem(`recent${i}`))
+			console.log(localStorage.getItem(`recent${i}`).body)
+		}
+		return pastRequests
+	}
+
 
 
 	render() {
 		const option = this.state.options[this.state.idx]
 		const route = this.props.selected.testRoute;
 		const method = this.props.selected.selectedRouteVerb;
-
-		console.log("localStorage: recent1 ", localStorage.getItem("recent1"), "recent2 ", localStorage.getItem("recent2"), "recent5 ", localStorage.getItem("recent5"));
-
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
 					<div className='nav'>
 						<button className='nav-children' onClick={()=>this.handleClick(route, method)}>Test</button>
 						<button className='nav-children'>History</button>
+							<div className="dropdown-content">
+									{ console.log('my local storage', this.getLocalStorage()) }
+							</div>
 						<Closex onClick={this.closeButton}/>
 					</div>
 					<div className='testing'>
@@ -295,3 +306,5 @@ export default class Modal extends React.Component {
 // ${method === 'post' || method === 'put'? '' : disabled}
 
 
+// this.getLocalStorage.map(req => {
+// console.log(req)
