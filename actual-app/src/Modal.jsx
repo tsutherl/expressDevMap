@@ -1,35 +1,31 @@
-'use strict';
-
 import React from 'react';
-import axios from 'axios'
-import Closex from './xImage'
-import Headers from './Headers.jsx'
-import Body from './Body.jsx'
-import Response from './Response.jsx'
+import axios from 'axios';
 
+import Closex from './xImage';
+import Headers from './Headers';
+import Body from './Body';
+import Response from './Response';
 
 export default class Modal extends React.Component {
-	constructor (props) {
-		super(props);
-
-		this.state = {
-
-			keyValuePairs: [],
-			lastAddedVal: null,
-			headerKeys: {},
-			headerVals: {},
-			bodyKVPairs: [],
-			bodyKeys: {},
-			bodyVals: {},
-			bodyJson: {},
-			JORU: null,
-			fadingOut: false,
-			currentOption: 'headers',
-			options: ['headers', 'body'],
-			idx: 0,
-			bodyTypeSelected: 'urlencoded',
-			changeMe: false
-		}
+  constructor (props) {
+    super(props);
+    this.state = {
+      keyValuePairs: [],
+      lastAddedVal: null,
+      headerKeys: {},
+      headerVals: {},
+      bodyKVPairs: [],
+      bodyKeys: {},
+      bodyVals: {},
+      bodyJson: {},
+      JORU: null,
+      fadingOut: false,
+      currentOption: 'headers',
+      options: ['headers', 'body'],
+      idx: 0,
+      bodyTypeSelected: 'urlencoded',
+      changeMe: false,
+    };
 		this.handleClick = this.handleClick.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.closeButton = this.closeButton.bind(this);

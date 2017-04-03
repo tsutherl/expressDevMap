@@ -16250,7 +16250,6 @@ var Modal = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
 
 		_this.state = {
-
 			keyValuePairs: [],
 			lastAddedVal: null,
 			headerKeys: {},
