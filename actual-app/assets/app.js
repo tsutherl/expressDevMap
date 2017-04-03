@@ -16795,14 +16795,12 @@ var SearchContainer = function (_Component) {
       var pathOnly = this.state.inputState.slice(colonPlace + 2);
       var verbOnly = this.state.inputState.slice(0, colonPlace).toLowerCase();
       var pathParts = pathOnly.split('/').slice(1);
-      console.log(pathParts);
       //try finding node from tree top
       //find the node from the DOM
       var currNode = document.querySelector('#tree g.node');
 
       var _loop = function _loop(i) {
         var currChildren = currNode.__data__ ? currNode.__data__.children : currNode.children;
-        console.log('children', currChildren);
         currNode = currChildren.filter(function (child) {
           return child.data.name === '/' + pathParts[i];
         });

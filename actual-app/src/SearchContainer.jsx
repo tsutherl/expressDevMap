@@ -59,13 +59,11 @@ class SearchContainer extends Component {
     const pathOnly = this.state.inputState.slice(colonPlace+2);
     const verbOnly = this.state.inputState.slice(0, colonPlace).toLowerCase();
     const pathParts = pathOnly.split('/').slice(1)
-    console.log(pathParts)
     //try finding node from tree top
     //find the node from the DOM
     let currNode = document.querySelector('#tree g.node');
     for (let i = 0; i < pathParts.length; i++){
       const currChildren = currNode.__data__ ? currNode.__data__.children : currNode.children;
-      console.log('children',currChildren)
       currNode = currChildren.filter(child => {return child.data.name === `/${pathParts[i]}`});
       if(currNode.length > 1) {
         currNode = currNode.filter(node => {return node.data.verb === verbOnly})
