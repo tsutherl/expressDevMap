@@ -21,8 +21,8 @@
 }
 
 html, body {
-    margin:0; 
-    padding:0; 
+    margin:0;
+    padding:0;
     overflow:hidden;
     background: #eee;
     font-family: 'Roboto', sans-serif;
@@ -39,16 +39,14 @@ button:hover {
 #app > div > div > svg {
     display: block;
     margin: auto;
-    position:fixed; 
-    height:100%; 
+    position:fixed;
+    height:100%;
     width:100%;
 }
 
 svg g {
    padding: 20em;
 }
-
-
 
 /*TODO: fix positioning on small screen 
 media query probably needed 
@@ -122,11 +120,11 @@ if view width is less than 1000 we'll have media query that does sth different*/
     border: 1px solid #999999;
     border-left: 0;
     /*max-width:400px;
-    white-space:nowrap; 
+    white-space:nowrap;
     overflow:hidden;*/
-    white-space: nowrap; 
-    width: 12em; 
-    overflow: hidden; 
+    white-space: nowrap;
+    width: 12em;
+    overflow: hidden;
     text-overflow:ellipsis;
     font-size: 14px;
 
@@ -163,7 +161,7 @@ if view width is less than 1000 we'll have media query that does sth different*/
 }
 
 .modal .nav button:hover {
-    background-color: #999999; 
+    background-color: #999999;
 }
 
 .modal .nav button {
@@ -184,12 +182,12 @@ if view width is less than 1000 we'll have media query that does sth different*/
     padding: 1em 3em ;
     text-decoration: none;
     border: none;
-    background-color: transparent; 
-    font-size: 14px;   
+    background-color: transparent;
+    font-size: 14px;
 }
 
 .modal .headers-body .selected {
-    border-bottom: 2px solid #94584f;    
+    border-bottom: 2px solid #94584f;
 }
 
 
@@ -228,6 +226,16 @@ if view width is less than 1000 we'll have media query that does sth different*/
 .modal textarea {
     margin: 1.3em;
 }
+
+.modal .response-header {
+    display: flex;
+}
+
+/*margin auto in flex box eats up anything averything vailabel to it*/
+.modal .response-header h4 {
+    margin-right: auto;
+}
+
 
 /*************TREE****************/
 #tree circle:hover {
@@ -291,7 +299,6 @@ if view width is less than 1000 we'll have media query that does sth different*/
     margin-left: 100px;
 }
 
-
 .modal .response-header {
     display: flex;
 }
@@ -301,8 +308,9 @@ if view width is less than 1000 we'll have media query that does sth different*/
     margin-right: auto;
 }
 
-
-
+.modal .response-header h5 {
+    margin-right: 8px;
+}
 
 /*************SEARCH BAR****************/
 #search-bar {
@@ -342,6 +350,7 @@ if view width is less than 1000 we'll have media query that does sth different*/
     margin: 0;
     list-style: none;
     border-radius: .5em;
+    z-index: 499;
 }
 
 #search-bar ul li {
@@ -356,8 +365,8 @@ if view width is less than 1000 we'll have media query that does sth different*/
     padding-bottom: 1em;
 }
 
-#search-bar ul li:hover, #search-bar ul li:focus {
-    background: skyblue;
+#search-bar ul li:hover, #search-bar ul li.hover {
+    background: rgba(135, 206,235,0.7);
 }
 
 #search-bar ul li a {

@@ -4,7 +4,6 @@ import React from 'react';
 import Closex from './xImage'
 import Headers from './Headers.jsx'
 import Body from './Body.jsx'
-import RequestBody from './RequestBody.jsx'
 import Response from './Response.jsx'
 
 
@@ -14,11 +13,11 @@ export default class Modal extends React.Component {
 
 		this.state = {
 			
-			keyValuePairs: [0], 
+			keyValuePairs: [], 
 			lastAddedVal: null,  
 			headerKeys: {},
 			headerVals: {},
-			bodyKVPairs: [0],
+			bodyKVPairs: [],
 			bodyKeys: {},
 			bodyVals: {},
 			bodyJson: {},
@@ -27,7 +26,8 @@ export default class Modal extends React.Component {
 			currentOption: 'headers',
 			options: ['headers', 'body'],
 			idx: 0,
-			bodyTypeSelected: 'urlencoded'
+			bodyTypeSelected: 'urlencoded',
+			changeMe: false
 		}
 		this.handleClick = this.handleClick.bind(this);
 		this.onChange = this.onChange.bind(this);
@@ -44,47 +44,47 @@ export default class Modal extends React.Component {
 		this.toggleBodyType = this.toggleBodyType.bind(this)
 	}
 
-
-// remove is a total problem now, cutting off everything!!!  
-
-//  remove bug -- trying to remove something at the visual level (or below) that has been removed
-// before crashes -- check how values are getting assigned.
-
-// headers / body kv pairs need to prepopulate from local state
-
-// and do we want the form to clear out after submission? or? 
-
 	removeInput(val) {
+		const KVPairsLength = this.state.keyValuePairs.length;
         const newState = this.state.keyValuePairs;
         const idxVal = newState.indexOf(val);
         if (idxVal > -1 ) {
             newState.splice(idxVal, 1);
             this.setState({keyValuePairs: newState})
         }
+        if (KVPairsLength === 1){
+        	this.addInput(0);
+        }
     }
 
 
     addInput (val) {
-        const {keyValuePairs} = this.state
+        const {keyValuePairs} = this.state;
         if (keyValuePairs.indexOf(val) === keyValuePairs.length-1) {
-            let newState = keyValuePairs.concat( Math.max(...keyValuePairs) + 1);
+        	// the double Math.max operation is needed because keyValuePairs is empty,
+        	// the inner Math.max returns -Infinity which breaks things
+            let newState = keyValuePairs.concat( Math.max(Math.max(...keyValuePairs), 0) + 1);
             this.setState({keyValuePairs: newState});
         }
     }
 
     removeInputB(val) {
+    	const bkvpairslen = this.state.bodyKVPairs.length;
         const newState = this.state.bodyKVPairs;
         let idxVal = newState.indexOf(val);
         if (idxVal > -1 ) {
             newState.splice(idxVal, 1);
             this.setState({bodyKVPairs: newState})
         }
+        if (bkvpairslen === 1){
+        	this.addInputB(0);
+        }
     }
 
     addInputB (val) {
         const {bodyKVPairs} = this.state
          if (bodyKVPairs.indexOf(val) === bodyKVPairs.length-1) {
-            let newState = bodyKVPairs.concat( Math.max(...bodyKVPairs) + 1);
+            let newState = bodyKVPairs.concat( Math.max(Math.max(...bodyKVPairs), 0) + 1);
             this.setState({bodyKVPairs: newState});
         }
     }
@@ -134,13 +134,20 @@ export default class Modal extends React.Component {
 		this.setState({ idx });
 	} 
 
+	updateLocalStorage(testInfo) {
+		for (let i=10; i>1; i--){
+			let shift = localStorage.getItem(`recent${i-1}`) || "empty"; 
+			localStorage.setItem(`recent${i}`, shift);
+		}
+		localStorage.setItem("recent1", testInfo);
+	}
+
 	handleClick (route, verb) {
 		const headerKeys = this.state.headerKeys;
 		const headerVals = this.state.headerVals;
 		const bodyKeys = this.state.bodyKeys;
 		const bodyVals = this.state.bodyVals;
-		const testingInfo = {}
-		console.log("keyValuePairs ", this.state.keyValuePairs, "bodyKVPairs", this.state.bodyKVPairs);
+		const testingInfo = {};
 		
 		let headers = {};
 
@@ -162,11 +169,12 @@ export default class Modal extends React.Component {
 			});
 		}
 		else if (this.state.bodyTypeSelected === 'json'){ 
-			body = JSON.stringify(this.state.bodyJson);
+			body = JSON.parse(this.state.bodyJson);
 		}
 		testingInfo.body = body;
 		
 		this.props.testThisRoute(route, verb, testingInfo);
+		this.updateLocalStorage(testingInfo);
 	}
 
 	toggleBodyType (evt) {
@@ -175,16 +183,45 @@ export default class Modal extends React.Component {
 					// this.setState({ idx });
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (this.props.selected.testRoute !== nextProps.selected.testRoute) {
+			this.setState ({	
+				keyValuePairs: [], 
+				lastAddedVal: null,  
+				headerKeys: {},
+				headerVals: {},
+				bodyKVPairs: [],
+				bodyKeys: {},
+				bodyVals: {},
+				bodyJson: {},
+				JORU: null,
+				fadingOut: false,
+				currentOption: 'headers',
+				options: ['headers', 'body'],
+				idx: 0,
+				bodyTypeSelected: 'urlencoded',
+			});
+			this.state.changeMe ? this.setState({changeMe: false}) : 
+				this.setState({changeMe: true});
+
+		}
+	}
+
+
 
 	render() {
 		const option = this.state.options[this.state.idx]
 		const route = this.props.selected.testRoute;
 		const method = this.props.selected.selectedRouteVerb;
+
+		console.log("localStorage: recent1 ", localStorage.getItem("recent1"), "recent2 ", localStorage.getItem("recent2"), "recent5 ", localStorage.getItem("recent5"));
+
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
 					<div className='nav'>
 						<button id='test-button' className='nav-children' onClick={()=>this.handleClick(route, method)}>Test</button>
+						<button className='nav-children'>History</button>
 						<Closex onClick={this.closeButton}/>
 					</div>
 					<div className='testing'>
@@ -196,7 +233,8 @@ export default class Modal extends React.Component {
 						<button className={`headers ${option === 'body'? 'selected' : ''}`}  disabled={method === 'post' || method === 'put'? '' : 'disabled'} value={1} onClick={this.toggleOptions}>Body</button>
 					</div>
 					{option === 'headers' ? <Headers 
-					verb={method} onChange={this.onChange} 
+					verb={method} 
+					onChange={this.onChange} 
 					addInput={this.addInput} 
 					removeInput={this.removeInput} 
 					keyValuePairs={this.state.keyValuePairs} /> : 

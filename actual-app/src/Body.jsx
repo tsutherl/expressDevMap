@@ -4,11 +4,15 @@ import Json from './Json.jsx'
 
 class Body extends React.Component {
     constructor(props) {
-        super()
-        
-      
+        super()        
+    }
+    componentDidMount(){
+        if (this.props.bodyKVPairs.length === 0) this.props.addInput(0);
     }
 
+    componentDidUpdate(){
+        if (this.props.bodyKVPairs.length === 0) this.props.addInput(0);
+    }
     
     render() {
         return(
