@@ -16200,7 +16200,7 @@ exports.default = Json;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -16242,381 +16242,385 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Modal = function (_React$Component) {
-	_inherits(Modal, _React$Component);
+  _inherits(Modal, _React$Component);
 
-	function Modal(props) {
-		_classCallCheck(this, Modal);
+  function Modal(props) {
+    _classCallCheck(this, Modal);
 
-		var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
 
-		_this.state = {
-			keyValuePairs: [],
-			lastAddedVal: null,
-			headerKeys: {},
-			headerVals: {},
-			bodyKVPairs: [],
-			bodyKeys: {},
-			bodyVals: {},
-			bodyJson: {},
-			JORU: null,
-			fadingOut: false,
-			currentOption: 'headers',
-			options: ['headers', 'body'],
-			idx: 0,
-			bodyTypeSelected: 'urlencoded',
-			changeMe: false
-		};
-		_this.handleClick = _this.handleClick.bind(_this);
-		_this.onChange = _this.onChange.bind(_this);
-		_this.closeButton = _this.closeButton.bind(_this);
-		_this.toggleOptions = _this.toggleOptions.bind(_this);
-		_this.removeInput = _this.removeInput.bind(_this);
-		_this.addInput = _this.addInput.bind(_this);
-		_this.onChange = _this.onChange.bind(_this);
-		_this.removeInputB = _this.removeInputB.bind(_this);
-		_this.addInputB = _this.addInputB.bind(_this);
-		_this.setUrlEn = _this.setUrlEn.bind(_this);
-		_this.setJson = _this.setJson.bind(_this);
-		_this.onChangeJson = _this.onChangeJson.bind(_this);
-		_this.toggleBodyType = _this.toggleBodyType.bind(_this);
-		_this.testRoute = _this.testRoute.bind(_this);
-		return _this;
-	}
+    _this.state = {
+      keyValuePairs: [],
+      lastAddedVal: null,
+      headerKeys: {},
+      headerVals: {},
+      bodyKVPairs: [],
+      bodyKeys: {},
+      bodyVals: {},
+      bodyJson: {},
+      JORU: null,
+      fadingOut: false,
+      currentOption: 'headers',
+      options: ['headers', 'body'],
+      idx: 0,
+      bodyTypeSelected: 'urlencoded',
+      changeMe: false
+    };
+    _this.handleClick = _this.handleClick.bind(_this);
+    _this.onChange = _this.onChange.bind(_this);
+    _this.closeButton = _this.closeButton.bind(_this);
+    _this.toggleOptions = _this.toggleOptions.bind(_this);
+    _this.removeInput = _this.removeInput.bind(_this);
+    _this.addInput = _this.addInput.bind(_this);
+    _this.onChange = _this.onChange.bind(_this);
+    _this.removeInputB = _this.removeInputB.bind(_this);
+    _this.addInputB = _this.addInputB.bind(_this);
+    _this.setUrlEn = _this.setUrlEn.bind(_this);
+    _this.setJson = _this.setJson.bind(_this);
+    _this.onChangeJson = _this.onChangeJson.bind(_this);
+    _this.toggleBodyType = _this.toggleBodyType.bind(_this);
+    _this.testRoute = _this.testRoute.bind(_this);
+    return _this;
+  }
 
-	_createClass(Modal, [{
-		key: 'removeInput',
-		value: function removeInput(val) {
-			var KVPairsLength = this.state.keyValuePairs.length;
-			var newState = this.state.keyValuePairs;
-			var idxVal = newState.indexOf(val);
-			if (idxVal > -1) {
-				newState.splice(idxVal, 1);
-				this.setState({ keyValuePairs: newState });
-			}
-			if (KVPairsLength === 1) {
-				this.addInput(0);
-			}
-		}
-	}, {
-		key: 'addInput',
-		value: function addInput(val) {
-			var keyValuePairs = this.state.keyValuePairs;
+  _createClass(Modal, [{
+    key: 'removeInputB',
+    value: function removeInputB(val) {
+      var bkvpairslen = this.state.bodyKVPairs.length;
+      var newState = this.state.bodyKVPairs;
+      var idxVal = newState.indexOf(val);
+      if (idxVal > -1) {
+        newState.splice(idxVal, 1);
+        this.setState({ bodyKVPairs: newState });
+      }
+      if (bkvpairslen === 1) {
+        this.addInputB(0);
+      }
+    }
+  }, {
+    key: 'addInputB',
+    value: function addInputB(val) {
+      var bodyKVPairs = this.state.bodyKVPairs;
 
-			if (keyValuePairs.indexOf(val) === keyValuePairs.length - 1) {
-				// the double Math.max operation is needed because keyValuePairs is empty,
-				// the inner Math.max returns -Infinity which breaks things
-				var newState = keyValuePairs.concat(Math.max(Math.max.apply(Math, _toConsumableArray(keyValuePairs)), 0) + 1);
-				this.setState({ keyValuePairs: newState });
-			}
-		}
-	}, {
-		key: 'removeInputB',
-		value: function removeInputB(val) {
-			var bkvpairslen = this.state.bodyKVPairs.length;
-			var newState = this.state.bodyKVPairs;
-			var idxVal = newState.indexOf(val);
-			if (idxVal > -1) {
-				newState.splice(idxVal, 1);
-				this.setState({ bodyKVPairs: newState });
-			}
-			if (bkvpairslen === 1) {
-				this.addInputB(0);
-			}
-		}
-	}, {
-		key: 'addInputB',
-		value: function addInputB(val) {
-			var bodyKVPairs = this.state.bodyKVPairs;
+      if (bodyKVPairs.indexOf(val) === bodyKVPairs.length - 1) {
+        var newState = bodyKVPairs.concat(Math.max(Math.max.apply(Math, _toConsumableArray(bodyKVPairs)), 0) + 1);
+        this.setState({ bodyKVPairs: newState });
+      }
+    }
+  }, {
+    key: 'setUrlEn',
+    value: function setUrlEn() {
+      this.setState({ JORU: 'U' });
+    }
+  }, {
+    key: 'setJson',
+    value: function setJson() {
+      this.setState({ JORU: 'J' });
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(idx, e) {
+      var requestFormInfo = void 0;
+      switch (e.target.name) {
+        case 'header-key':
+          requestFormInfo = Object.assign({}, this.state.headerKeys, _defineProperty({}, idx, e.target.value));
+          this.setState({ headerKeys: requestFormInfo });
+          break;
+        case 'header-value':
+          requestFormInfo = Object.assign({}, this.state.headerVals, _defineProperty({}, idx, e.target.value));
+          this.setState({ headerVals: requestFormInfo });
+          break;
+        case 'url-key':
+          requestFormInfo = Object.assign({}, this.state.bodyKeys, _defineProperty({}, idx, e.target.value));
+          this.setState({ bodyKeys: requestFormInfo });
+          break;
+        case 'url-value':
+          requestFormInfo = Object.assign({}, this.state.bodyVals, _defineProperty({}, idx, e.target.value));
+          this.setState({ bodyVals: requestFormInfo });
+          break;
+      }
+    }
+  }, {
+    key: 'onChangeJson',
+    value: function onChangeJson(e) {
+      this.setState({ bodyJson: e.target.value });
+    }
+  }, {
+    key: 'closeButton',
+    value: function closeButton() {
+      this.setState({ fadingOut: true });
+      setTimeout(this.props.hideModal, 1000);
+    }
+  }, {
+    key: 'toggleOptions',
+    value: function toggleOptions(evt) {
+      var idx = +evt.target.value;
+      this.setState({ idx: idx });
+    }
+  }, {
+    key: 'updateLocalStorage',
+    value: function updateLocalStorage(testInfo) {
+      for (var i = 10; i > 1; i--) {
+        var shift = localStorage.getItem('recent' + (i - 1)) || "empty";
+        localStorage.setItem('recent' + i, shift);
+      }
+      localStorage.setItem("recent1", testInfo);
+    }
+  }, {
+    key: 'handleClick',
+    value: function handleClick(route, verb) {
+      var _this2 = this;
 
-			if (bodyKVPairs.indexOf(val) === bodyKVPairs.length - 1) {
-				var newState = bodyKVPairs.concat(Math.max(Math.max.apply(Math, _toConsumableArray(bodyKVPairs)), 0) + 1);
-				this.setState({ bodyKVPairs: newState });
-			}
-		}
-	}, {
-		key: 'setUrlEn',
-		value: function setUrlEn() {
-			this.setState({ JORU: 'U' });
-		}
-	}, {
-		key: 'setJson',
-		value: function setJson() {
-			this.setState({ JORU: 'J' });
-		}
-	}, {
-		key: 'onChange',
-		value: function onChange(idx, e) {
+      var headerKeys = this.state.headerKeys;
+      var headerVals = this.state.headerVals;
+      var bodyKeys = this.state.bodyKeys;
+      var bodyVals = this.state.bodyVals;
+      var testingInfo = {};
 
-			switch (e.target.name) {
-				case "header-key":
-					var newHeaderKeys = Object.assign({}, this.state.headerKeys, _defineProperty({}, idx, e.target.value));
-					this.setState({ headerKeys: newHeaderKeys });
-					break;
-				case "header-value":
-					var newHeaderVals = Object.assign({}, this.state.headerVals, _defineProperty({}, idx, e.target.value));
-					this.setState({ headerVals: newHeaderVals });
-					break;
-				case "url-key":
-					var newBodyKeys = Object.assign({}, this.state.bodyKeys, _defineProperty({}, idx, e.target.value));
-					this.setState({ bodyKeys: newBodyKeys });
-					break;
-				case "url-value":
-					var newBodyVals = Object.assign({}, this.state.bodyVals, _defineProperty({}, idx, e.target.value));
-					this.setState({ bodyVals: newBodyVals });
-					break;
-			}
-		}
-	}, {
-		key: 'onChangeJson',
-		value: function onChangeJson(e) {
-			this.setState({ bodyJson: e.target.value });
-		}
-	}, {
-		key: 'closeButton',
-		value: function closeButton() {
-			this.setState({ fadingOut: true });
-			setTimeout(this.props.hideModal, 1000);
-		}
-	}, {
-		key: 'toggleOptions',
-		value: function toggleOptions(evt) {
-			var idx = +evt.target.value;
-			this.setState({ idx: idx });
-		}
-	}, {
-		key: 'updateLocalStorage',
-		value: function updateLocalStorage(testInfo) {
-			for (var i = 10; i > 1; i--) {
-				var shift = localStorage.getItem('recent' + (i - 1)) || "empty";
-				localStorage.setItem('recent' + i, shift);
-			}
-			localStorage.setItem("recent1", testInfo);
-		}
-	}, {
-		key: 'handleClick',
-		value: function handleClick(route, verb) {
-			var _this2 = this;
+      var headers = {};
 
-			var headerKeys = this.state.headerKeys;
-			var headerVals = this.state.headerVals;
-			var bodyKeys = this.state.bodyKeys;
-			var bodyVals = this.state.bodyVals;
-			var testingInfo = {};
+      this.state.keyValuePairs.forEach(function (val, idx) {
+        if (idx !== _this2.state.keyValuePairs.length - 1) {
+          headers[headerKeys[val]] = headerVals[val];
+        }
+      });
 
-			var headers = {};
+      testingInfo.headers = headers;
 
-			this.state.keyValuePairs.forEach(function (val, idx) {
-				if (idx !== _this2.state.keyValuePairs.length - 1) {
-					headers[headerKeys[val]] = headerVals[val];
-				}
-			});
+      var body = {};
 
-			testingInfo.headers = headers;
+      if (this.state.bodyTypeSelected === 'urlencoded') {
+        this.state.bodyKVPairs.forEach(function (val, idx) {
+          if (idx !== _this2.state.bodyKVPairs.length - 1) {
+            body[bodyKeys[val]] = bodyVals[val];
+          }
+        });
+      } else if (this.state.bodyTypeSelected === 'json') {
+        body = JSON.parse(this.state.bodyJson);
+      }
+      testingInfo.body = body;
+      testingInfo.route = route;
+      testingInfo.verb = verb;
 
-			var body = {};
+      this.testRoute(route, verb, testingInfo);
+      var stringified = JSON.stringify(testingInfo);
+      this.updateLocalStorage(stringified);
+    }
+  }, {
+    key: 'toggleBodyType',
+    value: function toggleBodyType(evt) {
+      this.setState({ bodyTypeSelected: evt.target.value });
+      // const idx = +evt.target.value;
+      // this.setState({ idx });
+    }
+  }, {
+    key: 'testRoute',
+    value: function testRoute(route, verb, info) {
+      var _this3 = this;
 
-			if (this.state.bodyTypeSelected === 'urlencoded') {
-				this.state.bodyKVPairs.forEach(function (val, idx) {
-					if (idx !== _this2.state.bodyKVPairs.length - 1) {
-						body[bodyKeys[val]] = bodyVals[val];
-					}
-				});
-			} else if (this.state.bodyTypeSelected === 'json') {
-				body = JSON.parse(this.state.bodyJson);
-			}
-			testingInfo.body = body;
-			testingInfo.route = route;
-			testingInfo.verb = verb;
+      var routeResponse = void 0;
+      route = route.slice(1);
+      if (verb === 'post' || verb === 'put') {
+        var headers = { headers: info.headers };
+        var body = info.body;
+        _axios2.default[verb](route, body, headers).then(function (res) {
+          routeResponse = res.data;
+          // dispatch(routeTestResponse(res.data));
+          // dispatch(makeRequest(info))
+          _this3.props.setResponse(routeResponse);
+        }).catch(console.error);
+      } else {
+        var _headers = { headers: info.headers };
+        _axios2.default[verb](route, _headers).then(function (res) {
+          routeResponse = res.data;
+          // dispatch(routeTestResponse(res.data));
+          // dispatch(makeRequest(info))
+          _this3.props.setResponse(routeResponse);
+        }).catch(console.error);
+      }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.selected.testRoute !== nextProps.selected.testRoute) {
+        this.setState({
+          keyValuePairs: [],
+          lastAddedVal: null,
+          headerKeys: {},
+          headerVals: {},
+          bodyKVPairs: [],
+          bodyKeys: {},
+          bodyVals: {},
+          bodyJson: {},
+          JORU: null,
+          fadingOut: false,
+          currentOption: 'headers',
+          options: ['headers', 'body'],
+          idx: 0,
+          bodyTypeSelected: 'urlencoded'
+        });
+        this.state.changeMe ? this.setState({ changeMe: false }) : this.setState({ changeMe: true });
+      }
+    }
+  }, {
+    key: 'getLocalStorage',
+    value: function getLocalStorage() {
+      var pastRequests = [];
+      var i = 0;
+      while (++i <= 10) {
+        console.log('our key', 'recent' + i);
+        var parsed = JSON.parse(localStorage.getItem('recent' + i));
+        pastRequests.push(parsed);
+      }
+      return pastRequests;
+    }
+  }, {
+    key: 'addInput',
+    value: function addInput(val) {
+      var keyValuePairs = this.state.keyValuePairs;
 
-			this.testRoute(route, verb, testingInfo);
-			var stringified = JSON.stringify(testingInfo);
-			this.updateLocalStorage(stringified);
-		}
-	}, {
-		key: 'toggleBodyType',
-		value: function toggleBodyType(evt) {
-			this.setState({ bodyTypeSelected: evt.target.value });
-			// const idx = +evt.target.value;
-			// this.setState({ idx });
-		}
-	}, {
-		key: 'testRoute',
-		value: function testRoute(route, verb, info) {
-			var _this3 = this;
+      if (keyValuePairs.indexOf(val) === keyValuePairs.length - 1) {
+        // the double Math.max operation is needed because keyValuePairs is empty,
+        // the inner Math.max returns -Infinity which breaks things
+        var newState = keyValuePairs.concat(Math.max(Math.max.apply(Math, _toConsumableArray(keyValuePairs)), 0) + 1);
+        this.setState({ keyValuePairs: newState });
+      }
+    }
+  }, {
+    key: 'removeInput',
+    value: function removeInput(val) {
+      var KVPairsLength = this.state.keyValuePairs.length;
+      var newState = this.state.keyValuePairs;
+      var idxVal = newState.indexOf(val);
+      if (idxVal > -1) {
+        newState.splice(idxVal, 1);
+        this.setState({ keyValuePairs: newState });
+      }
+      if (KVPairsLength === 1) {
+        this.addInput(0);
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this4 = this;
 
-			var routeResponse = void 0;
-			route = route.slice(1);
-			if (verb === 'post' || verb === 'put') {
-				var headers = { headers: info.headers };
-				var body = info.body;
-				_axios2.default[verb](route, body, headers).then(function (res) {
-					routeResponse = res.data;
-					// dispatch(routeTestResponse(res.data));
-					// dispatch(makeRequest(info))
-					_this3.props.setResponse(routeResponse);
-				}).catch(console.error);
-			} else {
-				var _headers = { headers: info.headers };
-				_axios2.default[verb](route, _headers).then(function (res) {
-					routeResponse = res.data;
-					// dispatch(routeTestResponse(res.data));
-					// dispatch(makeRequest(info))
-					_this3.props.setResponse(routeResponse);
-				}).catch(console.error);
-			}
-		}
-	}, {
-		key: 'componentWillReceiveProps',
-		value: function componentWillReceiveProps(nextProps) {
-			if (this.props.selected.testRoute !== nextProps.selected.testRoute) {
-				this.setState({
-					keyValuePairs: [],
-					lastAddedVal: null,
-					headerKeys: {},
-					headerVals: {},
-					bodyKVPairs: [],
-					bodyKeys: {},
-					bodyVals: {},
-					bodyJson: {},
-					JORU: null,
-					fadingOut: false,
-					currentOption: 'headers',
-					options: ['headers', 'body'],
-					idx: 0,
-					bodyTypeSelected: 'urlencoded'
-				});
-				this.state.changeMe ? this.setState({ changeMe: false }) : this.setState({ changeMe: true });
-			}
-		}
-	}, {
-		key: 'getLocalStorage',
-		value: function getLocalStorage() {
-			var pastRequests = [];
-			var i = 0;
-			while (++i <= 10) {
-				console.log('our key', 'recent' + i);
-				var parsed = JSON.parse(localStorage.getItem('recent' + i));
-				pastRequests.push(parsed);
-			}
-			return pastRequests;
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			var _this4 = this;
+      var option = this.state.options[this.state.idx];
+      var route = this.props.selected.testRoute;
+      var method = this.props.selected.selectedRouteVerb;
+      var LS = this.getLocalStorage();
+      return _react2.default.createElement(
+        'div',
+        { className: this.state.fadingOut ? 'modal fadeOut' : 'modal' },
+        _react2.default.createElement(
+          'div',
+          { className: 'info' },
+          _react2.default.createElement(
+            'div',
+            { className: 'nav' },
+            _react2.default.createElement(
+              'button',
+              { className: 'nav-children', onClick: function onClick() {
+                  return _this4.handleClick(route, method);
+                } },
+              'Test'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'nav-children dropdown' },
+              'History'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'dropdown-content' },
+              LS.map(function (req) {
+                return _react2.default.createElement(
+                  'div',
+                  null,
+                  _react2.default.createElement(
+                    'p',
+                    null,
+                    req.route
+                  ),
+                  _react2.default.createElement(
+                    'p',
+                    null,
+                    req.verb
+                  )
+                );
+              })
+            ),
+            _react2.default.createElement(_xImage2.default, { onClick: this.closeButton })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'testing' },
+            _react2.default.createElement(
+              'h2',
+              { id: 'request-verb' },
+              method
+            ),
+            _react2.default.createElement(
+              'h2',
+              null,
+              route
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'headers-body' },
+            _react2.default.createElement(
+              'button',
+              { className: 'headers ' + (option === 'headers' ? 'selected' : ''), value: 0, onClick: this.toggleOptions },
+              'Headers'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'headers ' + (option === 'body' ? 'selected' : ''), disabled: method === 'post' || method === 'put' ? '' : 'disabled', value: 1, onClick: this.toggleOptions },
+              'Body'
+            )
+          ),
+          option === 'headers' ? _react2.default.createElement(_Headers2.default, {
+            verb: method,
+            onChange: this.onChange,
+            addInput: this.addInput,
+            removeInput: this.removeInput,
+            keyValuePairs: this.state.keyValuePairs }) : _react2.default.createElement(_Body2.default, {
+            bodyTypeSelected: this.state.bodyTypeSelected,
+            toggleBodyType: this.toggleBodyType,
+            onChange: this.onChange,
+            addInput: this.addInputB,
+            removeInput: this.removeInputB,
+            bodyKVPairs: this.state.bodyKVPairs,
+            setUrlEn: this.setUrlEn,
+            setJson: this.setJson,
+            onChangeJson: this.onChangeJson,
+            bodyJson: this.state.bodyJson })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_Response2.default, { response: this.props.response })
+        )
+      );
+    }
+  }]);
 
-			var option = this.state.options[this.state.idx];
-			var route = this.props.selected.testRoute;
-			var method = this.props.selected.selectedRouteVerb;
-			var LS = this.getLocalStorage();
-			return _react2.default.createElement(
-				'div',
-				{ className: this.state.fadingOut ? 'modal fadeOut' : 'modal' },
-				_react2.default.createElement(
-					'div',
-					{ className: 'info' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'nav' },
-						_react2.default.createElement(
-							'button',
-							{ className: 'nav-children', onClick: function onClick() {
-									return _this4.handleClick(route, method);
-								} },
-							'Test'
-						),
-						_react2.default.createElement(
-							'button',
-							{ className: 'nav-children dropdown' },
-							'History'
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'dropdown-content' },
-							LS.map(function (req) {
-								return _react2.default.createElement(
-									'div',
-									null,
-									_react2.default.createElement(
-										'p',
-										null,
-										req.route
-									),
-									_react2.default.createElement(
-										'p',
-										null,
-										req.verb
-									)
-								);
-							})
-						),
-						_react2.default.createElement(_xImage2.default, { onClick: this.closeButton })
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'testing' },
-						_react2.default.createElement(
-							'h2',
-							{ id: 'request-verb' },
-							method
-						),
-						_react2.default.createElement(
-							'h2',
-							null,
-							route
-						)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'headers-body' },
-						_react2.default.createElement(
-							'button',
-							{ className: 'headers ' + (option === 'headers' ? 'selected' : ''), value: 0, onClick: this.toggleOptions },
-							'Headers'
-						),
-						_react2.default.createElement(
-							'button',
-							{ className: 'headers ' + (option === 'body' ? 'selected' : ''), disabled: method === 'post' || method === 'put' ? '' : 'disabled', value: 1, onClick: this.toggleOptions },
-							'Body'
-						)
-					),
-					option === 'headers' ? _react2.default.createElement(_Headers2.default, {
-						verb: method,
-						onChange: this.onChange,
-						addInput: this.addInput,
-						removeInput: this.removeInput,
-						keyValuePairs: this.state.keyValuePairs }) : _react2.default.createElement(_Body2.default, {
-						bodyTypeSelected: this.state.bodyTypeSelected,
-						toggleBodyType: this.toggleBodyType,
-						onChange: this.onChange,
-						addInput: this.addInputB,
-						removeInput: this.removeInputB,
-						bodyKVPairs: this.state.bodyKVPairs,
-						setUrlEn: this.setUrlEn,
-						setJson: this.setJson,
-						onChangeJson: this.onChangeJson,
-						bodyJson: this.state.bodyJson })
-				),
-				_react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(_Response2.default, { response: this.props.response })
-				)
-			);
-		}
-	}]);
-
-	return Modal;
+  return Modal;
 }(_react2.default.Component);
+
+exports.default = Modal;
+
+
+Modal.propTypes = {
+  hideModal: _react2.default.PropTypes.func
+};
 
 // ${method === 'post' || method === 'put'? '' : disabled}
 
 
 // this.getLocalStorage.map(req => {
 // console.log(req)
-
-
-exports.default = Modal;
 
 /***/ }),
 /* 175 */
@@ -16626,20 +16630,14 @@ exports.default = Modal;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
-
-var _react = __webpack_require__(3);
-
-var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(30);
 
 var _requestReducer = __webpack_require__(92);
 
 var _modalReducer = __webpack_require__(49);
-
-var _selectedReducer = __webpack_require__(50);
 
 var _Modal = __webpack_require__(174);
 
@@ -16648,19 +16646,19 @@ var _Modal2 = _interopRequireDefault(_Modal);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(_ref) {
-	var selected = _ref.selected;
-	return { selected: selected };
+  var selected = _ref.selected;
+  return { selected: selected };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	return {
-		testThisRoute: function testThisRoute(route, verb, testingInfo) {
-			dispatch((0, _requestReducer.testRoute)(route, verb, testingInfo));
-		},
-		hideModal: function hideModal() {
-			dispatch((0, _modalReducer.hideModal)());
-		}
-	};
+  return {
+    testThisRoute: function testThisRoute(route, verb, testingInfo) {
+      dispatch((0, _requestReducer.testRoute)(route, verb, testingInfo));
+    },
+    hideModal: function hideModal() {
+      dispatch((0, _modalReducer.hideModal)());
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Modal2.default);
