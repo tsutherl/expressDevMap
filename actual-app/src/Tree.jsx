@@ -51,12 +51,10 @@ export default class Tree extends React.Component {
     }
 
     const alterNode = (node) => {
-      console.log('the node', node)
       d3.select(node)
         .attr('r', 15)
         .style('stroke-width', 1.5)
         .style('stroke-opacity', 0.8)
-        console.log(d3.select(node.parentElement.nextSibling))
       d3.select(node.parentElement.nextSibling)
         .attr('x', function(d) { return d.height > 0 ?  -17.5 : 17.5})
     }
@@ -261,10 +259,24 @@ var i = 0;
             (d.height > 0 ? "node--internal" : "node--leaf"); })
         .attr("transform", function(d) { 
           return "translate(" + source.y0 + "," + source.x0 + ")"; })
-        .on('click', click);
+        .on('click', click)
 
     // adds symbols as nodes
     nodeEnter.append('a')//add anchor tag for keyboard accessibility
+      .on("keydown", function (e){
+        console.log('this', this)
+        console.log('event', d3.event);
+        if (d3.event.keyCode === 13) {
+            resetTree();
+          if (e.height > 0) {
+            routerHandleClick(e);
+          } else {
+            endRouteHandleClick(e); // modal functionality
+          }
+          alterNode(this);
+          alterPath(e);
+        }
+      })
       .attr('xlink:href','#')
       .append("circle")
       .attr('class', 'node')  // made all nodes circles instead of random shapes

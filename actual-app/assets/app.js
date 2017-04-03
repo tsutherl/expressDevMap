@@ -16926,9 +16926,7 @@ var Tree = function (_React$Component) {
       };
 
       var alterNode = function alterNode(node) {
-        console.log('the node', node);
         d3.select(node).attr('r', 15).style('stroke-width', 1.5).style('stroke-opacity', 0.8);
-        console.log(d3.select(node.parentElement.nextSibling));
         d3.select(node.parentElement.nextSibling).attr('x', function (d) {
           return d.height > 0 ? -17.5 : 17.5;
         });
@@ -17110,7 +17108,20 @@ var Tree = function (_React$Component) {
 
         // adds symbols as nodes
         nodeEnter.append('a') //add anchor tag for keyboard accessibility
-        .attr('xlink:href', '#').append("circle").attr('class', 'node') // made all nodes circles instead of random shapes
+        .on("keydown", function (e) {
+          console.log('this', this);
+          console.log('event', d3.event);
+          if (d3.event.keyCode === 13) {
+            resetTree();
+            if (e.height > 0) {
+              routerHandleClick(e);
+            } else {
+              endRouteHandleClick(e); // modal functionality
+            }
+            alterNode(this);
+            alterPath(e);
+          }
+        }).attr('xlink:href', '#').append("circle").attr('class', 'node') // made all nodes circles instead of random shapes
         .style("stroke", "black") // change node outline to black
         .style('stroke-opacity', .4).attr("r", 7.5) // above line fills node blue if it has child nodes, otherwise gray
         .attr('class', function (d) {
