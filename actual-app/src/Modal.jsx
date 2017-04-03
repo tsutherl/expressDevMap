@@ -244,7 +244,8 @@ export default class Modal extends React.Component {
 		let i = 0
 		while (++i <= 10) {
 			pastRequests.push(localStorage.getItem(`recent${i}`))
-			console.log(localStorage.getItem(`recent${i}`).body)
+			const parsed = localStorage.getItem(`recent${i}`)
+			pastRequests.push(parsed)
 		}
 		return pastRequests
 	}
@@ -255,6 +256,7 @@ export default class Modal extends React.Component {
 		const option = this.state.options[this.state.idx]
 		const route = this.props.selected.testRoute;
 		const method = this.props.selected.selectedRouteVerb;
+		const LS = this.getLocalStorage()
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
@@ -262,7 +264,13 @@ export default class Modal extends React.Component {
 						<button className='nav-children' onClick={()=>this.handleClick(route, method)}>Test</button>
 						<button className='nav-children'>History</button>
 							<div className="dropdown-content">
-									{ console.log('my local storage', this.getLocalStorage()) }
+									{ LS.map(req => {
+											return <div >
+															<p>{req.method}</p>
+															<p>{req.verb}</p>
+														 </div>
+										})
+									}
 							</div>
 						<Closex onClick={this.closeButton}/>
 					</div>
