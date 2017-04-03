@@ -16780,7 +16780,7 @@ var SearchContainer = function (_Component) {
       nextProps.routes && nextProps.routes.children.forEach(function (child) {
         treeToRoutes(list, '', child);
       });
-      this.setState({ routeList: list });
+      this.setState({ routeList: list.sort() });
     }
   }, {
     key: 'onOptionSelect',

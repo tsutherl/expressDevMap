@@ -46,7 +46,7 @@ class SearchContainer extends Component {
     nextProps.routes && nextProps.routes.children.forEach(child => {
       treeToRoutes(list, '', child);
     })
-    this.setState({routeList: list})
+    this.setState({routeList: list.sort()})
   }
 
   onOptionSelect (e) {
