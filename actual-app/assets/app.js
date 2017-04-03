@@ -16413,7 +16413,7 @@ var Modal = function (_React$Component) {
 						{ className: 'nav' },
 						_react2.default.createElement(
 							'button',
-							{ className: 'nav-children', onClick: function onClick() {
+							{ id: 'test-button', className: 'nav-children', onClick: function onClick() {
 									return _this3.handleClick(route, method);
 								} },
 							'Test'
