@@ -17118,6 +17118,10 @@ var Tree = function (_React$Component) {
             }
             alterNode(this.childNodes[0]);
             alterPath(e);
+          }
+        }).on('keyup', function (e) {
+          //to not execute the button if the key is still down
+          if (e.height === 0 && d3.event.keyCode === 13) {
             document.getElementById('test-button').focus();
           }
         }).attr('xlink:href', '#').append("circle").attr('class', 'node') // made all nodes circles instead of random shapes
