@@ -17118,6 +17118,7 @@ var Tree = function (_React$Component) {
             }
             alterNode(this.childNodes[0]);
             alterPath(e);
+            document.getElementById('test-button').focus();
           }
         }).attr('xlink:href', '#').append("circle").attr('class', 'node') // made all nodes circles instead of random shapes
         .style("stroke", "black") // change node outline to black
@@ -17125,7 +17126,6 @@ var Tree = function (_React$Component) {
         .attr('class', function (d) {
           return d.data.verb ? d.data.verb : 'router';
         }).on("click", function (e) {
-          console.log('the e', e);
           resetTree();
           if (e.height > 0) {
             routerHandleClick(e);

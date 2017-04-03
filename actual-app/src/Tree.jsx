@@ -273,6 +273,7 @@ var i = 0;
           }
           alterNode(this.childNodes[0]);
           alterPath(e);
+          document.getElementById('test-button').focus();
         }
       })
       .attr('xlink:href','#')
@@ -283,7 +284,6 @@ var i = 0;
       .attr("r", 7.5)  // above line fills node blue if it has child nodes, otherwise gray
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
-        console.log('the e', e)
         resetTree();
         if (e.height > 0) {
           routerHandleClick(e);
