@@ -264,8 +264,6 @@ var i = 0;
     // adds symbols as nodes
     nodeEnter.append('a')//add anchor tag for keyboard accessibility
       .on("keydown", function (e){
-        console.log('this', this)
-        console.log('event', d3.event);
         if (d3.event.keyCode === 13) {
             resetTree();
           if (e.height > 0) {
@@ -273,7 +271,7 @@ var i = 0;
           } else {
             endRouteHandleClick(e); // modal functionality
           }
-          alterNode(this);
+          alterNode(this.childNodes[0]);
           alterPath(e);
         }
       })
@@ -285,6 +283,7 @@ var i = 0;
       .attr("r", 7.5)  // above line fills node blue if it has child nodes, otherwise gray
       .attr('class', (d) => (d.data.verb ? d.data.verb : 'router'))
       .on("click", function (e) {
+        console.log('the e', e)
         resetTree();
         if (e.height > 0) {
           routerHandleClick(e);

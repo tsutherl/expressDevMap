@@ -17109,8 +17109,6 @@ var Tree = function (_React$Component) {
         // adds symbols as nodes
         nodeEnter.append('a') //add anchor tag for keyboard accessibility
         .on("keydown", function (e) {
-          console.log('this', this);
-          console.log('event', d3.event);
           if (d3.event.keyCode === 13) {
             resetTree();
             if (e.height > 0) {
@@ -17118,7 +17116,7 @@ var Tree = function (_React$Component) {
             } else {
               endRouteHandleClick(e); // modal functionality
             }
-            alterNode(this);
+            alterNode(this.childNodes[0]);
             alterPath(e);
           }
         }).attr('xlink:href', '#').append("circle").attr('class', 'node') // made all nodes circles instead of random shapes
@@ -17127,6 +17125,7 @@ var Tree = function (_React$Component) {
         .attr('class', function (d) {
           return d.data.verb ? d.data.verb : 'router';
         }).on("click", function (e) {
+          console.log('the e', e);
           resetTree();
           if (e.height > 0) {
             routerHandleClick(e);
