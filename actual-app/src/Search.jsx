@@ -9,7 +9,6 @@ export default (props) => {
       <div className='search-inner'>
         <Typeahead 
           options={props.routeList}
-          maxVisible={10}
           placeholder={'Filter Routes'}
           onOptionSelected={props.optionSelect}
         />
