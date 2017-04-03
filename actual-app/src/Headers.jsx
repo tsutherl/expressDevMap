@@ -20,7 +20,9 @@ class Headers extends React.Component {
 
 
 
-    render() {        
+    render() { 
+        console.log("in headers render, props ", this.props);
+
         return(
 
             <form className = "form">

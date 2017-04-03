@@ -27,7 +27,8 @@ export default class Modal extends React.Component {
 			options: ['headers', 'body'],
 			idx: 0,
 			bodyTypeSelected: 'urlencoded',
-			changeMe: false
+			changeMe: false,
+			response: null
 		}
 		this.handleClick = this.handleClick.bind(this);
 		this.onChange = this.onChange.bind(this);
@@ -185,6 +186,7 @@ export default class Modal extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.selected.testRoute !== nextProps.selected.testRoute) {
+			console.log("new test route")
 			this.setState ({	
 				keyValuePairs: [], 
 				lastAddedVal: null,  
@@ -200,11 +202,16 @@ export default class Modal extends React.Component {
 				options: ['headers', 'body'],
 				idx: 0,
 				bodyTypeSelected: 'urlencoded',
+				response: null
 			});
 			this.state.changeMe ? this.setState({changeMe: false}) : 
 				this.setState({changeMe: true});
-
 		}
+		if (this.state.response !== nextProps.response) {
+			console.log("new response");
+			this.setState({response: nextProps.response});
+		}
+
 	}
 
 
@@ -213,8 +220,6 @@ export default class Modal extends React.Component {
 		const option = this.state.options[this.state.idx]
 		const route = this.props.selected.testRoute;
 		const method = this.props.selected.selectedRouteVerb;
-
-		console.log("localStorage: recent1 ", localStorage.getItem("recent1"), "recent2 ", localStorage.getItem("recent2"), "recent5 ", localStorage.getItem("recent5"));
 
 		return (
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
@@ -252,7 +257,7 @@ export default class Modal extends React.Component {
 						
 				</div>
 				<div>
-					<Response response={this.props.response}/>
+					<Response response={this.state.response}/>
 				</div>
 			</div>
 		)
@@ -261,6 +266,5 @@ export default class Modal extends React.Component {
 
 
 
-// ${method === 'post' || method === 'put'? '' : disabled}
 
 

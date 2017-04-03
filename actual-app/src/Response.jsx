@@ -6,6 +6,8 @@ class Response extends React.Component {
     }
 
     render() {
+
+        console.log("in response render, props ", this.props);
         return(
             <div>
                 <div className='response-header'>

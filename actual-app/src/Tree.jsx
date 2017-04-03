@@ -5,7 +5,17 @@ import d3Force from 'd3-force';
 export default class Tree extends React.Component {
   constructor(props){
     super(props);
+    this.state = {tx: 0, ty: 0, scale: 1}
   }
+
+  // look into React Transition Groups
+
+  // make the transform part of the state on this component -- 
+  // make local state hold the transform matrix, initialize that as moving over to right
+  // on drag/zoom multiply transform matrix by appropriate factor 
+
+  // make svg element with react instead of d3, then can pass in transform stuff as props
+
 
   componentDidMount(){
 
@@ -25,7 +35,7 @@ export default class Tree extends React.Component {
     const getRoute = (node) => {
       const routeSteps = [];
       let current = node;
-      while (current.parent){
+      while (current.parent){ 
         routeSteps.unshift(current.data.name);
         current = current.parent;
         }
@@ -100,6 +110,7 @@ export default class Tree extends React.Component {
     var root = d3.hierarchy(this.props.routes, function(d) {
         return d.children;
       });
+    console.log(root)
     root.x0 = height/2;
     root.y0 = 0;
 
@@ -161,7 +172,9 @@ export default class Tree extends React.Component {
     
 
 //zoom transformations only work on elements that are nested within svgs. Zoom transformations of svgs didn't work when we tried to wrap our svg in a g and transform the g, OR when we tried to directly transform our svg. We had to change our svg to a g and wrap that g in an svg and then apply the zoom transformations to the g. 
-    var svg = d3.select(this.refs.routeMap).append("svg").call(zoom).attr("class", "outer").append("g")
+    var svg = //d3.select(this.refs.routeMap).append("svg")
+
+    d3.select(this.refs.svg)/*.call(zoom)*/.attr("class", "outer").append("g")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .attr('id', 'tree')
@@ -327,6 +340,9 @@ var i = 0;
           return d.id;
         })
     
+    // <path className='link' style={{stroke: 'black'}}
+    //   d={diagonal(s)}
+
     var linkEnter = link.enter().insert("path", "g")
         .attr("class", "link")
         .style("stroke", "black")     // question: can these style things be combined?
@@ -390,13 +406,51 @@ var i = 0;
   // centerNode(root);
 
 
-}                                              
+}          
+
+  grab(e) { console.log(e.x, e.clientX, e.pageX, this.state.tx);
+    this.setState({drag: {
+      original: {x: this.state.tx, y: this.state.ty},
+      point: {x: e.pageX, y: e.pageY},
+    }})
+  }          
+
+  drag(e) {
+    if (!this.state.drag) return
+    const [x, y] = [e.pageX, e.pageY]
+    const [dx, dy] = [
+      x - this.state.drag.point.x,
+      y - this.state.drag.point.y,
+    ]
+    this.setState({
+      tx: this.state.drag.original.x + dx,
+      ty: this.state.drag.original.y + dy,  
+    })
+  }
+  drop(e) { this.setState({drag: false}) }
+
+  zoom(e) { e.preventDefault(); e.ctrlKey && this.setState({scale: this.state.scale * Math.pow(1.01, -e.deltaY)}) }
 
   render() {
+    const transform = `translate(${this.state.tx}px, ${this.state.ty}px) scale(${this.state.scale})`
     return(
       <div id="routeMap" ref="routeMap">
+       <svg
+        onWheel={this.zoom.bind(this)}
+        onClick={() => console.log('clicked')} onMouseDown={this.grab.bind(this)}
+        onMouseUp={this.drop.bind(this)}
+        onMouseMove={this.drag.bind(this)}
+        style={{transform}} ref='svg' blah='foo'></svg>
       </div>
     )
   }
 }
 
+function svgTree(node, y=0) {
+  console.log(node, node.y0, node.x0)
+  return [
+    <circle cx={node.depth * 30} cy={y * 30} r={10} fill='fuchsia' />,
+    <text cx={node.depth * 30 + 10} cy={y * 30}>{`${node.data.name} ${node.data.verb}`}</text>,
+    ...(node.children ? node.children.map(svgTree) : []),
+  ]
+}
