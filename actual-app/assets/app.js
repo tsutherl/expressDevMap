@@ -16495,8 +16495,8 @@ var Modal = function (_React$Component) {
 			var pastRequests = [];
 			var i = 0;
 			while (++i <= 10) {
-				pastRequests.push(localStorage.getItem('recent' + i));
-				var parsed = localStorage.getItem('recent' + i);
+				console.log('our key', 'recent' + i);
+				var parsed = JSON.parse(localStorage.getItem('recent' + i));
 				pastRequests.push(parsed);
 			}
 			return pastRequests;
@@ -16528,7 +16528,7 @@ var Modal = function (_React$Component) {
 						),
 						_react2.default.createElement(
 							'button',
-							{ className: 'nav-children' },
+							{ className: 'nav-children dropdown' },
 							'History'
 						),
 						_react2.default.createElement(
@@ -16541,7 +16541,7 @@ var Modal = function (_React$Component) {
 									_react2.default.createElement(
 										'p',
 										null,
-										req.method
+										req.route
 									),
 									_react2.default.createElement(
 										'p',

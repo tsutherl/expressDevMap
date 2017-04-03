@@ -243,8 +243,8 @@ export default class Modal extends React.Component {
 		const pastRequests = []
 		let i = 0
 		while (++i <= 10) {
-			pastRequests.push(localStorage.getItem(`recent${i}`))
-			const parsed = localStorage.getItem(`recent${i}`)
+			console.log('our key', `recent${i}`)
+			const parsed = JSON.parse(localStorage.getItem(`recent${i}`))
 			pastRequests.push(parsed)
 		}
 		return pastRequests
@@ -262,11 +262,11 @@ export default class Modal extends React.Component {
 				<div className='info'>
 					<div className='nav'>
 						<button className='nav-children' onClick={()=>this.handleClick(route, method)}>Test</button>
-						<button className='nav-children'>History</button>
-							<div className="dropdown-content">
+						<button className='nav-children dropdown'>History</button>
+							<div className='dropdown-content'>
 									{ LS.map(req => {
 											return <div >
-															<p>{req.method}</p>
+															<p>{req.route}</p>
 															<p>{req.verb}</p>
 														 </div>
 										})
