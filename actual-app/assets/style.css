@@ -322,6 +322,8 @@ if view width is less than 1000 we'll have media query that does sth different*/
 }
 
 #search-bar ul.typeahead-selector {
+    height: 23.25em;
+    overflow: scroll;
     position: absolute;
     background: #eee;
     border: .1em #555 solid;
@@ -333,7 +335,8 @@ if view width is less than 1000 we'll have media query that does sth different*/
 }
 
 #search-bar ul li {
-    padding: .5em 1.5em;
+    padding: .625em 1.5em;
+    line-height: 1em;
 }
 
 #search-bar ul li:first-child {
