@@ -9,7 +9,8 @@ export default props=>(
       props.onChangeJson(e);
     }}
     rows="4"
-    cols="50">
+    cols="50"
+  >
     { _.isEmpty(this.props.bodyJson) ? null : this.props.bodyJson}
   </textarea>
 );

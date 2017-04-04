@@ -16,14 +16,14 @@ class Body extends React.Component {
       <div className="body">
         <form className="radio-buttons">
           <div className="radio">
-            <label>
-              <input type="radio" value="urlencoded" checked={this.props.bodyTypeSelected === 'urlencoded'} onChange={this.props.toggleBodyType}  />
+            <label> TODO check if we need to add something for accessability
+              <input type="radio" value="urlencoded" checked={this.props.bodyTypeSelected === 'urlencoded'} onChange={this.props.toggleBodyType} />
               urlencoded
             </label>
           </div>
           <div className="radio">
             <label>
-              <input type="radio" value="json" checked={this.props.bodyTypeSelected === 'json'} onChange={this.props.toggleBodyType}/>
+              <input type="radio" value="json" checked={this.props.bodyTypeSelected === 'json'} onChange={this.props.toggleBodyType} />
               JSON
               </label>
           </div>

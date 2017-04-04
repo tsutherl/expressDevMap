@@ -15537,6 +15537,7 @@ var Body = function (_React$Component) {
             _react2.default.createElement(
               'label',
               null,
+              ' TODO check if we need to add something for accessability',
               _react2.default.createElement('input', { type: 'radio', value: 'urlencoded', checked: this.props.bodyTypeSelected === 'urlencoded', onChange: this.props.toggleBodyType }),
               'urlencoded'
             )
@@ -15706,7 +15707,8 @@ exports.default = function (props) {
         props.onChangeJson(e);
       },
       rows: '4',
-      cols: '50' },
+      cols: '50'
+    },
     _lodash2.default.isEmpty(undefined.props.bodyJson) ? null : undefined.props.bodyJson
   );
 };
@@ -15840,6 +15842,8 @@ var Modal = function (_React$Component) {
         case 'url-value':
           requestFormInfo = Object.assign({}, this.state.bodyVals, _defineProperty({}, idx, e.target.value));
           this.setState({ bodyVals: requestFormInfo });
+          break;
+        default:
           break;
       }
     }
@@ -16292,7 +16296,6 @@ var SearchContainer = function (_Component) {
     };
     _this.onOptionSelect = _this.onOptionSelect.bind(_this);
     _this.onButtonClick = _this.onButtonClick.bind(_this);
-    // this.downOnInput = this.downOnInput.bind(this);
     return _this;
   }
 
@@ -16335,7 +16338,7 @@ var SearchContainer = function (_Component) {
         currNode = currNode[0];
       };
 
-      for (var i = 0; i < pathParts.length; i++) {
+      for (var i = 0; i < pathParts.length; i += 1) {
         _loop(i);
       }
       // simulate the click
@@ -16423,7 +16426,7 @@ var Tree = function (_React$Component) {
         if (!_this2.props.showModal) _this2.props.showModalNow();
       };
 
-      var routerHandleClick = function routerHandleClick(node) {
+      var routerHandleClick = function routerHandleClick() {
         if (_this2.props.showModal) _this2.props.hideModal();
       };
 
@@ -16442,12 +16445,12 @@ var Tree = function (_React$Component) {
       };
 
       var resetTree = function resetTree() {
-        d3.selectAll('circle').attr('r', 7.5) //reset circle size
-        .style('stroke-width', 1).style("stroke-opacity", 0.4);
+        d3.selectAll('circle').attr('r', 7.5) // reset circle size
+        .style('stroke-width', 1).style('stroke-opacity', 0.4);
         d3.selectAll('text').attr('x', function (d) {
           return d.height > 0 ? -10 : 10;
-        }); //reset text position
-        d3.selectAll('path').attr('class', 'link').style("stroke-opacity", 0.4).style("stroke-width", 1.5);
+        }); // reset text position
+        d3.selectAll('path').attr('class', 'link').style('stroke-opacity', 0.4).style('stroke-width', 1.5);
       };
 
       var alterNode = function alterNode(node) {
@@ -16457,7 +16460,7 @@ var Tree = function (_React$Component) {
         });
       };
 
-      //want to refactor this to take better advantage of d3
+      // want to refactor this to take better advantage of d3
       var alterPath = function alterPath(e) {
         var pathEnds = [];
         var paths = d3.selectAll('.link')._groups[0];
@@ -16476,9 +16479,9 @@ var Tree = function (_React$Component) {
       };
 
       // set the dimensions and margins of the diagram
-      var margin = { top: 100, right: 110, bottom: 30, left: 200 },
-          width = 1000 - margin.left - margin.right,
-          height = 600 - margin.top - margin.bottom;
+      var margin = { top: 100, right: 110, bottom: 30, left: 200 };
+      var width = 1000 - margin.left - margin.right;
+      var height = 600 - margin.top - margin.bottom;
 
       // declares a tree layout and assigns the size
       var treemap = d3.tree().size([height, width]);
@@ -16490,61 +16493,26 @@ var Tree = function (_React$Component) {
       root.x0 = height / 2;
       root.y0 = 0;
 
-      // // Collapse after the second level
-      // root.children.forEach(collapse);
+      // did we get rid of our scaleExtent? might want to add it back in if we did
+      // scaleExtent take an array which holds the
+      // min scale factor at idx 0 and max scale factor at idx 1
+      // event listener will be ignored if the graph is for
+      // whatever reason outside of the set scaleExtent
 
-      // update(root);
-
-      // // Collapse the node and all it's children
-      // function collapse(d) {
-      //   if(d.children) {
-      //     d._children = d.children
-      //     d._children.forEach(collapse)
-      //     d.children = null
-      //   }
-      // }
-
-
-      // maps the node data to the tree layout
-
-
-      //scaleExtent take an array which holds the min scale factor at idx 0 and max scale factor at idx 1
-      //event listener will be ignored if the graph is for whatever reason outside of the set scaleExtent
-
-      //zoom ~=zoomListener
-      var zoom = d3.zoom()
-      // .scaleExtent([1 / 2, 4])
-      .on("zoom", function () {
-        // console.log(d3.select(".outer"))
-        // console.log("g-----", g)
-        // console.log('d3.event---', d3.event.transform);
-        //  svg.selectAll('g').attr("transform", d3.event.transform);
-        //  svg.selectAll('path.link').attr("transform", d3.event.transform);
-        // d3.event.transform.k = 1
-        // svg.select("g").attr("transform", d3.event.transform)
-        d3.select(".grab").attr("transform", d3.event.transform);
-        // svg.selectAll("path").attr("transform", d3.event.transform)
-
-        //d3.select('#tree')
-        //d3.select('svg')
-        //d3.select('#routeMap')
-
-
-        // var transform = ransform(this);
-        // d3.select("#tree").attr("transform", "translate(" + transform.x + "," + transform.y + ")scale(" + transform.k + ")");
-        // d3.select('g')
-        //   .attr('transform', 'translate(' + d3.event.transform.x + ',' + d3.event.transform.y + ') scale(' + d3.event.transform.k + ')');
-
+      // zoom ~=zoomListener
+      var zoom = d3.zoom().on('zoom', function () {
+        return d3.select('.grab').attr('transform', d3.event.transform);
       });
 
-      // console.log("zoom scale", zoom.scale)
       // append the svg object to the body of the page
       // appends a 'group' element to 'svg'
       // moves the 'group' element to the top left margin
 
-
-      //zoom transformations only work on elements that are nested within svgs. Zoom transformations of svgs didn't work when we tried to wrap our svg in a g and transform the g, OR when we tried to directly transform our svg. We had to change our svg to a g and wrap that g in an svg and then apply the zoom transformations to the g.
-      var svg = d3.select(this.refs.routeMap).append("svg").call(zoom).attr("class", "outer").append("g").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).attr('id', 'tree').attr('class', 'grab').attr('transform', "translate(" + 50 + "," + 0 + ")");
+      // zoom transformations only work on elements that are nested within svgs. Zoom
+      // transformations of svgs didn't work when we tried to wrap our svg in a g and
+      // transform the g, OR when we tried to directly transform our svg. We had to change
+      // our svg to a g and wrap that g in an svg and then apply the zoom transformations to the g.
+      var svg = d3.select(this.refs.routeMap).append('svg').call(zoom).attr('class', 'outer').append('g').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).attr('id', 'tree').attr('class', 'grab').attr("transform", "translate(" + 50 + "," + 0 + ")");
 
       // var zoomer = svg.append("rect")
       //       .attr("width", width)
@@ -16553,7 +16521,7 @@ var Tree = function (_React$Component) {
       //       .style("pointer-events", "all")
       //       .call(zoom)
 
-      var g = svg.append("g");
+      svg.append('g');
 
       // zoomer.call(zoom.transform, d3.zoomIdentity.translate(150, 0))
       //g~= svgGroup

@@ -13,158 +13,103 @@ export default class Tree extends React.Component {
       if (!this.props.showModal) this.props.showModalNow();
     };
 
-    const routerHandleClick = (node)=>{
+    const routerHandleClick = ()=>{
       if (this.props.showModal) this.props.hideModal();
-    }
+    };
 
-    const getRoute = (node) => {
+    const getRoute = (node)=>{
       const routeSteps = [];
       let current = node;
-      while (current.parent){
+      while (current.parent) {
         routeSteps.unshift(current.data.name);
         current = current.parent;
-        }
+      }
       return routeSteps.join("");
-    }
+    };
 
-    const getVerb = (node) => {
-      return node.data.verb;
-    }
+    const getVerb = node=>node.data.verb;
 
     const resetTree = ()=>{
       d3.selectAll('circle')
-        .attr('r', 7.5)//reset circle size
+        .attr('r', 7.5) // reset circle size
         .style('stroke-width', 1)
-        .style("stroke-opacity", 0.4)
+        .style('stroke-opacity', 0.4);
       d3.selectAll('text')
-        .attr('x', function(d) {
-          return d.height > 0 ?  -10 : 10});//reset text position
+        .attr('x', d=>d.height > 0 ? -10 : 10); // reset text position
       d3.selectAll('path')
         .attr('class', 'link')
-        .style("stroke-opacity", 0.4)
-        .style("stroke-width", 1.5);
-    }
+        .style('stroke-opacity', 0.4)
+        .style('stroke-width', 1.5);
+    };
 
-    const alterNode = (node) => {
+    const alterNode = (node)=>{
       d3.select(node)
         .attr('r', 15)
         .style('stroke-width', 1.5)
         .style('stroke-opacity', 0.8)
       d3.select(node.nextSibling)
-        .attr('x', function(d) { return d.height > 0 ?  -17.5 : 17.5})
-    }
+        .attr('x', (d)=>d.height > 0 ? -17.5 : 17.5);
+    };
 
-    //want to refactor this to take better advantage of d3
-    const alterPath = (e) => {
-      let pathEnds = [];
-      const paths = d3.selectAll('.link')._groups[0]
+    // want to refactor this to take better advantage of d3
+    const alterPath = (e)=>{
+      const pathEnds = [];
+      const paths = d3.selectAll('.link')._groups[0];
       while (e.parent) {
-        pathEnds.push(`${e.y},${e.x}`)
-        e = e.parent
+        pathEnds.push(`${e.y},${e.x}`);
+        e = e.parent;
       }
-      paths.forEach(path => {
+      paths.forEach((path)=>{
         const info = path.getAttribute('d').split(' ');
         const startString = `${info[1]},${info[2]}`;
-        if (pathEnds.indexOf(startString.slice(0, -1)) > -1){
-          path.setAttribute('class', 'link selected')
+        if (pathEnds.indexOf(startString.slice(0, -1)) > -1) {
+          path.setAttribute('class', 'link selected');
         }
-      })
+      });
       d3.selectAll('.link.selected')
         .style('stroke-opacity', 0.8)
-        .style('stroke-width', 3)
-    }
-
-
-
+        .style('stroke-width', 3);
+    };
 
     // set the dimensions and margins of the diagram
-    var margin = {top: 100, right: 110, bottom: 30, left: 200},
-        width = 1000 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+    const margin = { top: 100, right: 110, bottom: 30, left: 200 };
+    const width = 1000 - margin.left - margin.right;
+    const height = 600 - margin.top - margin.bottom;
 
     // declares a tree layout and assigns the size
-    var treemap = d3.tree()
+    const treemap = d3.tree()
         .size([height, width]);
 
-
-
-
-
-
     //  assigns the data to a hierarchy using parent-child relationships
-    var root = d3.hierarchy(this.props.routes, function(d) {
-        return d.children;
-      });
-    root.x0 = height/2;
+    const root = d3.hierarchy(this.props.routes, d=>d.children);
+    root.x0 = height / 2;
     root.y0 = 0;
 
-    // // Collapse after the second level
-    // root.children.forEach(collapse);
+    // did we get rid of our scaleExtent? might want to add it back in if we did
+    // scaleExtent take an array which holds the
+    // min scale factor at idx 0 and max scale factor at idx 1
+    // event listener will be ignored if the graph is for
+    // whatever reason outside of the set scaleExtent
 
-    // update(root);
-
-    // // Collapse the node and all it's children
-    // function collapse(d) {
-    //   if(d.children) {
-    //     d._children = d.children
-    //     d._children.forEach(collapse)
-    //     d.children = null
-    //   }
-    // }
-
-
-
-    // maps the node data to the tree layout
-
-
-    //scaleExtent take an array which holds the min scale factor at idx 0 and max scale factor at idx 1
-    //event listener will be ignored if the graph is for whatever reason outside of the set scaleExtent
-
-    //zoom ~=zoomListener
+    // zoom ~=zoomListener
     const zoom = d3.zoom()
-      // .scaleExtent([1 / 2, 4])
-      .on("zoom", () => {
-        // console.log(d3.select(".outer"))
-        // console.log("g-----", g)
-        // console.log('d3.event---', d3.event.transform);
-        //  svg.selectAll('g').attr("transform", d3.event.transform);
-        //  svg.selectAll('path.link').attr("transform", d3.event.transform);
-        // d3.event.transform.k = 1
-        // svg.select("g").attr("transform", d3.event.transform)
-        d3.select(".grab").attr("transform", d3.event.transform)
-        // svg.selectAll("path").attr("transform", d3.event.transform)
+      .on('zoom', ()=>d3.select('.grab').attr('transform', d3.event.transform));
 
-        //d3.select('#tree')
-        //d3.select('svg')
-        //d3.select('#routeMap')
-
-
-
-        // var transform = ransform(this);
-        // d3.select("#tree").attr("transform", "translate(" + transform.x + "," + transform.y + ")scale(" + transform.k + ")");
-        // d3.select('g')
-        //   .attr('transform', 'translate(' + d3.event.transform.x + ',' + d3.event.transform.y + ') scale(' + d3.event.transform.k + ')');
-
-
-
-    });
-
-      // console.log("zoom scale", zoom.scale)
     // append the svg object to the body of the page
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
 
-
-//zoom transformations only work on elements that are nested within svgs. Zoom transformations of svgs didn't work when we tried to wrap our svg in a g and transform the g, OR when we tried to directly transform our svg. We had to change our svg to a g and wrap that g in an svg and then apply the zoom transformations to the g.
-    var svg = d3.select(this.refs.routeMap).append("svg").call(zoom).attr("class", "outer").append("g")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
+    // zoom transformations only work on elements that are nested within svgs. Zoom
+    // transformations of svgs didn't work when we tried to wrap our svg in a g and
+    // transform the g, OR when we tried to directly transform our svg. We had to change
+    // our svg to a g and wrap that g in an svg and then apply the zoom transformations to the g.
+    const svg = d3.select(this.refs.routeMap).append('svg').call(zoom).attr('class', 'outer')
+          .append('g')
+          .attr('width', width + margin.left + margin.right)
+          .attr('height', height + margin.top + margin.bottom)
           .attr('id', 'tree')
           .attr('class', 'grab')
-          .attr('transform', "translate(" + 50 + "," + 0 + ")");
-
-
-
+          .attr("transform", "translate(" + 50 + "," + 0 + ")");
 
     // var zoomer = svg.append("rect")
     //       .attr("width", width)
@@ -173,7 +118,7 @@ export default class Tree extends React.Component {
     //       .style("pointer-events", "all")
     //       .call(zoom)
 
-    var g = svg.append("g")
+    svg.append('g');
 
     // zoomer.call(zoom.transform, d3.zoomIdentity.translate(150, 0))
     //g~= svgGroup

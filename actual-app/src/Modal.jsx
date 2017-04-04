@@ -81,6 +81,8 @@ export default class Modal extends React.Component {
         requestFormInfo = Object.assign({}, this.state.bodyVals, { [idx]: e.target.value });
         this.setState({ bodyVals: requestFormInfo });
         break;
+      default:
+        break;
     }
   }
 

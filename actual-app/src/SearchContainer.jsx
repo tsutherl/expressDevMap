@@ -32,10 +32,9 @@ class SearchContainer extends Component {
     this.state = {
       routeList: [],
       inputState: '',
-    }
+    };
     this.onOptionSelect = this.onOptionSelect.bind(this);
     this.onButtonClick = this.onButtonClick.bind(this);
-    // this.downOnInput = this.downOnInput.bind(this);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -53,21 +52,22 @@ class SearchContainer extends Component {
     const colonPlace = this.state.inputState.indexOf(':');
     const pathOnly = this.state.inputState.slice(colonPlace + 2);
     const verbOnly = this.state.inputState.slice(0, colonPlace).toLowerCase();
-    const pathParts = pathOnly.split('/').slice(1)
+    const pathParts = pathOnly.split('/').slice(1);
     // try finding node from tree top
     // find the node from the DOM
     let currNode = document.querySelector('#tree g.node');
-    for (let i = 0; i < pathParts.length; i++) {
+    for (let i = 0; i < pathParts.length; i += 1) {
       const currChildren = currNode.__data__ ? currNode.__data__.children : currNode.children;
       currNode = currChildren.filter(child=>child.data.name === `/${pathParts[i]}`);
       if (currNode.length > 1) {
-        currNode = currNode.filter(node=>node.data.verb === verbOnly)
+        currNode = currNode.filter(node=>node.data.verb === verbOnly);
       }
-      currNode = currNode[0]
+      currNode = currNode[0];
     }
     // simulate the click
     const leaves = document.querySelectorAll('#tree g.node--leaf');
-    const rightNode = Array.prototype.filter.call(leaves, leaf=>leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y)[0];
+    const rightNode = Array.prototype.filter.call(
+      leaves, leaf=>leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y)[0];
     simulateClick(rightNode.firstChild);
   }
 
