@@ -1,33 +1,30 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import Search from './Search.jsx';
+import Search from './Search';
 
+// helper functions
 
-//helper functions
-
-//gets terminal nodes from the routes object
-const treeToRoutes = (array, prefix, node) => {
-  const currString = `${prefix}${node.name}`
+// gets terminal nodes from the routes object
+const treeToRoutes = (array, prefix, node)=>{
+  const currString = `${prefix}${node.name}`;
   if (node.verb) {
     array.push(`${node.verb.toUpperCase()}: ${currString}`);
   }
-  if (node.children){
-    node.children.forEach(child => {
-      treeToRoutes(array, currString , child)
-    })
+  if (node.children) {
+    node.children.forEach(child=>treeToRoutes(array, currString, child));
   }
-}
+};
 
-//handles the tricky bit of simulating clicks on a d3 element
-function simulateClick(circle) {
-    const event = new MouseEvent('click', {
-      view: window,
-      bubbles: true,
-      cancelable: true,
-    })
-    circle.dispatchEvent(event);
-}
+// handles the tricky bit of simulating clicks on a d3 element
+const simulateClick = (circle)=>{
+  const event = new MouseEvent('click', {
+    view: window,
+    bubbles: true,
+    cancelable: true,
+  });
+  circle.dispatchEvent(event);
+};
 
 class SearchContainer extends Component {
   constructor () {
@@ -42,56 +39,51 @@ class SearchContainer extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    let list = []
-    nextProps.routes && nextProps.routes.children.forEach(child => {
-      treeToRoutes(list, '', child);
-    })
-    this.setState({routeList: list})
+    const list = [];
+    nextProps.routes && nextProps.routes.children.forEach(child=>treeToRoutes(list, '', child))
+    this.setState({ routeList: list });
   }
 
   onOptionSelect (e) {
-    this.setState({inputState: e}, this.onButtonClick)
+    this.setState({ inputState: e }, this.onButtonClick);
   }
 
   onButtonClick () {
-    //parse the route
+    // parse the route
     const colonPlace = this.state.inputState.indexOf(':');
-    const pathOnly = this.state.inputState.slice(colonPlace+2);
+    const pathOnly = this.state.inputState.slice(colonPlace + 2);
     const verbOnly = this.state.inputState.slice(0, colonPlace).toLowerCase();
     const pathParts = pathOnly.split('/').slice(1)
-    console.log(pathParts)
-    //try finding node from tree top
-    //find the node from the DOM
+    // try finding node from tree top
+    // find the node from the DOM
     let currNode = document.querySelector('#tree g.node');
-    for (let i = 0; i < pathParts.length; i++){
+    for (let i = 0; i < pathParts.length; i++) {
       const currChildren = currNode.__data__ ? currNode.__data__.children : currNode.children;
-      console.log('children',currChildren)
-      currNode = currChildren.filter(child => {return child.data.name === `/${pathParts[i]}`});
-      if(currNode.length > 1) {
-        currNode = currNode.filter(node => {return node.data.verb === verbOnly})
+      currNode = currChildren.filter(child=>child.data.name === `/${pathParts[i]}`);
+      if (currNode.length > 1) {
+        currNode = currNode.filter(node=>node.data.verb === verbOnly)
       }
       currNode = currNode[0]
     }
-    // //simulate the click
+    // simulate the click
     const leaves = document.querySelectorAll('#tree g.node--leaf');
-    const rightNode = Array.prototype.filter.call(leaves, leaf => {return leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y})[0];
-    
+    const rightNode = Array.prototype.filter.call(leaves, leaf=>leaf.__data__.x === currNode.x && leaf.__data__.y === currNode.y)[0];
     simulateClick(rightNode.firstChild);
   }
 
   render () {
     return (
-      <Search 
-        routeList={this.state.routeList} 
-        optionSelect={this.onOptionSelect} 
+      <Search
+        routeList={this.state.routeList}
+        optionSelect={this.onOptionSelect}
         buttonClick={this.onButtonClick}
       />
-    )
+    );
   }
 }
 
-const mapStateToProps = ({routes}) => ({
-  routes
-})
+const mapStateToProps = ({ routes })=>({
+  routes,
+});
 
 export default connect(mapStateToProps)(SearchContainer);

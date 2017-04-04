@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: './src/index.js',
+  entry: './src/index.jsx',
   output: {
     path: './assets',
     filename: 'app.js',

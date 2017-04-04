@@ -1,25 +1,19 @@
-import React from 'react'
-import * as d3 from "d3"
-import d3Force from 'd3-force';
+import React from 'react';
+import * as d3 from 'd3';
 
 export default class Tree extends React.Component {
-  constructor(props){
-    super(props);
-  }
-
   componentDidMount () {
-    const endRouteHandleClick = (node) => {
+    const endRouteHandleClick = (node)=>{
       const testRoute = getRoute(node);
-      let verb = getVerb(node);
+      const verb = getVerb(node);
       this.props.clearResponse();
       this.props.setRouteVerb(verb);
       this.props.setTestRoute(testRoute);
       this.props.setTestNode(node);
       if (!this.props.showModal) this.props.showModalNow();
+    };
 
-    }
-
-    const routerHandleClick = (node) => {
+    const routerHandleClick = (node)=>{
       if (this.props.showModal) this.props.hideModal();
     }
 
@@ -37,13 +31,13 @@ export default class Tree extends React.Component {
       return node.data.verb;
     }
 
-    const resetTree = () => {
+    const resetTree = ()=>{
       d3.selectAll('circle')
         .attr('r', 7.5)//reset circle size
         .style('stroke-width', 1)
         .style("stroke-opacity", 0.4)
       d3.selectAll('text')
-        .attr("x", function(d) {
+        .attr('x', function(d) {
           return d.height > 0 ?  -10 : 10});//reset text position
       d3.selectAll('path')
         .attr('class', 'link')

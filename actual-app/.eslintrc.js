@@ -13,4 +13,7 @@ module.exports = {
         "react/require-default-props": [0],
         "react/prop-types": [0]
     },
+    "env": {
+        "browser": true
+    }
 };

@@ -20,11 +20,11 @@ const rootReducer = combineReducers({
 
 // construct our store with rootReducer and middleware
 const store = createStore(
-    rootReducer,
-    applyMiddleware(
-        thunkMiddleware,
-        createLogger({ collapsed: true }),
-    ),
+  rootReducer,
+  applyMiddleware(
+    thunkMiddleware,
+    createLogger({ collapsed: true }),
+  ),
 );
 
 export default store;
