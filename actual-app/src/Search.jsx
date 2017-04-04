@@ -3,11 +3,11 @@ import {Typeahead} from 'react-typeahead';
 
 
 
-export default (props) => {
+export default (props)=>{
   return (
     <div id='search-bar'>
       <div className='search-inner'>
-        <Typeahead 
+        <Typeahead
           options={props.routeList}
           maxVisible={10}
           placeholder={'Filter Routes'}

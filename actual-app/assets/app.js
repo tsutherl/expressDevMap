@@ -3888,12 +3888,6 @@ module.exports = React;
 
 /***/ }),
 /* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(154);
-
-/***/ }),
-/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3911,7 +3905,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -3961,7 +3955,7 @@ if (true) {
 
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3973,7 +3967,7 @@ if (true) {
 
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3999,7 +3993,7 @@ module.exports = emptyObject;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4283,7 +4277,7 @@ module.exports = EventPluginHub;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4299,7 +4293,7 @@ module.exports = EventPluginHub;
 
 
 
-var EventPluginHub = __webpack_require__(34);
+var EventPluginHub = __webpack_require__(33);
 var EventPluginUtils = __webpack_require__(63);
 
 var accumulateInto = __webpack_require__(118);
@@ -4423,7 +4417,7 @@ module.exports = EventPropagators;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4476,7 +4470,7 @@ var ReactInstanceMap = {
 module.exports = ReactInstanceMap;
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4540,7 +4534,7 @@ SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 module.exports = SyntheticUIEvent;
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4580,6 +4574,12 @@ var component = oneOfType([func, string]);
 var components = oneOfType([component, object]);
 var route = oneOfType([object, element]);
 var routes = oneOfType([route, arrayOf(route)]);
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(154);
 
 /***/ }),
 /* 39 */
@@ -5275,7 +5275,7 @@ module.exports = ReactBrowserEventEmitter;
 
 
 
-var SyntheticUIEvent = __webpack_require__(37);
+var SyntheticUIEvent = __webpack_require__(36);
 var ViewportMetrics = __webpack_require__(117);
 
 var getEventModifierState = __webpack_require__(71);
@@ -5932,44 +5932,41 @@ module.exports = defaults;
 "use strict";
 
 
-/*---------------CONSTANTS-----------------*/
-
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-var SHOW_MODAL = 'SHOW_MODAL';
+/* ---------------CONSTANTS----------------- */
 
+var SHOW_MODAL = 'SHOW_MODAL';
 var HIDE_MODAL = 'HIDE_MODAL';
 
-/*---------------ACTION CREATORS-----------------*/
+/* ---------------ACTION CREATORS----------------- */
 
 var showModal = exports.showModal = function showModal() {
-    return {
-        type: SHOW_MODAL
-    };
+  return {
+    type: SHOW_MODAL
+  };
 };
-
 var hideModal = exports.hideModal = function hideModal() {
-    return {
-        type: HIDE_MODAL
-    };
+  return {
+    type: HIDE_MODAL
+  };
 };
 
-/*---------------- REDUCER ---------------- */
+/* ---------------- REDUCER ---------------- */
 
 var modalReducer = exports.modalReducer = function modalReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-    var action = arguments[1];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var action = arguments[1];
 
-    switch (action.type) {
-        case SHOW_MODAL:
-            return true;
-            break;
-        case HIDE_MODAL:
-            return false;
-            break;
-    }
-    return state;
+  switch (action.type) {
+    case SHOW_MODAL:
+      return true;
+    case HIDE_MODAL:
+      return false;
+    default:
+      return state;
+  }
 };
 
 /***/ }),
@@ -5980,90 +5977,81 @@ var modalReducer = exports.modalReducer = function modalReducer() {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.selectedReducer = exports.routeTestAsync = exports.setRouteVerb = exports.setTestNode = exports.setTestRoute = undefined;
+exports.testRoute = exports.responseReducer = exports.clearResponse = exports.routeTestResponse = undefined;
 
-var _axios = __webpack_require__(29);
+var _axios = __webpack_require__(38);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _requestReducer = __webpack_require__(92);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// action creators and reducers in this file deal with all the information we need
-// to select a route end point (node from our map) to test, put that route's information
-// on our store, make an asynchronous request to test the route, and return the results
-// of that test to the store
+/* ---------------CONSTANTS----------------- */
 
+var RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
+var CLEAR_RESPONSE = 'CLEAR_RESPONSE';
 
-/*---------------CONSTANTS-----------------*/
+/* ---------------ACTION CREATORS----------------- */
 
-var RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
+var routeTestResponse = exports.routeTestResponse = function routeTestResponse(result) {
+  return {
+    type: RECEIVE_TEST_RESULT,
+    result: result
+  };
+};
+var clearResponse = exports.clearResponse = function clearResponse() {
+  return {
+    type: CLEAR_RESPONSE
+  };
+};
 
-var SET_TEST_NODE = 'SET_TEST_NODE';
+/* ---------------- REDUCER ---------------- */
 
-var SET_ROUTE_VERB = 'SET_ROUTE_VERB';
+var responseReducer = exports.responseReducer = function responseReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments[1];
 
-/*---------------ACTION CREATORS-----------------*/
+  switch (action.type) {
+    case RECEIVE_TEST_RESULT:
+      // TODO: what exactly do we want the response to look like? an object
+      // probably with more info than this
+      return action.result;
+    case CLEAR_RESPONSE:
+      return null;
+    default:
+      return state;
 
-var setTestRoute = exports.setTestRoute = function setTestRoute(testRoute) {
-    return {
-        type: RECEIVE_TEST_ROUTE,
-        testRoute: testRoute
+  }
+};
+
+/* ---------------- DISPATCHERS ---------------- */
+
+var testRoute = exports.testRoute = function testRoute(route, verb, info) {
+  var headers = { headers: info.headers };
+  var body = info.body;
+  var request = void 0;
+  var slicedRoute = route.slice(1);
+  if (verb === 'post' || verb === 'put') {
+    request = function request() {
+      return _axios2.default[verb](slicedRoute, body, headers);
     };
-};
-
-var setTestNode = exports.setTestNode = function setTestNode(node) {
-    return {
-        type: SET_TEST_NODE,
-        node: node
+  } else {
+    request = function request() {
+      return _axios2.default[verb](slicedRoute, headers);
     };
+  }
+  return function (dispatch) {
+    request().then(function (res) {
+      dispatch(routeTestResponse(res.data));
+      dispatch((0, _requestReducer.routeTestRequestInfo)(info));
+    }).catch(console.error);
+  };
 };
 
-var setRouteVerb = exports.setRouteVerb = function setRouteVerb(verb) {
-    return {
-        type: SET_ROUTE_VERB,
-        verb: verb
-    };
-};
-
-/*---------------ASYNC ACTION CREATORS-----------------*/
-
-var routeTestAsync = exports.routeTestAsync = function routeTestAsync(route, verb) {
-    var routeResponse = void 0;
-    route = route.slice(1);
-
-    return function (dispatch) {
-        _axios2.default[verb](route).then(function (res) {
-            routeResponse = res.data;
-            dispatch(routeTestResult(res.data));
-        }).catch(console.error);
-    };
-};
-
-var selectedReducer = exports.selectedReducer = function selectedReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { activeTestNode: null, testRoute: null };
-    var action = arguments[1];
-
-
-    var newState = Object.assign({}, state);
-
-    switch (action.type) {
-
-        case RECEIVE_TEST_ROUTE:
-            newState.testRoute = action.testRoute;
-            break;
-        case SET_TEST_NODE:
-            newState.activeTestNode = action.node;
-            break;
-        case SET_ROUTE_VERB:
-            newState.selectedRouteVerb = action.verb;
-            break;
-        default:
-            return state;
-    }
-    return newState;
-};
+// store everything on the store state
 
 /***/ }),
 /* 51 */
@@ -7613,7 +7601,7 @@ module.exports = ReactErrorUtils;
 var _prodInvariant = __webpack_require__(4);
 
 var ReactCurrentOwner = __webpack_require__(14);
-var ReactInstanceMap = __webpack_require__(36);
+var ReactInstanceMap = __webpack_require__(35);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactUpdates = __webpack_require__(13);
 
@@ -8937,7 +8925,7 @@ var _prodInvariant = __webpack_require__(22);
 var ReactNoopUpdateQueue = __webpack_require__(82);
 
 var canDefineProperty = __webpack_require__(84);
-var emptyObject = __webpack_require__(33);
+var emptyObject = __webpack_require__(32);
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
 
@@ -9257,36 +9245,34 @@ module.exports = getIteratorFn;
 "use strict";
 
 
-/*--------------- CONSTANT -----------------*/
-
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
+/* --------------- CONSTANT ----------------- */
+
 var RECEIVE_ROUTES = 'RECEIVE_ROUTES';
 
-/*---------------ACTION CREATOR-----------------*/
+/* ---------------ACTION CREATOR----------------- */
 
 var loadRoutes = exports.loadRoutes = function loadRoutes(routes) {
-	return {
-		type: RECEIVE_ROUTES,
-		routes: routes
-	};
+  return {
+    type: RECEIVE_ROUTES,
+    routes: routes
+  };
 };
 
-/*---------------REDUCER-----------------*/
+/* ---------------REDUCER----------------- */
 
 var routeReducer = exports.routeReducer = function routeReducer() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-	var action = arguments[1];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments[1];
 
-
-	switch (action.type) {
-		case RECEIVE_ROUTES:
-			return action.routes;
-
-	}
-
-	return state;
+  switch (action.type) {
+    case RECEIVE_ROUTES:
+      return action.routes;
+    default:
+      return state;
+  }
 };
 
 /***/ }),
@@ -9601,79 +9587,60 @@ var requestReducer = exports.requestReducer = function requestReducer() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.testRoute = exports.responseReducer = exports.clearResponse = exports.routeTestResponse = undefined;
-
-var _axios = __webpack_require__(29);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _requestReducer = __webpack_require__(92);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+// action creators and reducers in this file deal with all the information we need
+// to select a route end point (node from our map) to test, put that route's information
+// on our store, make an asynchronous request to test the route, and return the results
+// of that test to the store
 
 /* ---------------CONSTANTS----------------- */
 
-var RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
-var CLEAR_RESPONSE = 'CLEAR_RESPONSE';
+var RECEIVE_TEST_ROUTE = 'RECEIVE_TEST_ROUTE';
+var SET_TEST_NODE = 'SET_TEST_NODE';
+var SET_ROUTE_VERB = 'SET_ROUTE_VERB';
 
 /* ---------------ACTION CREATORS----------------- */
 
-var routeTestResponse = exports.routeTestResponse = function routeTestResponse(result) {
+var setTestRoute = exports.setTestRoute = function setTestRoute(testRoute) {
   return {
-    type: RECEIVE_TEST_RESULT,
-    result: result
+    type: RECEIVE_TEST_ROUTE,
+    testRoute: testRoute
   };
 };
-var clearResponse = exports.clearResponse = function clearResponse() {
+var setTestNode = exports.setTestNode = function setTestNode(node) {
   return {
-    type: CLEAR_RESPONSE
+    type: SET_TEST_NODE,
+    node: node
+  };
+};
+var setRouteVerb = exports.setRouteVerb = function setRouteVerb(verb) {
+  return {
+    type: SET_ROUTE_VERB,
+    verb: verb
   };
 };
 
-/* ---------------- REDUCER ---------------- */
+/* ---------------REDUCER----------------- */
 
-var responseReducer = exports.responseReducer = function responseReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+var selectedReducer = exports.selectedReducer = function selectedReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { activeTestNode: null, testRoute: null };
   var action = arguments[1];
 
+  var newState = Object.assign({}, state);
   switch (action.type) {
-    case RECEIVE_TEST_RESULT:
-      // TODO: what exactly do we want the response to look like? an object
-      // probably with more info than this
-      return action.result;
-    case CLEAR_RESPONSE:
-      return null;
+    case RECEIVE_TEST_ROUTE:
+      newState.testRoute = action.testRoute;
+      break;
+    case SET_TEST_NODE:
+      newState.activeTestNode = action.node;
+      break;
+    case SET_ROUTE_VERB:
+      newState.selectedRouteVerb = action.verb;
+      break;
     default:
       return state;
-
   }
+  return newState;
 };
-
-/* ---------------- DISPATCHERS ---------------- */
-
-var testRoute = exports.testRoute = function testRoute(route, verb, info) {
-  var headers = { headers: info.headers };
-  var body = info.body;
-  var request = void 0;
-  var slicedRoute = route.slice(1);
-  if (verb === 'post' || verb === 'put') {
-    request = function request() {
-      return _axios2.default[verb](slicedRoute, body, headers);
-    };
-  } else {
-    request = function request() {
-      return _axios2.default[verb](slicedRoute, headers);
-    };
-  }
-  return function (dispatch) {
-    request().then(function (res) {
-      dispatch(routeTestResponse(res.data));
-      dispatch((0, _requestReducer.routeTestRequestInfo)(info));
-    }).catch(console.error);
-  };
-};
-
-// store everything on the store state
 
 /***/ }),
 /* 94 */
@@ -11475,14 +11442,14 @@ var ReactDOMComponentTree = __webpack_require__(6);
 var ReactDOMContainerInfo = __webpack_require__(261);
 var ReactDOMFeatureFlags = __webpack_require__(263);
 var ReactFeatureFlags = __webpack_require__(111);
-var ReactInstanceMap = __webpack_require__(36);
+var ReactInstanceMap = __webpack_require__(35);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactMarkupChecksum = __webpack_require__(283);
 var ReactReconciler = __webpack_require__(25);
 var ReactUpdateQueue = __webpack_require__(68);
 var ReactUpdates = __webpack_require__(13);
 
-var emptyObject = __webpack_require__(33);
+var emptyObject = __webpack_require__(32);
 var instantiateReactComponent = __webpack_require__(122);
 var invariant = __webpack_require__(1);
 var setInnerHTML = __webpack_require__(46);
@@ -13278,7 +13245,7 @@ function isPromise(obj) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__RouteUtils__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PatternUtils__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__InternalPropTypes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__InternalPropTypes__ = __webpack_require__(37);
 
 
 
@@ -13795,7 +13762,7 @@ var React = __webpack_require__(3);
 var TypeaheadSelector = __webpack_require__(346);
 var KeyEvent = __webpack_require__(139);
 var fuzzy = __webpack_require__(229);
-var classNames = __webpack_require__(31);
+var classNames = __webpack_require__(30);
 
 /**
  * A "typeahead", an auto-completing text input
@@ -14900,16 +14867,14 @@ module.exports = function(module) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(30);
+var _reactRedux = __webpack_require__(29);
 
 var _TreeContainer = __webpack_require__(180);
 
@@ -14925,49 +14890,28 @@ var _SearchContainer2 = _interopRequireDefault(_SearchContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var App = function (_React$Component) {
-    _inherits(App, _React$Component);
-
-    function App() {
-        _classCallCheck(this, App);
-
-        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
-    }
-
-    _createClass(App, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                null,
-                this.props.showModal ? _react2.default.createElement(_ModalContainer2.default, null) : null,
-                _react2.default.createElement(
-                    'h1',
-                    null,
-                    'expressDevMap'
-                ),
-                _react2.default.createElement(_SearchContainer2.default, null),
-                this.props.routes ? _react2.default.createElement(_TreeContainer2.default, null) : null
-            );
-        }
-    }]);
-
-    return App;
-}(_react2.default.Component);
+var App = function App(props) {
+  return _react2.default.createElement(
+    'div',
+    null,
+    props.showModal ? _react2.default.createElement(_ModalContainer2.default, null) : null,
+    _react2.default.createElement(
+      'h1',
+      null,
+      'expressDevMap'
+    ),
+    _react2.default.createElement(_SearchContainer2.default, null),
+    props.routes ? _react2.default.createElement(_TreeContainer2.default, null) : null
+  );
+};
 
 var mapStateToProps = function mapStateToProps(_ref) {
-    var routes = _ref.routes,
-        showModal = _ref.showModal;
-    return {
-        routes: routes,
-        showModal: showModal
-    };
+  var routes = _ref.routes,
+      showModal = _ref.showModal;
+  return {
+    routes: routes,
+    showModal: showModal
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
@@ -14983,10 +14927,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _axios = __webpack_require__(29);
-
-var _axios2 = _interopRequireDefault(_axios);
-
 var _redux = __webpack_require__(147);
 
 var _reduxLogger = __webpack_require__(361);
@@ -15001,11 +14941,11 @@ var _modalReducer = __webpack_require__(49);
 
 var _routeReducer = __webpack_require__(86);
 
-var _selectedReducer = __webpack_require__(50);
+var _selectedReducer = __webpack_require__(93);
 
 var _requestReducer = __webpack_require__(92);
 
-var _responseReducer = __webpack_require__(93);
+var _responseReducer = __webpack_require__(50);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15968,7 +15908,7 @@ module.exports = function spread(callback) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -15994,64 +15934,70 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Body = function (_React$Component) {
-    _inherits(Body, _React$Component);
+  _inherits(Body, _React$Component);
 
-    function Body(props) {
-        _classCallCheck(this, Body);
+  function Body() {
+    _classCallCheck(this, Body);
 
-        return _possibleConstructorReturn(this, (Body.__proto__ || Object.getPrototypeOf(Body)).call(this));
+    return _possibleConstructorReturn(this, (Body.__proto__ || Object.getPrototypeOf(Body)).apply(this, arguments));
+  }
+
+  _createClass(Body, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.props.bodyKVPairs.length === 0) this.props.addInput(0);
     }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      if (this.props.bodyKVPairs.length === 0) this.props.addInput(0);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'body' },
+        _react2.default.createElement(
+          'form',
+          { className: 'radio-buttons' },
+          _react2.default.createElement(
+            'div',
+            { className: 'radio' },
+            _react2.default.createElement(
+              'label',
+              null,
+              _react2.default.createElement('input', { type: 'radio', value: 'urlencoded', checked: this.props.bodyTypeSelected === 'urlencoded', onChange: this.props.toggleBodyType }),
+              'urlencoded'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'radio' },
+            _react2.default.createElement(
+              'label',
+              null,
+              _react2.default.createElement('input', { type: 'radio', value: 'json', checked: this.props.bodyTypeSelected === 'json', onChange: this.props.toggleBodyType }),
+              'JSON'
+            )
+          )
+        ),
+        this.props.bodyTypeSelected === 'urlencoded' ? _react2.default.createElement(_Urlencoded2.default, {
+          onChange: this.props.onChange,
+          addInput: this.props.addInput,
+          removeInput: this.props.removeInput,
+          bodyKVPairs: this.props.bodyKVPairs,
+          setUrlEn: this.props.setUrlEn
+        }) : _react2.default.createElement(_Json2.default, {
+          setJson: this.props.setJson,
+          onChangeJson: this.props.onChangeJson,
+          bodyJson: this.props.bodyJson
+        })
+      );
+    }
+  }]);
 
-    _createClass(Body, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            if (this.props.bodyKVPairs.length === 0) this.props.addInput(0);
-        }
-    }, {
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate() {
-            if (this.props.bodyKVPairs.length === 0) this.props.addInput(0);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: 'body' },
-                _react2.default.createElement(
-                    'form',
-                    { className: 'radio-buttons' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'radio' },
-                        _react2.default.createElement(
-                            'label',
-                            null,
-                            _react2.default.createElement('input', { type: 'radio', value: 'urlencoded', checked: this.props.bodyTypeSelected === 'urlencoded', onChange: this.props.toggleBodyType }),
-                            'urlencoded'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'radio' },
-                        _react2.default.createElement(
-                            'label',
-                            null,
-                            _react2.default.createElement('input', { type: 'radio', value: 'json', checked: this.props.bodyTypeSelected === 'json', onChange: this.props.toggleBodyType }),
-                            'JSON'
-                        )
-                    )
-                ),
-                this.props.bodyTypeSelected === 'urlencoded' ? _react2.default.createElement(_Urlencoded2.default, { onChange: this.props.onChange,
-                    addInput: this.props.addInput, removeInput: this.props.removeInput, bodyKVPairs: this.props.bodyKVPairs, setUrlEn: this.props.setUrlEn }) : _react2.default.createElement(_Json2.default, {
-                    setJson: this.props.setJson,
-                    onChangeJson: this.props.onChangeJson,
-                    bodyJson: this.props.bodyJson })
-            );
-        }
-    }]);
-
-    return Body;
+  return Body;
 }(_react2.default.Component);
 
 exports.default = Body;
@@ -16603,9 +16549,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reactRedux = __webpack_require__(30);
+var _reactRedux = __webpack_require__(29);
 
-var _responseReducer = __webpack_require__(93);
+var _responseReducer = __webpack_require__(50);
 
 var _modalReducer = __webpack_require__(49);
 
@@ -16705,13 +16651,6 @@ var Response = function (_React$Component) {
   return Response;
 }(_react2.default.Component);
 
-// This is probably not right
-
-
-Response.propTypes = {
-  response: _react2.default.PropTypes.node || _react2.default.PropTypes.null
-};
-
 exports.default = Response;
 
 /***/ }),
@@ -16772,7 +16711,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(30);
+var _reactRedux = __webpack_require__(29);
 
 var _Search = __webpack_require__(177);
 
@@ -17300,17 +17239,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reactRedux = __webpack_require__(30);
+var _reactRedux = __webpack_require__(29);
 
 var _Tree = __webpack_require__(179);
 
 var _Tree2 = _interopRequireDefault(_Tree);
 
-var _selectedReducer = __webpack_require__(50);
+var _selectedReducer = __webpack_require__(93);
 
 var _modalReducer = __webpack_require__(49);
 
-var _responseReducer = __webpack_require__(93);
+var _responseReducer = __webpack_require__(50);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17807,7 +17746,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constant__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constant__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__jiggle__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_d3_quadtree__ = __webpack_require__(96);
 
@@ -17915,7 +17854,7 @@ function y(d) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constant__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constant__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__jiggle__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_d3_collection__ = __webpack_require__(94);
 
@@ -18041,7 +17980,7 @@ function find(nodeById, nodeId) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constant__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constant__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__jiggle__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_d3_quadtree__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__simulation__ = __webpack_require__(95);
@@ -18166,7 +18105,7 @@ function find(nodeById, nodeId) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constant__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constant__ = __webpack_require__(31);
 
 
 /* harmony default export */ __webpack_exports__["a"] = function(x) {
@@ -18215,7 +18154,7 @@ function find(nodeById, nodeId) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constant__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constant__ = __webpack_require__(31);
 
 
 /* harmony default export */ __webpack_exports__["a"] = function(y) {
@@ -55037,7 +54976,7 @@ module.exports = AutoFocusUtils;
 
 
 
-var EventPropagators = __webpack_require__(35);
+var EventPropagators = __webpack_require__(34);
 var ExecutionEnvironment = __webpack_require__(7);
 var FallbackCompositionState = __webpack_require__(254);
 var SyntheticCompositionEvent = __webpack_require__(297);
@@ -55642,8 +55581,8 @@ module.exports = CSSPropertyOperations;
 
 
 
-var EventPluginHub = __webpack_require__(34);
-var EventPropagators = __webpack_require__(35);
+var EventPluginHub = __webpack_require__(33);
+var EventPropagators = __webpack_require__(34);
 var ExecutionEnvironment = __webpack_require__(7);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactUpdates = __webpack_require__(13);
@@ -56053,7 +55992,7 @@ module.exports = DefaultEventPluginOrder;
 
 
 
-var EventPropagators = __webpack_require__(35);
+var EventPropagators = __webpack_require__(34);
 var ReactDOMComponentTree = __webpack_require__(6);
 var SyntheticMouseEvent = __webpack_require__(43);
 
@@ -56677,7 +56616,7 @@ var React = __webpack_require__(28);
 var ReactComponentEnvironment = __webpack_require__(66);
 var ReactCurrentOwner = __webpack_require__(14);
 var ReactErrorUtils = __webpack_require__(67);
-var ReactInstanceMap = __webpack_require__(36);
+var ReactInstanceMap = __webpack_require__(35);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactNodeTypes = __webpack_require__(115);
 var ReactReconciler = __webpack_require__(25);
@@ -56686,7 +56625,7 @@ if (process.env.NODE_ENV !== 'production') {
   var checkReactTypeSpec = __webpack_require__(306);
 }
 
-var emptyObject = __webpack_require__(33);
+var emptyObject = __webpack_require__(32);
 var invariant = __webpack_require__(1);
 var shallowEqual = __webpack_require__(55);
 var shouldUpdateReactComponent = __webpack_require__(74);
@@ -57706,7 +57645,7 @@ var DOMLazyTree = __webpack_require__(24);
 var DOMNamespaces = __webpack_require__(62);
 var DOMProperty = __webpack_require__(17);
 var DOMPropertyOperations = __webpack_require__(107);
-var EventPluginHub = __webpack_require__(34);
+var EventPluginHub = __webpack_require__(33);
 var EventPluginRegistry = __webpack_require__(41);
 var ReactBrowserEventEmitter = __webpack_require__(42);
 var ReactDOMComponentFlags = __webpack_require__(108);
@@ -60799,7 +60738,7 @@ module.exports = REACT_ELEMENT_TYPE;
 
 
 
-var EventPluginHub = __webpack_require__(34);
+var EventPluginHub = __webpack_require__(33);
 
 function runEventQueueInBatch(events) {
   EventPluginHub.enqueueEvents(events);
@@ -61037,7 +60976,7 @@ module.exports = ReactHostOperationHistoryHook;
 
 
 var DOMProperty = __webpack_require__(17);
-var EventPluginHub = __webpack_require__(34);
+var EventPluginHub = __webpack_require__(33);
 var EventPluginUtils = __webpack_require__(63);
 var ReactComponentEnvironment = __webpack_require__(66);
 var ReactEmptyComponent = __webpack_require__(110);
@@ -61176,7 +61115,7 @@ module.exports = ReactMarkupChecksum;
 var _prodInvariant = __webpack_require__(4);
 
 var ReactComponentEnvironment = __webpack_require__(66);
-var ReactInstanceMap = __webpack_require__(36);
+var ReactInstanceMap = __webpack_require__(35);
 var ReactInstrumentation = __webpack_require__(11);
 
 var ReactCurrentOwner = __webpack_require__(14);
@@ -62605,7 +62544,7 @@ module.exports = SVGDOMPropertyConfig;
 
 
 
-var EventPropagators = __webpack_require__(35);
+var EventPropagators = __webpack_require__(34);
 var ExecutionEnvironment = __webpack_require__(7);
 var ReactDOMComponentTree = __webpack_require__(6);
 var ReactInputSelection = __webpack_require__(113);
@@ -62805,7 +62744,7 @@ module.exports = SelectEventPlugin;
 var _prodInvariant = __webpack_require__(4);
 
 var EventListener = __webpack_require__(97);
-var EventPropagators = __webpack_require__(35);
+var EventPropagators = __webpack_require__(34);
 var ReactDOMComponentTree = __webpack_require__(6);
 var SyntheticAnimationEvent = __webpack_require__(295);
 var SyntheticClipboardEvent = __webpack_require__(296);
@@ -62816,7 +62755,7 @@ var SyntheticMouseEvent = __webpack_require__(43);
 var SyntheticDragEvent = __webpack_require__(298);
 var SyntheticTouchEvent = __webpack_require__(302);
 var SyntheticTransitionEvent = __webpack_require__(303);
-var SyntheticUIEvent = __webpack_require__(37);
+var SyntheticUIEvent = __webpack_require__(36);
 var SyntheticWheelEvent = __webpack_require__(304);
 
 var emptyFunction = __webpack_require__(12);
@@ -63204,7 +63143,7 @@ module.exports = SyntheticDragEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(37);
+var SyntheticUIEvent = __webpack_require__(36);
 
 /**
  * @interface FocusEvent
@@ -63287,7 +63226,7 @@ module.exports = SyntheticInputEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(37);
+var SyntheticUIEvent = __webpack_require__(36);
 
 var getEventCharCode = __webpack_require__(70);
 var getEventKey = __webpack_require__(310);
@@ -63376,7 +63315,7 @@ module.exports = SyntheticKeyboardEvent;
 
 
 
-var SyntheticUIEvent = __webpack_require__(37);
+var SyntheticUIEvent = __webpack_require__(36);
 
 var getEventModifierState = __webpack_require__(71);
 
@@ -63760,7 +63699,7 @@ var _prodInvariant = __webpack_require__(4);
 
 var ReactCurrentOwner = __webpack_require__(14);
 var ReactDOMComponentTree = __webpack_require__(6);
-var ReactInstanceMap = __webpack_require__(36);
+var ReactInstanceMap = __webpack_require__(35);
 
 var getHostComponentFromComposite = __webpack_require__(120);
 var invariant = __webpack_require__(1);
@@ -64915,7 +64854,7 @@ var IndexLink = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createClass({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Redirect__ = __webpack_require__(132);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__InternalPropTypes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__InternalPropTypes__ = __webpack_require__(37);
 
 
 
@@ -64974,7 +64913,7 @@ var IndexRedirect = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createClass({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__RouteUtils__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__InternalPropTypes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__InternalPropTypes__ = __webpack_require__(37);
 
 
 
@@ -65031,7 +64970,7 @@ var IndexRoute = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createClass({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__RouteUtils__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__InternalPropTypes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__InternalPropTypes__ = __webpack_require__(37);
 
 
 
@@ -65088,7 +65027,7 @@ var Route = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createClass({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__createTransitionManager__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__InternalPropTypes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__InternalPropTypes__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RouterContext__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__RouteUtils__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__RouterUtils__ = __webpack_require__(133);
@@ -66208,7 +66147,7 @@ var React = __webpack_require__(3);
 var Token = __webpack_require__(344);
 var KeyEvent = __webpack_require__(139);
 var Typeahead = __webpack_require__(140);
-var classNames = __webpack_require__(31);
+var classNames = __webpack_require__(30);
 
 function _arraysAreDifferent(array1, array2) {
   if (array1.length != array2.length) {
@@ -66421,7 +66360,7 @@ module.exports = TypeaheadTokenizer;
 /***/ (function(module, exports, __webpack_require__) {
 
 var React = __webpack_require__(3);
-var classNames = __webpack_require__(31);
+var classNames = __webpack_require__(30);
 
 /**
  * Encapsulates the rendering of an option that has been "selected" in a
@@ -66486,7 +66425,7 @@ module.exports = Token;
 /***/ (function(module, exports, __webpack_require__) {
 
 var React = __webpack_require__(3);
-var classNames = __webpack_require__(31);
+var classNames = __webpack_require__(30);
 
 /**
  * A single option within the TypeaheadSelector
@@ -66556,7 +66495,7 @@ module.exports = TypeaheadOption;
 
 var React = __webpack_require__(3);
 var TypeaheadOption = __webpack_require__(345);
-var classNames = __webpack_require__(31);
+var classNames = __webpack_require__(30);
 
 /**
  * Container for the options rendered as part of the autocompletion process
@@ -67063,7 +67002,7 @@ var ReactElement = __webpack_require__(21);
 var ReactPropTypeLocationNames = __webpack_require__(83);
 var ReactNoopUpdateQueue = __webpack_require__(82);
 
-var emptyObject = __webpack_require__(33);
+var emptyObject = __webpack_require__(32);
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
 
@@ -68399,7 +68338,7 @@ var _assign = __webpack_require__(5);
 var ReactComponent = __webpack_require__(81);
 var ReactNoopUpdateQueue = __webpack_require__(82);
 
-var emptyObject = __webpack_require__(33);
+var emptyObject = __webpack_require__(32);
 
 /**
  * Base class helpers for the updating state of a component.
@@ -69561,7 +69500,7 @@ function symbolObservablePonyfill(root) {
 "use strict";
 
 
-var _axios = __webpack_require__(29);
+var _axios = __webpack_require__(38);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -69571,7 +69510,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(152);
 
-var _reactRedux = __webpack_require__(30);
+var _reactRedux = __webpack_require__(29);
 
 var _reactRouter = __webpack_require__(153);
 

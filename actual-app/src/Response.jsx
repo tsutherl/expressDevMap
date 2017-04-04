@@ -18,11 +18,6 @@ class Response extends React.Component {
   }
 }
 
-// This is probably not right
-Response.propTypes = {
-  response: React.PropTypes.node || React.PropTypes.null,
-};
-
 export default Response;
 
 
