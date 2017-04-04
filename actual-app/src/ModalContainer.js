@@ -1,26 +1,18 @@
-'use strict';
+import { connect } from 'react-redux';
 
-import React from 'react';
-import {connect} from 'react-redux';
-
-import {testRoute} from './reducers/requestReducer';
+import { testRoute } from './reducers/responseReducer';
 import { hideModal } from './reducers/modalReducer';
-import { routeTestAsync } from './reducers/selectedReducer';
+import Modal from './Modal';
 
+const mapStateToProps = ({ selected, response })=>({ selected, response });
 
-import Modal from './Modal.jsx';
+const mapDispatchToProps = dispatch=>({
+  testThisRoute: (route, verb, testingInfo)=>{
+    dispatch(testRoute(route, verb, testingInfo));
+  },
+  hideModal: ()=>{
+    dispatch(hideModal());
+  },
+});
 
-const mapStateToProps = ({ selected, response }) =>
-	({ selected, response });
-
-const mapDispatchToProps = (dispatch) => ({
-	testThisRoute : (route, verb, testingInfo) => {
-		dispatch(testRoute(route, verb, testingInfo));
-	},
-	hideModal : () => {
-		dispatch(hideModal());
-	}
-})
-
-
-export default connect (mapStateToProps, mapDispatchToProps)(Modal);
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);

@@ -1,28 +1,21 @@
-'use strict';
-
-
-/*--------------- CONSTANT -----------------*/
+/* --------------- CONSTANT ----------------- */
 
 const RECEIVE_ROUTES = 'RECEIVE_ROUTES';
 
+/* ---------------ACTION CREATOR----------------- */
 
-/*---------------ACTION CREATOR-----------------*/
-
-export const loadRoutes = routes => ({
+export const loadRoutes = routes=>({
   type: RECEIVE_ROUTES,
-  routes
+  routes,
 });
 
-/*---------------REDUCER-----------------*/
+/* ---------------REDUCER----------------- */
 
-
-export const routeReducer = (state = null, action) => {
-
-	switch (action.type){
-		case RECEIVE_ROUTES:
-		return action.routes;
-            
-	}
-
-	return state;
-}
+export const routeReducer = (state = null, action)=>{
+  switch (action.type) {
+    case RECEIVE_ROUTES:
+      return action.routes;
+    default:
+      return state;
+  }
+};
