@@ -9562,42 +9562,33 @@ module.exports = function bind(fn, thisArg) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-exports.requestReducer = exports.makeRequest = undefined;
-
-var _axios = __webpack_require__(29);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _responseReducer = __webpack_require__(93);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/*---------------CONSTANTS-----------------*/
+/* ---------------CONSTANTS----------------- */
 
 var RECEIVE_TEST_REQUEST = 'RECEIVE_TEST_REQUEST';
 
-/*---------------ACTION CREATORS-----------------*/
+/* ---------------ACTION CREATORS----------------- */
 
-var makeRequest = exports.makeRequest = function makeRequest(requestInfo) {
-    return {
-        type: RECEIVE_TEST_REQUEST,
-        requestInfo: requestInfo
-    };
+var routeTestRequestInfo = exports.routeTestRequestInfo = function routeTestRequestInfo(requestInfo) {
+  return {
+    type: RECEIVE_TEST_REQUEST,
+    requestInfo: requestInfo
+  };
 };
 
-/*---------------- REDUCER ---------------- */
+/* ---------------- REDUCER ---------------- */
 
 var requestReducer = exports.requestReducer = function requestReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var action = arguments[1];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
 
-    switch (action.type) {
-        case RECEIVE_TEST_REQUEST:
-            return action.requestInfo;
-    }
-    return state;
+  switch (action.type) {
+    case RECEIVE_TEST_REQUEST:
+      return action.requestInfo;
+    default:
+      return state;
+  }
 };
 
 /***/ }),
@@ -9607,35 +9598,82 @@ var requestReducer = exports.requestReducer = function requestReducer() {
 "use strict";
 
 
-/*---------------CONSTANTS-----------------*/
-
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
-var RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
+exports.testRoute = exports.responseReducer = exports.clearResponse = exports.routeTestResponse = undefined;
 
-/*---------------ACTION CREATORS-----------------*/
+var _axios = __webpack_require__(29);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _requestReducer = __webpack_require__(92);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* ---------------CONSTANTS----------------- */
+
+var RECEIVE_TEST_RESULT = 'RECEIVE_TEST_RESULT';
+var CLEAR_RESPONSE = 'CLEAR_RESPONSE';
+
+/* ---------------ACTION CREATORS----------------- */
 
 var routeTestResponse = exports.routeTestResponse = function routeTestResponse(result) {
-    return {
-        type: RECEIVE_TEST_RESULT,
-        result: result
-    };
+  return {
+    type: RECEIVE_TEST_RESULT,
+    result: result
+  };
+};
+var clearResponse = exports.clearResponse = function clearResponse() {
+  return {
+    type: CLEAR_RESPONSE
+  };
 };
 
-/*---------------- REDUCER ---------------- */
+/* ---------------- REDUCER ---------------- */
 
 var responseReducer = exports.responseReducer = function responseReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    var action = arguments[1];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments[1];
 
-    switch (action.type) {
-        case RECEIVE_TEST_RESULT:
-            //TODO: what exactly do we want the response to look like? an object probably with more info than this
-            return action.result;
-    }
-    return state;
+  switch (action.type) {
+    case RECEIVE_TEST_RESULT:
+      // TODO: what exactly do we want the response to look like? an object
+      // probably with more info than this
+      return action.result;
+    case CLEAR_RESPONSE:
+      return null;
+    default:
+      return state;
+
+  }
 };
+
+/* ---------------- DISPATCHERS ---------------- */
+
+var testRoute = exports.testRoute = function testRoute(route, verb, info) {
+  var headers = { headers: info.headers };
+  var body = info.body;
+  var request = void 0;
+  var slicedRoute = route.slice(1);
+  if (verb === 'post' || verb === 'put') {
+    request = function request() {
+      return _axios2.default[verb](slicedRoute, body, headers);
+    };
+  } else {
+    request = function request() {
+      return _axios2.default[verb](slicedRoute, headers);
+    };
+  }
+  return function (dispatch) {
+    request().then(function (res) {
+      dispatch(routeTestResponse(res.data));
+      dispatch((0, _requestReducer.routeTestRequestInfo)(info));
+    }).catch(console.error);
+  };
+};
+
+// store everything on the store state
 
 /***/ }),
 /* 94 */
@@ -14896,44 +14934,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var App = function (_React$Component) {
     _inherits(App, _React$Component);
 
-    function App(props) {
+    function App() {
         _classCallCheck(this, App);
 
-        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-
-        _this.state = {
-            response: 'response will load here'
-        };
-        _this.clearResponse = _this.clearResponse.bind(_this);
-        _this.setResponse = _this.setResponse.bind(_this);
-        //
-        return _this;
+        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
     }
 
     _createClass(App, [{
-        key: 'clearResponse',
-        value: function clearResponse() {
-            this.setState({ response: 'response will load here' });
-        }
-    }, {
-        key: 'setResponse',
-        value: function setResponse(responseInfo) {
-            this.setState({ response: responseInfo });
-        }
-    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'div',
                 null,
-                this.props.showModal ? _react2.default.createElement(_ModalContainer2.default, { response: this.state.response, setResponse: this.setResponse }) : null,
+                this.props.showModal ? _react2.default.createElement(_ModalContainer2.default, null) : null,
                 _react2.default.createElement(
                     'h1',
                     null,
                     'expressDevMap'
                 ),
                 _react2.default.createElement(_SearchContainer2.default, null),
-                this.props.routes ? _react2.default.createElement(_TreeContainer2.default, { clearResponse: this.clearResponse }) : null
+                this.props.routes ? _react2.default.createElement(_TreeContainer2.default, null) : null
             );
         }
     }]);
@@ -16209,10 +16229,6 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(29);
-
-var _axios2 = _interopRequireDefault(_axios);
-
 var _xImage = __webpack_require__(182);
 
 var _xImage2 = _interopRequireDefault(_xImage);
@@ -16231,9 +16247,9 @@ var _Response2 = _interopRequireDefault(_Response);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -16279,43 +16295,31 @@ var Modal = function (_React$Component) {
     _this.setJson = _this.setJson.bind(_this);
     _this.onChangeJson = _this.onChangeJson.bind(_this);
     _this.toggleBodyType = _this.toggleBodyType.bind(_this);
-    _this.testRoute = _this.testRoute.bind(_this);
     return _this;
   }
 
   _createClass(Modal, [{
-    key: 'removeInputB',
-    value: function removeInputB(val) {
-      var bkvpairslen = this.state.bodyKVPairs.length;
-      var newState = this.state.bodyKVPairs;
-      var idxVal = newState.indexOf(val);
-      if (idxVal > -1) {
-        newState.splice(idxVal, 1);
-        this.setState({ bodyKVPairs: newState });
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.selected.testRoute !== nextProps.selected.testRoute) {
+        this.setState({
+          keyValuePairs: [],
+          lastAddedVal: null,
+          headerKeys: {},
+          headerVals: {},
+          bodyKVPairs: [],
+          bodyKeys: {},
+          bodyVals: {},
+          bodyJson: {},
+          JORU: null,
+          fadingOut: false,
+          currentOption: 'headers',
+          options: ['headers', 'body'],
+          idx: 0,
+          bodyTypeSelected: 'urlencoded'
+        });
+        this.state.changeMe ? this.setState({ changeMe: false }) : this.setState({ changeMe: true });
       }
-      if (bkvpairslen === 1) {
-        this.addInputB(0);
-      }
-    }
-  }, {
-    key: 'addInputB',
-    value: function addInputB(val) {
-      var bodyKVPairs = this.state.bodyKVPairs;
-
-      if (bodyKVPairs.indexOf(val) === bodyKVPairs.length - 1) {
-        var newState = bodyKVPairs.concat(Math.max(Math.max.apply(Math, _toConsumableArray(bodyKVPairs)), 0) + 1);
-        this.setState({ bodyKVPairs: newState });
-      }
-    }
-  }, {
-    key: 'setUrlEn',
-    value: function setUrlEn() {
-      this.setState({ JORU: 'U' });
-    }
-  }, {
-    key: 'setJson',
-    value: function setJson() {
-      this.setState({ JORU: 'J' });
     }
   }, {
     key: 'onChange',
@@ -16346,6 +16350,40 @@ var Modal = function (_React$Component) {
       this.setState({ bodyJson: e.target.value });
     }
   }, {
+    key: 'setUrlEn',
+    value: function setUrlEn() {
+      this.setState({ JORU: 'U' });
+    }
+  }, {
+    key: 'setJson',
+    value: function setJson() {
+      this.setState({ JORU: 'J' });
+    }
+  }, {
+    key: 'addInputB',
+    value: function addInputB(val) {
+      var bodyKVPairs = this.state.bodyKVPairs;
+
+      if (bodyKVPairs.indexOf(val) === bodyKVPairs.length - 1) {
+        var newState = bodyKVPairs.concat(Math.max(Math.max.apply(Math, _toConsumableArray(bodyKVPairs)), 0) + 1);
+        this.setState({ bodyKVPairs: newState });
+      }
+    }
+  }, {
+    key: 'removeInputB',
+    value: function removeInputB(val) {
+      var bkvpairslen = this.state.bodyKVPairs.length;
+      var newState = this.state.bodyKVPairs;
+      var idxVal = newState.indexOf(val);
+      if (idxVal > -1) {
+        newState.splice(idxVal, 1);
+        this.setState({ bodyKVPairs: newState });
+      }
+      if (bkvpairslen === 1) {
+        this.addInputB(0);
+      }
+    }
+  }, {
     key: 'closeButton',
     value: function closeButton() {
       this.setState({ fadingOut: true });
@@ -16358,15 +16396,6 @@ var Modal = function (_React$Component) {
       this.setState({ idx: idx });
     }
   }, {
-    key: 'updateLocalStorage',
-    value: function updateLocalStorage(testInfo) {
-      for (var i = 10; i > 1; i--) {
-        var shift = localStorage.getItem('recent' + (i - 1)) || "empty";
-        localStorage.setItem('recent' + i, shift);
-      }
-      localStorage.setItem("recent1", testInfo);
-    }
-  }, {
     key: 'handleClick',
     value: function handleClick(route, verb) {
       var _this2 = this;
@@ -16376,7 +16405,6 @@ var Modal = function (_React$Component) {
       var bodyKeys = this.state.bodyKeys;
       var bodyVals = this.state.bodyVals;
       var testingInfo = {};
-
       var headers = {};
 
       this.state.keyValuePairs.forEach(function (val, idx) {
@@ -16384,11 +16412,9 @@ var Modal = function (_React$Component) {
           headers[headerKeys[val]] = headerVals[val];
         }
       });
-
       testingInfo.headers = headers;
 
       var body = {};
-
       if (this.state.bodyTypeSelected === 'urlencoded') {
         this.state.bodyKVPairs.forEach(function (val, idx) {
           if (idx !== _this2.state.bodyKVPairs.length - 1) {
@@ -16402,9 +16428,9 @@ var Modal = function (_React$Component) {
       testingInfo.route = route;
       testingInfo.verb = verb;
 
-      this.testRoute(route, verb, testingInfo);
-      var stringified = JSON.stringify(testingInfo);
-      this.updateLocalStorage(stringified);
+      this.props.testThisRoute(route, verb, testingInfo);
+      // const stringified = JSON.stringify(testingInfo)
+      // this.updateLocalStorage(stringified);
     }
   }, {
     key: 'toggleBodyType',
@@ -16412,67 +16438,6 @@ var Modal = function (_React$Component) {
       this.setState({ bodyTypeSelected: evt.target.value });
       // const idx = +evt.target.value;
       // this.setState({ idx });
-    }
-  }, {
-    key: 'testRoute',
-    value: function testRoute(route, verb, info) {
-      var _this3 = this;
-
-      var routeResponse = void 0;
-      route = route.slice(1);
-      if (verb === 'post' || verb === 'put') {
-        var headers = { headers: info.headers };
-        var body = info.body;
-        _axios2.default[verb](route, body, headers).then(function (res) {
-          routeResponse = res.data;
-          // dispatch(routeTestResponse(res.data));
-          // dispatch(makeRequest(info))
-          _this3.props.setResponse(routeResponse);
-        }).catch(console.error);
-      } else {
-        var _headers = { headers: info.headers };
-        _axios2.default[verb](route, _headers).then(function (res) {
-          routeResponse = res.data;
-          // dispatch(routeTestResponse(res.data));
-          // dispatch(makeRequest(info))
-          _this3.props.setResponse(routeResponse);
-        }).catch(console.error);
-      }
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (this.props.selected.testRoute !== nextProps.selected.testRoute) {
-        this.setState({
-          keyValuePairs: [],
-          lastAddedVal: null,
-          headerKeys: {},
-          headerVals: {},
-          bodyKVPairs: [],
-          bodyKeys: {},
-          bodyVals: {},
-          bodyJson: {},
-          JORU: null,
-          fadingOut: false,
-          currentOption: 'headers',
-          options: ['headers', 'body'],
-          idx: 0,
-          bodyTypeSelected: 'urlencoded'
-        });
-        this.state.changeMe ? this.setState({ changeMe: false }) : this.setState({ changeMe: true });
-      }
-    }
-  }, {
-    key: 'getLocalStorage',
-    value: function getLocalStorage() {
-      var pastRequests = [];
-      var i = 0;
-      while (++i <= 10) {
-        console.log('our key', 'recent' + i);
-        var parsed = JSON.parse(localStorage.getItem('recent' + i));
-        pastRequests.push(parsed);
-      }
-      return pastRequests;
     }
   }, {
     key: 'addInput',
@@ -16503,12 +16468,12 @@ var Modal = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       var option = this.state.options[this.state.idx];
       var route = this.props.selected.testRoute;
       var method = this.props.selected.selectedRouteVerb;
-      var LS = this.getLocalStorage();
+      // const LS = this.getLocalStorage();
       return _react2.default.createElement(
         'div',
         { className: this.state.fadingOut ? 'modal fadeOut' : 'modal' },
@@ -16520,9 +16485,12 @@ var Modal = function (_React$Component) {
             { className: 'nav' },
             _react2.default.createElement(
               'button',
-              { className: 'nav-children', onClick: function onClick() {
-                  return _this4.handleClick(route, method);
-                } },
+              {
+                className: 'nav-children',
+                onClick: function onClick() {
+                  return _this3.handleClick(route, method);
+                }
+              },
               'Test'
             ),
             _react2.default.createElement(
@@ -16530,26 +16498,7 @@ var Modal = function (_React$Component) {
               { className: 'nav-children dropdown' },
               'History'
             ),
-            _react2.default.createElement(
-              'div',
-              { className: 'dropdown-content' },
-              LS.map(function (req) {
-                return _react2.default.createElement(
-                  'div',
-                  null,
-                  _react2.default.createElement(
-                    'p',
-                    null,
-                    req.route
-                  ),
-                  _react2.default.createElement(
-                    'p',
-                    null,
-                    req.verb
-                  )
-                );
-              })
-            ),
+            _react2.default.createElement('div', { className: 'dropdown-content' }),
             _react2.default.createElement(_xImage2.default, { onClick: this.closeButton })
           ),
           _react2.default.createElement(
@@ -16585,7 +16534,8 @@ var Modal = function (_React$Component) {
             onChange: this.onChange,
             addInput: this.addInput,
             removeInput: this.removeInput,
-            keyValuePairs: this.state.keyValuePairs }) : _react2.default.createElement(_Body2.default, {
+            keyValuePairs: this.state.keyValuePairs
+          }) : _react2.default.createElement(_Body2.default, {
             bodyTypeSelected: this.state.bodyTypeSelected,
             toggleBodyType: this.toggleBodyType,
             onChange: this.onChange,
@@ -16595,7 +16545,8 @@ var Modal = function (_React$Component) {
             setUrlEn: this.setUrlEn,
             setJson: this.setJson,
             onChangeJson: this.onChangeJson,
-            bodyJson: this.state.bodyJson })
+            bodyJson: this.state.bodyJson
+          })
         ),
         _react2.default.createElement(
           'div',
@@ -16609,18 +16560,37 @@ var Modal = function (_React$Component) {
   return Modal;
 }(_react2.default.Component);
 
-exports.default = Modal;
-
-
-Modal.propTypes = {
-  hideModal: _react2.default.PropTypes.func
-};
-
-// ${method === 'post' || method === 'put'? '' : disabled}
-
-
 // this.getLocalStorage.map(req => {
 // console.log(req)
+
+// getLocalStorage() {
+//   const pastRequests = [];
+//   let i = 0
+//   while (++i <= 10) {
+//     console.log('our key', `recent${i}`)
+//     const parsed = JSON.parse(localStorage.getItem(`recent${i}`))
+//     pastRequests.push(parsed)
+//   }
+//   return pastRequests
+// }
+
+// updateLocalStorage (testInfo) {
+//   for (let i = 10; i > 1; i--) {
+//     let shift = localStorage.getItem(`recent${i-1}`) || "empty";
+//     localStorage.setItem(`recent${i}`, shift);
+//   }
+//   localStorage.setItem("recent1", testInfo);
+// }
+/*
+{ LS.map(req=>(
+  <div>
+    <p>{req.route}</p>
+    <p>{req.verb}</p>
+  </div>
+))}*/
+
+
+exports.default = Modal;
 
 /***/ }),
 /* 175 */
@@ -16635,7 +16605,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactRedux = __webpack_require__(30);
 
-var _requestReducer = __webpack_require__(92);
+var _responseReducer = __webpack_require__(93);
 
 var _modalReducer = __webpack_require__(49);
 
@@ -16646,14 +16616,15 @@ var _Modal2 = _interopRequireDefault(_Modal);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var selected = _ref.selected;
-  return { selected: selected };
+  var selected = _ref.selected,
+      response = _ref.response;
+  return { selected: selected, response: response };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     testThisRoute: function testThisRoute(route, verb, testingInfo) {
-      dispatch((0, _requestReducer.testRoute)(route, verb, testingInfo));
+      dispatch((0, _responseReducer.testRoute)(route, verb, testingInfo));
     },
     hideModal: function hideModal() {
       dispatch((0, _modalReducer.hideModal)());
@@ -16671,7 +16642,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -16689,46 +16660,57 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Response = function (_React$Component) {
-    _inherits(Response, _React$Component);
+  _inherits(Response, _React$Component);
 
-    function Response(props) {
-        _classCallCheck(this, Response);
+  function Response() {
+    _classCallCheck(this, Response);
 
-        return _possibleConstructorReturn(this, (Response.__proto__ || Object.getPrototypeOf(Response)).call(this, props));
+    return _possibleConstructorReturn(this, (Response.__proto__ || Object.getPrototypeOf(Response)).apply(this, arguments));
+  }
+
+  _createClass(Response, [{
+    key: 'render',
+    value: function render() {
+      var response = this.props.response;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'response-header' },
+          _react2.default.createElement(
+            'h4',
+            null,
+            'Response'
+          ),
+          _react2.default.createElement(
+            'h5',
+            null,
+            'Status:'
+          ),
+          _react2.default.createElement(
+            'h5',
+            null,
+            'Time:'
+          )
+        ),
+        _react2.default.createElement('textarea', {
+          value: response ? JSON.stringify(this.props.response) : 'response will load here'
+        })
+      );
     }
+  }]);
 
-    _createClass(Response, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'div',
-                    { className: 'response-header' },
-                    _react2.default.createElement(
-                        'h4',
-                        null,
-                        'Response'
-                    ),
-                    _react2.default.createElement(
-                        'h5',
-                        null,
-                        'Status:   '
-                    ),
-                    _react2.default.createElement(
-                        'h5',
-                        null,
-                        'Time:   '
-                    )
-                ),
-                _react2.default.createElement('textarea', { value: JSON.stringify(this.props.response) })
-            );
-        }
-    }]);
-
-    return Response;
+  return Response;
 }(_react2.default.Component);
+
+// This is probably not right
+
+
+Response.propTypes = {
+  response: _react2.default.PropTypes.node || _react2.default.PropTypes.null
+};
 
 exports.default = Response;
 
@@ -17315,12 +17297,8 @@ exports.default = Tree;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
-
-var _react = __webpack_require__(3);
-
-var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(30);
 
@@ -17332,35 +17310,46 @@ var _selectedReducer = __webpack_require__(50);
 
 var _modalReducer = __webpack_require__(49);
 
+var _responseReducer = __webpack_require__(93);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapState = function mapState(_ref) {
-	var routes = _ref.routes,
-	    testRoute = _ref.testRoute,
-	    showModal = _ref.showModal,
-	    activeTestNode = _ref.activeTestNode,
-	    selectedRouteVerb = _ref.selectedRouteVerb;
-	return { routes: routes, testRoute: testRoute, showModal: showModal, activeTestNode: activeTestNode, selectedRouteVerb: selectedRouteVerb };
+  var routes = _ref.routes,
+      testRoute = _ref.testRoute,
+      showModal = _ref.showModal,
+      activeTestNode = _ref.activeTestNode,
+      selectedRouteVerb = _ref.selectedRouteVerb;
+  return {
+    routes: routes,
+    testRoute: testRoute,
+    showModal: showModal,
+    activeTestNode: activeTestNode,
+    selectedRouteVerb: selectedRouteVerb
+  };
 };
 
 var mapDispatch = function mapDispatch(dispatch) {
-	return {
-		setRouteVerb: function setRouteVerb(verb) {
-			dispatch((0, _selectedReducer.setRouteVerb)(verb));
-		},
-		setTestRoute: function setTestRoute(testRoute) {
-			dispatch((0, _selectedReducer.setTestRoute)(testRoute));
-		},
-		setTestNode: function setTestNode(node) {
-			dispatch((0, _selectedReducer.setTestNode)(node));
-		},
-		showModalNow: function showModalNow() {
-			dispatch((0, _modalReducer.showModal)());
-		},
-		hideModal: function hideModal() {
-			dispatch((0, _modalReducer.hideModal)());
-		}
-	};
+  return {
+    setRouteVerb: function setRouteVerb(verb) {
+      dispatch((0, _selectedReducer.setRouteVerb)(verb));
+    },
+    setTestRoute: function setTestRoute(testRoute) {
+      dispatch((0, _selectedReducer.setTestRoute)(testRoute));
+    },
+    setTestNode: function setTestNode(node) {
+      dispatch((0, _selectedReducer.setTestNode)(node));
+    },
+    showModalNow: function showModalNow() {
+      dispatch((0, _modalReducer.showModal)());
+    },
+    hideModal: function hideModal() {
+      dispatch((0, _modalReducer.hideModal)());
+    },
+    clearResponse: function clearResponse() {
+      dispatch((0, _responseReducer.clearResponse)());
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(_Tree2.default);

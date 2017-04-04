@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 
-import { testRoute } from './reducers/requestReducer';
+import { testRoute } from './reducers/responseReducer';
 import { hideModal } from './reducers/modalReducer';
 import Modal from './Modal';
 
-const mapStateToProps = ({ selected })=>({ selected });
+const mapStateToProps = ({ selected, response })=>({ selected, response });
 
 const mapDispatchToProps = dispatch=>({
   testThisRoute: (route, verb, testingInfo)=>{
@@ -14,6 +14,5 @@ const mapDispatchToProps = dispatch=>({
     dispatch(hideModal());
   },
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);

@@ -7,10 +7,9 @@ export default class Tree extends React.Component {
     super(props);
   }
 
-  componentDidMount(){
-
+  componentDidMount () {
     const endRouteHandleClick = (node) => {
-      let testRoute = getRoute(node);
+      const testRoute = getRoute(node);
       let verb = getVerb(node);
       this.props.clearResponse();
       this.props.setRouteVerb(verb);

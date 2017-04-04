@@ -9,29 +9,13 @@ import SearchContainer from './SearchContainer.jsx';
 
 
 class App extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            response: 'response will load here'
-        }
-        this.clearResponse = this.clearResponse.bind(this)
-        this.setResponse = this.setResponse.bind(this)
-//
-    }
-
-    clearResponse() {
-      this.setState({response: 'response will load here'})
-    }
-    setResponse(responseInfo) {
-        this.setState({response: responseInfo})
-    }
     render() {
         return(
             <div>
-                {this.props.showModal ? <ModalContainer response={this.state.response} setResponse={this.setResponse}/> : null}
+                {this.props.showModal ? <ModalContainer /> : null}
                 <h1>expressDevMap</h1>
                 <SearchContainer />
-                {this.props.routes ? <TreeContainer clearResponse={this.clearResponse}/> : null }
+                {this.props.routes ? <TreeContainer /> : null }
             </div>
         )
     }
