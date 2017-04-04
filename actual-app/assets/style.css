@@ -32,6 +32,10 @@ h1 {
     text-align: center;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 #app > div > div > svg {
     display: block;
     margin: auto;
@@ -44,9 +48,8 @@ svg g {
    padding: 20em;
 }
 
-
-/*TODO: fix positioning on small screen
-media query probably needed
+/*TODO: fix positioning on small screen 
+media query probably needed 
 if view width is less than 1000 we'll have media query that does sth different*/
 
 /*TODO: fix box-shadow so it's only on the left side*/
@@ -235,6 +238,10 @@ if view width is less than 1000 we'll have media query that does sth different*/
 
 
 /*************TREE****************/
+#tree circle:hover {
+    cursor: pointer;
+}
+
 #tree circle.router {
     fill: #555;
 }
@@ -263,6 +270,20 @@ if view width is less than 1000 we'll have media query that does sth different*/
     display: block;
     font-weight: bold;
     background: #eeeeee;
+}
+
+#tree a {
+    border-radius: 50%;
+}
+
+#tree a:focus circle {
+    stroke-opacity: 1;
+    stroke-width: 2;
+    stroke: green;
+}
+
+#tree a:focus + text {
+    text-decoration: underline;
 }
 
 #response {

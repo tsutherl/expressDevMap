@@ -220,7 +220,7 @@ export default class Modal extends React.Component {
 			<div className={this.state.fadingOut ? 'modal fadeOut': 'modal'}>
 				<div className='info'>
 					<div className='nav'>
-						<button className='nav-children' onClick={()=>this.handleClick(route, method)}>Test</button>
+						<button id='test-button' className='nav-children' onClick={()=>this.handleClick(route, method)}>Test</button>
 						<button className='nav-children'>History</button>
 						<Closex onClick={this.closeButton}/>
 					</div>
